@@ -1,0 +1,19 @@
+{
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true
+  },
+  "files.associations": {
+    "*.json": "jsonc"
+  },
+  "files.eol": "\r\n",
+  "stylelint.validate": [
+    "css",
+    "scss",
+    "vue"
+  ],
+  "i18n-ally.localesPaths": [
+    "src/components/uni-ui/uni-load-more/i18n"
+  ]
+}

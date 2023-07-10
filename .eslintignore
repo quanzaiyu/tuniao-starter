@@ -1,0 +1,4 @@
+src/library/amap-wx.js
+src/auto-imports.d.ts
+
+src/uni_modules/uni-*/**/*
