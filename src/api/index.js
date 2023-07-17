@@ -109,7 +109,33 @@ class API {
   }
 
   // 上传图片
-  async upload(e) {
+  upload(e) {
+    return new Promise((resolve, reject) => {
+      uni.uploadFile({
+        url: this.baseProjectUrl + '/blade-resource/oss/endpoint/put-file',
+        filePath: e.path,
+        name: 'file',
+        header: {
+          'Blade-Auth': uni.$store.userInfo.access_token,
+          Authorization: 'Basic c2FiZXI6c2FiZXJfc2VjcmV0',
+        },
+        formData: {},
+        success: uploadFileRes => {
+          if (uploadFileRes.statusCode === 200) {
+            resolve(JSON.parse(uploadFileRes.data)?.data || {})
+          } else {
+            reject(JSON.parse(uploadFileRes.data))
+          }
+        },
+        fail(e) {
+          reject(e)
+        },
+      })
+    })
+  }
+
+  // 批量上传图片
+  async uploadBatch(e) {
     const promiseArr = []
     e.tempFilePaths.forEach(path => {
       const promise = new Promise((resolve, reject) => {
