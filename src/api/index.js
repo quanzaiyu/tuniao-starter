@@ -1,9 +1,11 @@
-import urls from './urls'
-
 class API {
   constructor() {
     // #ifdef H5
     this.baseProjectUrl = import.meta.env.VITE_APP_BASE_API_H5
+    // #endif
+
+    // #ifdef MP-WEIXIN
+    this.baseProjectUrl = import.meta.env.VITE_APP_BASE_API_MP_WEIXIN
     // #endif
 
     // #ifdef MP-ALIPAY

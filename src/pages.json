@@ -36,7 +36,12 @@
 			// 全局组件
 			"^comp-(.*)": "@/components/comp-$1.vue",
 			"^app-(.*)": "@/components/app-$1.vue",
-			"Layout": "@/components/Layout.vue"
+			"Layout": "@/components/Layout.vue",
+      // 图鸟UI
+      "^tn-(.*)-(item|group)$": "@tuniao/tnui-vue3-uniapp/components/$1/src/$1-$2.vue",
+      "^tn-(.*)": "@tuniao/tnui-vue3-uniapp/components/$1/src/$1.vue",
+      // uni-ui
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
 		}
 	}
 }

@@ -6,6 +6,7 @@
     "baseUrl": ".",
     "allowJs": true,
     "target": "ES2022",
+    "moduleResolution": "classic",
     "lib": ["ESNext", "Dom", "DOM.Iterable"],
     "types": [
       "@dcloudio/types",
