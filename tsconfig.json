@@ -1,0 +1,22 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    "ignoreDeprecations": "5.0",
+    "sourceMap": true,
+    "baseUrl": ".",
+    "allowJs": true,
+    "target": "ES2022",
+    "lib": ["ESNext", "Dom", "DOM.Iterable"],
+    "types": [
+      "@dcloudio/types",
+      "@tuniao/tnui-vue3-uniapp/global",
+      "miniprogram-api-typings",
+      "mini-types",
+      "@types/node"
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["**/*.js", "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
+}

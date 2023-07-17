@@ -7,7 +7,6 @@ export default {
 
   // 登录
   sessionId: ['https://shgz.ljming.cn:38087/service/alipay/api/confirmLoginAccount', 'post', 2, 1], // 获取sessionId
-  // login: func(['/gzpt/api/login', 'post', 1]), // 通过sessionId获取用户信息和鉴权信息
   login: ['/gzpt/api/login', 'post', 1], // 通过sessionId获取用户信息和鉴权信息
 
   // 公共模块
@@ -16,7 +15,3 @@ export default {
   region: ['/system/v1/bladeRegionInfo/lazy-tree', 'get', 1], // 行政区划
   regionTree: ['/system/v1/bladeRegionInfo/getAllTree', 'get', 1], // 行政区划（树状）
 }
-
-// async function func(type) {
-//   return await api.resolve(type)
-// }
