@@ -7,11 +7,11 @@ export default {
 
   // 登录
   sessionId: ['https://shgz.ljming.cn:38087/service/alipay/api/confirmLoginAccount', 'post', 2, 1], // 获取sessionId
-  login: ['/gzpt/api/login', 'post', 1], // 通过sessionId获取用户信息和鉴权信息
+  login: ['/blade-auth/oauth/token', 'post', 1], // 登录
 
   // 公共模块
-  dic: ['/blade-system/dict/dictionary', 'get', 1], // 字典
-  dicTree: ['/blade-system/dict/dictionaryTrees', 'get', 1], // 字典（树状）
-  region: ['/system/v1/bladeRegionInfo/lazy-tree', 'get', 1], // 行政区划
-  regionTree: ['/system/v1/bladeRegionInfo/getAllTree', 'get', 1], // 行政区划（树状）
+  dic: ['/blade-system/dict/dictionary', 'get', 2], // 字典
+  dicTree: ['/blade-system/dict/dictionaryTrees', 'get', 2], // 字典（树状）
+  region: ['/system/v1/bladeRegionInfo/lazy-tree', 'get', 2], // 行政区划
+  regionTree: ['/system/v1/bladeRegionInfo/getAllTree', 'get', 2], // 行政区划（树状）
 }

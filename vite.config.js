@@ -46,12 +46,12 @@ export default defineConfig({
 
     Unocss(),
   ],
-  // server: {
-  //   proxy: {
-  //     '/api': {
-  //       target: 'http://localhost:88/',
-  //       rewrite: path => path.replace(/^\/api/, '/'), // 路径重写，本项目不需要重写
-  //     },
-  //   },
-  // },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:88/',
+        rewrite: path => path.replace(/^\/api/, '/'), // 路径重写，本项目不需要重写
+      },
+    },
+  },
 })

@@ -58,16 +58,6 @@ class API {
           delete data[key]
         }
       }
-
-      if (userInfo) {
-        // 市场销售主体ID
-        if (options.needMarketSponsorInfoId) {
-          data = {
-            MarketSponsorInfoId: userInfo.marketId,
-            ...data,
-          }
-        }
-      }
     }
 
     return new Promise((resolve, reject) => {

@@ -1,4 +1,7 @@
 <script setup>
+const sexList = $computed(() => uni.$store.sexList)
+const sexMap = $computed(() => uni.$store.sexMap)
+console.log(sexList, sexMap)
 </script>
 
 <template lang="pug">

@@ -48,25 +48,7 @@
   },
   /* 快应用特有相关 */
   "quickapp": {},
-  "h5": {
-    "devServer": {
-      "https": false,
-      "headers": {
-        "Access-Control-Allow-Origin": "*"
-      },
-      "proxy": {
-        "/api/": {
-          "target": "http://localhost:88",
-          "changeOrigin": true,
-          "secure": false,
-          "pathRewrite": {
-            "^/api": "/api"
-          }
-        },
-      },
-      "port": 8081
-    }
-  },
+  "h5": {},
   /* 小程序特有相关 */
   "mp-weixin": {
     "appid": "",
