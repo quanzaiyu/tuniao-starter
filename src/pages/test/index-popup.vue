@@ -1,4 +1,6 @@
 <script setup>
+const layout = $ref(null)
+
 // toast
 function toast() {
   utils.toast('hello')
@@ -13,12 +15,17 @@ function hideLoading() {
 }
 
 // modal
-const layout = ref(null)
 function showModal() {
-  utils.modal('模态框', '模态框内容', true, () => {
-    console.log(1)
-  }, () => {
-    console.log(2)
+  layout.showModal({
+    title: '模态框',
+    content: '模态框内容',
+    showCancel: true,
+    confirm: () => {
+      console.log('确定')
+    },
+    cancel: () => {
+      console.log('取消')
+    },
   })
 }
 

@@ -33,11 +33,6 @@ class Utils {
     uni.$store.overlay = { show: true }
   }
 
-  modal(title, content, showCancel = true, confirm, cancel, options) {
-    console.log(111)
-    uni.$store.modal = { title, content, showCancel, confirm, cancel, options, show: true }
-  }
-
   sheet(itemList = []) {
     // 解决多次弹出sheet的问题
     if (sheetLock) {

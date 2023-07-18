@@ -8,25 +8,10 @@ const props = defineProps({
 defineEmits(['search', 'loadmore', 'add-btn-click', 'clear'])
 
 // 弹出层：modal
-const modal = computed(() => uni.$store.modal)
-const modalRef = ref()
-watch(modal, () => {
-  modalRef.value?.showModal({
-    title: modal.value.title,
-    content: modal.value.content,
-    showCancel: modal.value.showCancel,
-    cancelStyle: modal.value.options?.cancelStyle,
-    confirmStyle: modal.value.options?.confirmStyle,
-    confirmText: modal.value.options?.confirmText,
-    cancelText: modal.value.options?.cancelText,
-    confirm: () => {
-      modal.value?.confirm()
-    },
-    cancel: () => {
-      modal.value?.cancel()
-    },
-  })
-})
+const modalRef = $ref()
+function showModal(modal) {
+  modalRef?.showModal(modal)
+}
 
 // 弹出层：toast
 const toast = computed(() => uni.$store.toast)
@@ -44,6 +29,12 @@ watchEffect(() => {
   if (props.title) {
     uni.setNavigationBarTitle({ title: props.title })
   }
+})
+
+defineExpose({
+  modalRef,
+  notifyRef,
+  showModal,
 })
 </script>
 
