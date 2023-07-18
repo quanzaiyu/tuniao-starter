@@ -7,22 +7,44 @@ const props = defineProps({
 
 defineEmits(['search', 'loadmore', 'add-btn-click', 'clear'])
 
-// 弹出层：modal
-const modalRef = $ref()
-function showModal(modal) {
-  modalRef?.showModal(modal)
+// 弹出层：notify
+const notifyRef = $ref()
+function showNotify(options) {
+  notifyRef?.show({ position: 'center', type: 'primary', ...options })
 }
 
-// 弹出层：toast
-const toast = computed(() => uni.$store.toast)
-const notifyRef = ref()
-watch(toast, () => {
-  notifyRef.value?.show({
-    msg: toast.value.msg,
-    position: toast.value.position,
-    type: toast.value.type,
-  })
+// 弹出层：loading
+let loading = $ref({
+  title: '',
+  show: false,
 })
+function showLoading(title, duration = 3000) {
+  loading = { show: true, title }
+
+  if (duration > 0) {
+    setTimeout(() => {
+      loading = { show: false, title }
+    }, duration)
+  }
+}
+
+function hideLoading() {
+  loading = { show: false, title: '' }
+}
+
+// 弹出层：overlay
+let overlay = $ref({
+  show: false,
+})
+function showOverlay() {
+  overlay = { show: true }
+}
+
+// 弹出层：modal
+const modalRef = $ref()
+function showModal(options) {
+  modalRef?.showModal(options)
+}
 
 // 更新标题
 watchEffect(() => {
@@ -32,9 +54,11 @@ watchEffect(() => {
 })
 
 defineExpose({
-  modalRef,
-  notifyRef,
-  showModal,
+  loading: showLoading,
+  unloading: hideLoading,
+  notify: showNotify,
+  modal: showModal,
+  overlay: showOverlay,
 })
 </script>
 
@@ -53,17 +77,17 @@ view(:key="title")
   //- 弹出层：modal
   tn-modal(ref="modalRef")
   //- 弹出层：loading
-  tn-popup(v-model="$store.loading.show" :width="200" :height="300" bg-color="transparent" :overlay-closeable="false")
+  tn-popup(v-model="loading.show" :width="200" :height="300" bg-color="transparent" :overlay-closeable="false")
     .w-full.h-full.flex-center.flex-col
       tn-loading(
-        :show="$store.loading.show"
+        :show="loading.show"
         animation
         mode="flower"
         type="primary"
         size="100rpx"
       )
-      .mt-20.text-toast {{ $store.loading.title }}
-  //- 弹出层：遮罩，可自定义内容
-  tn-overlay(v-model:show="$store.overlay.show" :opacity="0.4" )
+      .mt-20.text-toast {{ loading.title }}
+  //- 弹出层：overlay，可自定义内容
+  tn-overlay(v-model:show="overlay.show" :opacity="0.4" )
     slot(name="overlay")
 </template>

@@ -1,5 +1,9 @@
 module.exports = {
   root: true,
+  env: {
+    node: true,
+    'vue/setup-compiler-macros': true,
+  },
   extends: [
     '@nuxtjs',
     'plugin:vue-pug/vue3-recommended',

@@ -2,42 +2,42 @@
 const layout = $ref(null)
 
 // toast
-function toast() {
-  utils.toast('hello')
+function showNotify() {
+  layout.notify({ msg: 'hello' })
 }
 
 // loading
 function showLoading() {
-  utils.loading('加载中...', 3000)
+  layout.loading('加载中...')
 }
 function hideLoading() {
-  utils.unloading()
+  layout.unloading()
 }
 
 // modal
 function showModal() {
-  layout.showModal({
+  layout.modal({
     title: '模态框',
     content: '模态框内容',
     showCancel: true,
     confirm: () => {
-      console.log('确定')
+      console.info('确定')
     },
     cancel: () => {
-      console.log('取消')
+      console.info('取消')
     },
   })
 }
 
 // overlay
 function showOverlay() {
-  utils.overlay()
+  layout.overlay()
 }
 </script>
 
 <template lang="pug">
 Layout(ref="layout" title="弹出层")
-  button(@click="toast") toast
+  button(@click="showNotify") showNotify
   button(@click="showLoading") showLoading
   button(@click="hideLoading") hideLoading
   button(@click="showOverlay") showOverlay

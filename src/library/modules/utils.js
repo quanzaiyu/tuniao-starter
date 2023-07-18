@@ -1,38 +1,10 @@
-
 let sheetLock = false
-let timer = null
 
 let timerDebounce = null
 let timerThrottle = null
 
 class Utils {
   // 自定义弹出层封装
-  toast(msg, position = 'center', type = 'primary') {
-    uni.$store.toast = { msg, position, type }
-  }
-
-  loading(title = '加载中...', time = 3000) {
-    uni.$store.loading = {
-      show: true,
-      title: title || '加载中...',
-    }
-
-    timer = setTimeout(() => {
-      clearTimeout(timer)
-      uni.$store.loading = { show: false, title: '' }
-    }, time)
-  }
-
-  unloading(time = 0) {
-    setTimeout(() => {
-      uni.$store.loading = { show: false }
-    }, time)
-  }
-
-  overlay() {
-    uni.$store.overlay = { show: true }
-  }
-
   sheet(itemList = []) {
     // 解决多次弹出sheet的问题
     if (sheetLock) {
