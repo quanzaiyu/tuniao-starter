@@ -17,6 +17,16 @@ export default {
       title: '加载中...', // 标题
       duration: 3000, // loading存在时间
     },
+    // 自定义modal
+    modal: {
+      show: false,
+      title: '',
+      content: '',
+      showCancel: true, // 是否显示取消按钮
+      confirm: null, // 确认按钮,
+      cancel: null, // 取消按钮
+      options: {}, // modal的options
+    },
     // 自定义遮罩
     overlay: {
       show: false, // 是否显示遮罩

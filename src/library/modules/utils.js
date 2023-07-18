@@ -7,7 +7,6 @@ let timerThrottle = null
 
 class Utils {
   // 自定义弹出层封装
-  // 参考：https://vue3.tuniaokj.com/zh-CN/component/notify.html
   toast(msg, position = 'center', type = 'primary') {
     uni.$store.toast = { msg, position, type }
   }
@@ -34,15 +33,9 @@ class Utils {
     uni.$store.overlay = { show: true }
   }
 
-  model(title, content, func1, func2, showCancel = true) {
-    uni.showModal({
-      title,
-      content,
-      showCancel,
-      success(res) {
-        res.confirm ? func1?.() : func2?.()
-      },
-    })
+  modal(title, content, showCancel = true, confirm, cancel, options) {
+    console.log(111)
+    uni.$store.modal = { title, content, showCancel, confirm, cancel, options, show: true }
   }
 
   sheet(itemList = []) {

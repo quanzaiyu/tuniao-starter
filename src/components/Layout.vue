@@ -7,11 +7,32 @@ const props = defineProps({
 
 defineEmits(['search', 'loadmore', 'add-btn-click', 'clear'])
 
+// 弹出层：modal
+const modal = computed(() => uni.$store.modal)
+const modalRef = ref()
+watch(modal, () => {
+  modalRef.value?.showModal({
+    title: modal.value.title,
+    content: modal.value.content,
+    showCancel: modal.value.showCancel,
+    cancelStyle: modal.value.options?.cancelStyle,
+    confirmStyle: modal.value.options?.confirmStyle,
+    confirmText: modal.value.options?.confirmText,
+    cancelText: modal.value.options?.cancelText,
+    confirm: () => {
+      modal.value?.confirm()
+    },
+    cancel: () => {
+      modal.value?.cancel()
+    },
+  })
+})
+
 // 弹出层：toast
 const toast = computed(() => uni.$store.toast)
-const notifyRef = $ref()
+const notifyRef = ref()
 watch(toast, () => {
-  notifyRef?.show({
+  notifyRef.value?.show({
     msg: toast.value.msg,
     position: toast.value.position,
     type: toast.value.type,
@@ -27,7 +48,7 @@ watchEffect(() => {
 </script>
 
 <template lang="pug">
-view
+view(:key="title")
   view(:class="[styles.bg || 'bg-default']")
     //- 自定义页面模板
     view
@@ -38,6 +59,8 @@ view
     .fixed.bottom-0.w-full.h-footer.bg-white.z-100
   //- 弹出层：toast
   tn-notify(ref="notifyRef")
+  //- 弹出层：modal
+  tn-modal(ref="modalRef")
   //- 弹出层：loading
   tn-popup(v-model="$store.loading.show" :width="200" :height="300" bg-color="transparent" :overlay-closeable="false")
     .w-full.h-full.flex-center.flex-col

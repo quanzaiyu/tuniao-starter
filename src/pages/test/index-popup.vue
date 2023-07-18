@@ -12,18 +12,29 @@ function hideLoading() {
   utils.unloading()
 }
 
-// 展示遮罩
+// modal
+const layout = ref(null)
+function showModal() {
+  utils.modal('模态框', '模态框内容', true, () => {
+    console.log(1)
+  }, () => {
+    console.log(2)
+  })
+}
+
+// overlay
 function showOverlay() {
   utils.overlay()
 }
 </script>
 
 <template lang="pug">
-Layout(title="弹出层")
-  button(@click="toast") Toast
+Layout(ref="layout" title="弹出层")
+  button(@click="toast") toast
   button(@click="showLoading") showLoading
   button(@click="hideLoading") hideLoading
   button(@click="showOverlay") showOverlay
+  button(@click="showModal") showModal
   template(#overlay)
     .w-full.h-full.flex-center.text-white.text-48 overlay
 </template>
