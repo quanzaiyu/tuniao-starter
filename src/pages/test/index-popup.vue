@@ -29,6 +29,25 @@ function showModal() {
   })
 }
 
+// action-sheet
+function showActionSheet() {
+  layout.sheet({
+    actions: [
+      { text: '选项1', value: '1' },
+      { text: '选项2', value: '2', desc: '暂时不能选' },
+      { text: '选项3', value: '3' },
+    ],
+    cancel: () => {
+      console.info('取消按钮被点击')
+      return true
+    },
+    select: (index, value) => {
+      console.info('选项被点击', index, value)
+      return true
+    },
+  })
+}
+
 // overlay
 function showOverlay() {
   layout.overlay()
@@ -42,6 +61,7 @@ Layout(ref="layout" title="弹出层")
   button(@click="hideLoading") hideLoading
   button(@click="showOverlay") showOverlay
   button(@click="showModal") showModal
+  button(@click="showActionSheet") showActionSheet
   template(#overlay)
     .w-full.h-full.flex-center.text-white.text-48 overlay
 </template>

@@ -46,6 +46,12 @@ function showModal(options) {
   modalRef?.showModal(options)
 }
 
+// 弹出层：actionSheetRef
+const actionSheetRef = $ref()
+function showActionSheet(options) {
+  actionSheetRef.show(options)
+}
+
 // 更新标题
 watchEffect(() => {
   if (props.title) {
@@ -59,6 +65,7 @@ defineExpose({
   notify: showNotify,
   modal: showModal,
   overlay: showOverlay,
+  sheet: showActionSheet,
 })
 </script>
 
@@ -76,6 +83,7 @@ view(:key="title")
   tn-notify(ref="notifyRef")
   //- 弹出层：modal
   tn-modal(ref="modalRef")
+  tn-action-sheet(ref="actionSheetRef")
   //- 弹出层：loading
   tn-popup(v-model="loading.show" :width="200" :height="300" bg-color="transparent" :overlay-closeable="false")
     .w-full.h-full.flex-center.flex-col
