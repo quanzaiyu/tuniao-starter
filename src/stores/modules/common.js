@@ -5,18 +5,23 @@ export default {
     /*
      * 系统相关的状态
      */
-    title: '',
+    // 自定义toast
     toast: {
-      show: false,
-      title: '',
-      icon: 'none',
-      duration: 3000,
-    }, // 自定义吐司
+      msg: '',
+      position: 'center', // toast位置：center、top、bottom
+      type: 'primary', // toast类型：primary、success、warning、danger、info
+    },
+    // 自定义loading
     loading: {
       show: false, // 是否显示loading
       title: '加载中...', // 标题
       duration: 3000, // loading存在时间
-    }, // 自定义loading
+    },
+    // 自定义遮罩
+    overlay: {
+      show: false, // 是否显示遮罩
+    },
+    // 系统信息
     platform: uni.getSystemInfoSync().platform, // 获取平台信息，返回 ios android
     env: process.env.UNI_PLATFORM, // 获取运行环境，返回 h5 mp-weixin mp-alipay 等
     /*

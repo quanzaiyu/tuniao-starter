@@ -7,12 +7,9 @@ let timerThrottle = null
 
 class Utils {
   // 自定义弹出层封装
-  toast(title, icon = 'none', duration = 3000, callback) {
-    uni.$store.toast = { show: true, title, icon, duration }
-    setTimeout(() => {
-      uni.$store.toast = { show: false }
-      callback?.()
-    }, duration)
+  // 参考：https://vue3.tuniaokj.com/zh-CN/component/notify.html
+  toast(msg, position = 'center', type = 'primary') {
+    uni.$store.toast = { msg, position, type }
   }
 
   loading(title = '加载中...', time = 3000) {
@@ -31,6 +28,10 @@ class Utils {
     setTimeout(() => {
       uni.$store.loading = { show: false }
     }, time)
+  }
+
+  overlay() {
+    uni.$store.overlay = { show: true }
   }
 
   model(title, content, func1, func2, showCancel = true) {

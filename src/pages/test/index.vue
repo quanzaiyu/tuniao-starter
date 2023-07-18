@@ -1,14 +1,33 @@
 <script setup>
-onLoad(() => {
-  console.info(dayjs())
-  // const { data, error } = await to(api.resolve(URLS.login))
-  // console.info({ data, error })
+console.info(dayjs())
+
+// const { data, error } = await to(api.resolve(URLS.login))
+// console.info({ data, error })
+
+// 获取页面参数
+onLoad(options => {
+  console.log(options)
 })
 
+// toast
 function toast() {
   utils.toast('hello')
 }
 
+// loading
+function showLoading() {
+  utils.loading('加载中...', 3000)
+}
+function hideLoading() {
+  utils.unloading()
+}
+
+// 展示遮罩
+function showOverlay() {
+  utils.overlay()
+}
+
+// 图片上传
 const imageList = $ref([])
 async function upload(e) {
   const res = await api.upload(e)
@@ -24,27 +43,24 @@ async function upload(e) {
   */
   return res.link
 }
-
-// const fileList = $computed(() => imageList.map(item => item.link))
-
 </script>
 
-<template>
-  <button @click="toast">Toast</button>
-  <view class="box1"></view>
-  <view class="box2"></view>
-  <tn-image-upload v-model="imageList" action="" :custom-upload-handler="upload" :max-size="3 * 1024 * 1024" :extensions="['jpg','jpeg', 'png']" />
-  <view>当前上传列表</view>
-  <!-- <view class="flex">
-    <image v-for="(item, index) in fileList" :key="index" class="w-100 h-100" :src="item" mode="scaleToFill" />
-  </view> -->
-</template>
-
-<!-- <template lang="pug">
+<template lang="pug">
 Layout(title="测试页面" type="custom")
+  button(@click="toast") Toast
+  button(@click="showLoading") showLoading
+  button(@click="hideLoading") hideLoading
+  button(@click="showOverlay") showOverlay
+  tn-image-upload(v-model="imageList" action="" :custom-upload-handler="upload" :max-size="3 * 1024 * 1024" :extensions="['jpg','jpeg', 'png']")
   .box1
   .box2
-</template> -->
+  tn-icon(name="logo-tuniao")
+  view 当前上传列表
+  .flex
+    image.w-100.h-100(v-for="(item, index) in imageList" :key="index" :src="item" mode="scaleToFill")
+  template(#overlay)
+    .w-full.h-full.flex-center.text-white.text-48 overlay
+</template>
 
 <style lang="stylus" scoped>
 .box1
