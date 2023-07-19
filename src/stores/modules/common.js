@@ -13,8 +13,8 @@ export default {
      */
     sessionId: '', // 用户登录的sessionId
     userInfo: uni.getStorageSync('userInfo') || null, // 用户信息
-    sexMap: uni.getStorageSync('sexMap') || {}, // 销售者属性
-    sexList: uni.getStorageSync('sexList') || [], // 销售者属性列表
+    sexMap: {}, // 销售者属性
+    sexList: [], // 销售者属性列表
   },
   getters: {},
   actions: {
@@ -26,7 +26,9 @@ export default {
       })
       uni.setStorage({ key: 'userInfo', data: this.userInfo })
 
-      navigator.redirectTo('/pages/index/index')
+      if (!options.noJump) {
+        navigator.redirectTo('/pages/index/index')
+      }
     },
     // 通过sessionId登录
     async loginBySessionId(options) {
@@ -51,17 +53,18 @@ export default {
       }
     },
     // 获取省市区列表
-    async getRegion() {
-      if (!uni.getStorageSync('region')) {
+    async getRegion(type = 'tree') {
+      if (type === 'tree') {
+        // 获取行政区划树
+        this.regionTree = await api.resolve(URLS.regionTree, {}, {
+          needMarketSponsorInfoId: false,
+        })
+      } else if (type === 'flat') {
+        // 扁平数组
         this.region = await api.resolve(URLS.region, {}, {
           needMarketSponsorInfoId: false,
         })
-        uni.setStorage({ key: 'region', data: this.region })
       }
-      // 获取行政区划树
-      this.regionTree = await api.resolve(URLS.regionTree, {}, {
-        needMarketSponsorInfoId: false,
-      })
     },
     // 获取字典值：性别
     async getSex() {
