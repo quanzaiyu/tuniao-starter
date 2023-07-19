@@ -17,12 +17,14 @@ async function upload(e) {
 }
 </script>
 
-<template lang="pug">
-Layout(title="上传图片")
-  tn-image-upload(v-model="imageList" action="" :custom-upload-handler="upload" :max-size="3 * 1024 * 1024" :extensions="['jpg','jpeg', 'png']")
-  view 当前上传列表
-  .flex
-    image.w-100.h-100(v-for="(item, index) in imageList" :key="index" :src="item" mode="scaleToFill")
+<template>
+<Layout title="上传图片">
+  <tn-image-upload v-model="imageList" action="" :custom-upload-handler="upload" :max-size="3 * 1024 * 1024" :extensions="['jpg','jpeg', 'png']"></tn-image-upload>
+  <view>当前上传列表</view>
+  <view class="flex">
+    <image v-for="(item, index) in imageList" :key="index" class="w-100 h-100" :src="item" mode="scaleToFill"></image>
+  </view>
+</Layout>
 </template>
 
 <style lang="stylus" scoped>

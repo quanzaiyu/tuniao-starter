@@ -4,7 +4,8 @@ function go() {
 }
 </script>
 
-<template lang="pug">
-Layout(title="首页" :hide-navbar="true")
-  button(@click="go") 跳转页面
+<template>
+<Layout title="首页" :hide-navbar="true">
+  <button @click="go">跳转页面</button>
+</Layout>
 </template>

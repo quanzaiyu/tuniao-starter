@@ -1,10 +1,11 @@
 <script setup>
 </script>
 
-<template lang="pug">
-Layout(title="样式渲染")
-  .box1
-  .box2
+<template>
+<Layout title="样式渲染">
+  <view class="box1"></view>
+  <view class="box2"></view>
+</Layout>
 </template>
 
 <style lang="stylus" scoped>

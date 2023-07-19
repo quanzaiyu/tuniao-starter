@@ -4,14 +4,15 @@ function go(page) {
 }
 </script>
 
-<template lang="pug">
-Layout(title="示例")
-  button(@click="go('/pages/test/index-popup')") 弹出层
-  button(@click="go('/pages/test/index-api')") 接口请求
-  button(@click="go('/pages/test/index-upload')") 上传图片
-  button(@click="go('/pages/test/index-style')") 样式渲染
-  button(@click="go('/pages/test/index-tuniao')") 图鸟UI
-  button(@click="go('/pages/test/index-uni-ui')") uni-ui
+<template>
+<Layout title="示例">
+  <button @click="go('/pages/test/index-popup')">弹出层</button>
+  <button @click="go('/pages/test/index-api')">接口请求</button>
+  <button @click="go('/pages/test/index-upload')">上传图片</button>
+  <button @click="go('/pages/test/index-style')">样式渲染</button>
+  <button @click="go('/pages/test/index-tuniao')">图鸟UI</button>
+  <button @click="go('/pages/test/index-uni-ui')">uni-ui</button>
+</Layout>
 </template>
 
 <style lang="stylus" scoped>

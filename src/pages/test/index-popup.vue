@@ -54,16 +54,18 @@ function showOverlay() {
 }
 </script>
 
-<template lang="pug">
-Layout(ref="layout" title="弹出层")
-  button(@click="showNotify") showNotify
-  button(@click="showLoading") showLoading
-  button(@click="hideLoading") hideLoading
-  button(@click="showOverlay") showOverlay
-  button(@click="showModal") showModal
-  button(@click="showActionSheet") showActionSheet
-  template(#overlay)
-    .w-full.h-full.flex-center.text-white.text-48 overlay
+<template>
+<Layout ref="layout" title="弹出层">
+  <button @click="showNotify">showNotify</button>
+  <button @click="showLoading">showLoading</button>
+  <button @click="hideLoading">hideLoading</button>
+  <button @click="showOverlay">showOverlay</button>
+  <button @click="showModal">showModal</button>
+  <button @click="showActionSheet">showActionSheet</button>
+  <template #overlay>
+    <view class="w-full h-full flex-center text-white text-48">overlay</view>
+  </template>
+</Layout>
 </template>
 
 <style lang="stylus" scoped>

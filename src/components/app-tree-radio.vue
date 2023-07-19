@@ -24,22 +24,27 @@ function selectChange(e) {
 }
 </script>
 
-<template lang="pug">
-view
-  .h-70.w-full.border.border-solid.border-main-10.flex-between.text-main-4.pl-20.pr-10.rounded-10.box-border(@click="showPicker")
-    view {{ showValue || placeholder || '请选择' }}
-    .text-36.text-main-5.i-mdi-chevron-down
-  comp-tree(
-    ref="tree",
-    :value="value",
-    :range="localdata",
-    :multiple="false",
-    :select-parent="selectParent",
-    :select-root="selectRoot",
-    :show-indexes="showIndexes",
-    range-key="text",
-    id-key="value",
-    confirm-color="#4e8af7",
-    @confirm="selectChange"
-  )
+<template>
+  <view>
+    <view
+      class="h-70 w-full border border-solid border-main-10 flex-between text-main-4 pl-20 pr-10 rounded-10 box-border"
+      @click="showPicker"
+    >
+      <view>{{ showValue || placeholder || '请选择' }}</view>
+      <view class="text-36 text-main-5 i-mdi-chevron-down"></view>
+    </view>
+    <comp-tree
+      ref="tree"
+      :value="value"
+      :range="localdata"
+      :multiple="false"
+      :select-parent="selectParent"
+      :select-root="selectRoot"
+      :show-indexes="showIndexes"
+      range-key="text"
+      id-key="value"
+      confirm-color="#4e8af7"
+      @confirm="selectChange"
+    ></comp-tree>
+  </view>
 </template>

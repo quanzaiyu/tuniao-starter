@@ -70,33 +70,29 @@ defineExpose({
 })
 </script>
 
-<template lang="pug">
-view
-  view(:class="[styles.bg || 'bg-default']")
-    tn-navbar(v-if="!hideNavbar" fixed) {{ title }}
-    view
-      scroll-view.w-full.h-100vh(scroll-y @scrolltolower="$emit('loadmore')")
-        slot
-        .w-full.h-footer
-    //- 底部安全区域
-    .fixed.bottom-0.w-full.h-footer.bg-white.z-100
-  //- 弹出层：toast
-  tn-notify(ref="notifyRef")
-  //- 弹出层：modal
-  tn-modal(ref="modalRef")
-  tn-action-sheet(ref="actionSheetRef")
-  //- 弹出层：loading
-  tn-popup(v-model="loading.show" :width="200" :height="300" bg-color="transparent" :overlay-closeable="false")
-    .w-full.h-full.flex-center.flex-col
-      tn-loading(
-        :show="loading.show"
-        animation
-        mode="flower"
-        type="primary"
-        size="100rpx"
-      )
-      .mt-20.text-toast {{ loading.title }}
-  //- 弹出层：overlay，可自定义内容
-  tn-overlay(v-model:show="overlay.show" :opacity="0.4" )
-    slot(name="overlay")
+<template>
+<view>
+  <view :class="[styles.bg || 'bg-default']">
+    <tn-navbar v-if="!hideNavbar" fixed="fixed">{{ title }}</tn-navbar>
+    <view>
+      <scroll-view class="w-full h-100vh" scroll-y="scroll-y" @scrolltolower="$emit('loadmore')">
+        <slot></slot>
+        <view class="w-full h-footer"></view>
+      </scroll-view>
+    </view>
+    <view class="fixed bottom-0 w-full h-footer bg-white z-100"></view>
+  </view>
+  <tn-notify ref="notifyRef"></tn-notify>
+  <tn-modal ref="modalRef"></tn-modal>
+  <tn-action-sheet ref="actionSheetRef"></tn-action-sheet>
+  <tn-popup v-model="loading.show" :width="200" :height="300" bg-color="transparent" :overlay-closeable="false">
+    <view class="w-full h-full flex-center flex-col">
+      <tn-loading :show="loading.show" animation="animation" mode="flower" type="primary" size="100rpx"></tn-loading>
+      <view class="mt-20 text-toast">{{ loading.title }}</view>
+    </view>
+  </tn-popup>
+  <tn-overlay v-model:show="overlay.show" :opacity="0.4">
+    <slot name="overlay"></slot>
+  </tn-overlay>
+</view>
 </template>
