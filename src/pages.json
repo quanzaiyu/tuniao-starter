@@ -20,9 +20,7 @@
 		]
 	},
 	"globalStyle": {
-		"h5": {
-			"navigationStyle": "custom"
-		}
+    "navigationStyle": "custom"
 	},
 	"easycom": {
 		"autoscan": true,
