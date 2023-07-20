@@ -6,7 +6,7 @@ const props = defineProps({
   type: { type: String, default: 'custom' }, // 可取值: custom list
 })
 
-defineEmits(['search', 'loadmore', 'add-btn-click', 'clear'])
+defineEmits([])
 
 // 弹出层：notify
 const notifyRef = $ref()

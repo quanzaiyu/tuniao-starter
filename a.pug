@@ -1,9 +1,0 @@
-Layout(ref="layout" title="接口请求")
-  tn-input(v-model="form.username" placeholder="请输入用户名")
-  tn-input(v-model="form.password" placeholder="请输入密码" type="password")
-  button(@click="login") 登录（获取token请求示例）
-  button(@click="getDict") 获取字典值（携带token请求示例）
-  .flex
-    .mr-20(v-for="(item, index) in sexMap" :key="index") {{ index }}: {{ item }} 123
-  .flex
-    .mr-20(v-for="(item, index) in sexList" :key="index") {{ item.dictKey }}: {{ item.dictValue }}
