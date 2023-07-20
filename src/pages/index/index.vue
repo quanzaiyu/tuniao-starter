@@ -5,7 +5,7 @@ function go() {
 </script>
 
 <template>
-<Layout title="首页" :hide-navbar="true">
+<Layout title="首页" :hide-icon="true">
   <button @click="go">跳转页面</button>
 </Layout>
 </template>

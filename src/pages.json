@@ -2,12 +2,13 @@
 	"pages": [
 		{ "path": "pages/index/index" },
 		{ "path": "pages/test/index" },
-		{ "path": "pages/test/index-upload" },
-		{ "path": "pages/test/index-api" },
+		{ "path": "pages/test/index-header" },
 		{ "path": "pages/test/index-popup" },
+		{ "path": "pages/test/index-api" },
+		{ "path": "pages/test/index-upload" },
 		{ "path": "pages/test/index-style" },
 		{ "path": "pages/test/index-tuniao" },
-		{ "path": "pages/test/index-uni-ui" },
+		{ "path": "pages/test/index-uni-ui" }
 	],
 	"condition": {
 		"current": 0,

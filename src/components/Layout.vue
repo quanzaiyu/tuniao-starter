@@ -1,6 +1,7 @@
 <script setup>
 const props = defineProps({
   hideIcon: { type: Boolean, default: false },
+  hideNavbar: { type: Boolean, default: false },
   title: { type: String, default: '' },
   styles: { type: Object, default: () => ({}) },
   type: { type: String, default: 'custom' }, // 可取值: custom list
@@ -74,6 +75,7 @@ defineExpose({
 <view>
   <view :class="[styles.bg || 'bg-default']">
     <tn-navbar
+        v-if="!hideNavbar"
         frosted
         fixed="fixed"
         :back-icon="hideIcon ? '' : 'left'"
@@ -82,6 +84,7 @@ defineExpose({
     >
       <view>{{ title }}</view>
     </tn-navbar>
+    <view v-else><slot name="navbar"></slot></view>
     <view>
       <scroll-view class="w-full h-100vh" scroll-y="scroll-y" @scrolltolower="$emit('loadmore')">
         <slot></slot>
