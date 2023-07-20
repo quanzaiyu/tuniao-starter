@@ -109,14 +109,15 @@ export default defineConfig({
     },
     spacing: {
       half: '50%',
-      header: 'calc(var(--status-bar-height))',
+      statusbar: 'var(--status-bar-height)',
+      header: 'calc(env(safe-area-inset-top))',
       footer: 'calc(env(safe-area-inset-bottom))',
     },
     width: { half: '50%' },
     height: {
       half: '50%',
       statusbar: 'var(--status-bar-height)',
-      header: 'calc(var(--status-bar-height))',
+      header: 'calc(env(safe-area-inset-top))',
       footer: 'calc(env(safe-area-inset-bottom))',
     },
     fontSize: {

@@ -1,6 +1,6 @@
 <script setup>
 const props = defineProps({
-  hideNavbar: { type: Boolean, default: false },
+  hideIcon: { type: Boolean, default: false },
   title: { type: String, default: '' },
   styles: { type: Object, default: () => ({}) },
   type: { type: String, default: 'custom' }, // 可取值: custom list
@@ -73,7 +73,15 @@ defineExpose({
 <template>
 <view>
   <view :class="[styles.bg || 'bg-default']">
-    <tn-navbar v-if="!hideNavbar" fixed="fixed">{{ title }}</tn-navbar>
+    <tn-navbar
+        frosted
+        fixed="fixed"
+        :back-icon="hideIcon ? '' : 'left'"
+        :home-icon="hideIcon ? '' : 'home-capsule-fill'"
+        :safe-area-inset-right="hideIcon ? false : true"
+    >
+      <view>{{ title }}</view>
+    </tn-navbar>
     <view>
       <scroll-view class="w-full h-100vh" scroll-y="scroll-y" @scrolltolower="$emit('loadmore')">
         <slot></slot>
