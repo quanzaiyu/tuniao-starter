@@ -13,6 +13,7 @@ function go(page) {
   <button @click="go('/pages/test/index-style')">样式渲染</button>
   <button @click="go('/pages/test/index-tuniao')">图鸟UI</button>
   <button @click="go('/pages/test/index-uni-ui')">uni-ui</button>
+  <button @click="go('/pages/test/index-form')">json表单配置</button>
 </Layout>
 </template>
 

@@ -1,4 +1,10 @@
 <script setup>
+
+import { useUniAppSystemRectInfo } from '@tuniao/tnui-vue3-uniapp/hooks/use-uniapp-system-rect-info/index'
+const { navBarInfo } = useUniAppSystemRectInfo()
+
+const titleheight = computed(() => `${navBarInfo.height - navBarInfo.statusHeight}px`)
+
 const props = defineProps({
   hideIcon: { type: Boolean, default: false },
   hideNavbar: { type: Boolean, default: false },
@@ -7,7 +13,7 @@ const props = defineProps({
   type: { type: String, default: 'custom' }, // 可取值: custom list
 })
 
-defineEmits([])
+defineEmits(['loadmore'])
 
 // 弹出层：notify
 const notifyRef = $ref()
@@ -86,7 +92,7 @@ defineExpose({
     </tn-navbar>
     <view v-else><slot name="navbar"></slot></view>
     <view>
-      <scroll-view class="w-full h-100vh" scroll-y="scroll-y" @scrolltolower="$emit('loadmore')">
+      <scroll-view class="scroll-view" scroll-y="scroll-y" @scrolltolower="$emit('loadmore')">
         <slot></slot>
         <view class="w-full h-footer"></view>
       </scroll-view>
@@ -107,3 +113,10 @@ defineExpose({
   </tn-overlay>
 </view>
 </template>
+
+<style>
+.scroll-view {
+  width: 100vw;
+  height: calc(100vh - v-bind(titleheight));
+}
+</style>
