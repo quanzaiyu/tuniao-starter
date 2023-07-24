@@ -13,6 +13,8 @@ import 'uno.css'
 import './ployfill'
 
 // 引入 store
+import TnIcon from '@tuniao/tnui-vue3-uniapp/components/icon/src/icon.vue'
+import TnTitle from '@tuniao/tnui-vue3-uniapp/components/title/src/title.vue'
 import App from './App.vue'
 import { store } from '@/stores'
 // 引入library
@@ -25,6 +27,7 @@ import mixin from '@/mixin'
 // 全局指令
 import { skin } from '@/directive'
 
+import basePage from '@/components/base-page'
 dayjs.extend(utc)
 dayjs.extend(isToday)
 dayjs.extend(isTomorrow)
@@ -45,6 +48,9 @@ const mountObj = {
 export function createApp() {
   const app = createSSRApp(App)
 
+  app.component('base-page', basePage)
+  app.component('tn-icon', TnIcon)
+  app.component('tn-title', TnTitle)
   app.use(createPinia())
   app.mixin(mixin)
 
