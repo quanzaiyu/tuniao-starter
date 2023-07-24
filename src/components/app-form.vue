@@ -28,22 +28,22 @@ const form = $ref(null)
 
 <template>
   <view class="p-20">
-    <tn-form ref="form" :label-position="computedConfig.labelPosition ?? 'top'">
-      <tn-form-item v-for="(item, index) in computedConfig.columns" :key="index" :label-position="item.labelPosition ?? 'top'" :rules="item.rules">
+    <tn-form ref="form" :label-position="computedConfig.labelPosition || 'top'">
+      <tn-form-item v-for="(item, index) in computedConfig.columns" :key="index" :label-position="item.labelPosition || 'top'" :rules="item.rules">
         <template #label>
           <text>{{ item.label }}</text>
         </template>
         <tn-input
           v-if="item.componentType === 'input'"
           v-model="item.value"
-          :placeholder="item.placeholder ?? `请输入${item.label}`"
-          :text-align="item.textAlign ?? 'left'"
-          :size="item.size ?? 'lg'"
-          :type="item.type ?? 'text'"
-          :disabled="item.disabled ?? false"
+          :placeholder="item.placeholder || `请输入${item.label}`"
+          :text-align="item.textAlign || 'left'"
+          :size="item.size || 'lg'"
+          :type="item.type || 'text'"
+          :disabled="item.disabled || false"
           :height="item.height"
           :placeholder-style="item.placeholderStyle"
-          :border="item.border ?? true"
+          :border="item.border || true"
           :border-color="item.borderColor"
           :maxlength="item.maxlength"
           @input="invokeEventFunc(item, 'input', $event)"

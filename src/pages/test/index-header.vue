@@ -8,11 +8,11 @@ const titleHeight = computed(() => `${navBarInfo.height - navBarInfo.statusHeigh
 </script>
 
 <template>
-<Layout title="首页" :hide-navbar="true">
+<Layout :hide-navbar="true">
   <template #navbar>
     <view :style="{height: headerHeight}" class="tn-gradient-bg__purplered ">
       <view :style="{height: navBarHeight}"></view>
-      <view :style="{height: titleHeight}" class="flex-center">自定义头部</view>
+      <view :style="{height: titleHeight}" class="flex-center text-white text-30">自定义头部</view>
     </view>
   </template>
 </Layout>

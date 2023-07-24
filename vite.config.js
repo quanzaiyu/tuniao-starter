@@ -3,6 +3,7 @@ import { defineConfig } from 'vite'
 import uni from '@dcloudio/vite-plugin-uni'
 import AutoImport from 'unplugin-auto-import/vite'
 import Unocss from 'unocss/vite'
+import babel from 'vite-plugin-babel'
 
 // https://vuejs.org/guide/extras/reactivity-transform.html
 // https://vue-macros.sxzz.moe/features/reactivity-transform.html
@@ -44,6 +45,8 @@ export default defineConfig({
 
     ReactivityTransform(),
 
+    babel(),
+
     Unocss(),
   ],
   server: {
@@ -55,6 +58,7 @@ export default defineConfig({
     },
   },
   build: {
+    target: 'es2015',
     rollupOptions: {
       output: {
         manualChunks(id) {

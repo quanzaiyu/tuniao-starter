@@ -1,34 +1,7 @@
-let sheetLock = false
-
 let timerDebounce = null
 let timerThrottle = null
 
 class Utils {
-  // 自定义弹出层封装
-  sheet(itemList = []) {
-    // 解决多次弹出sheet的问题
-    if (sheetLock) {
-      return
-    }
-    sheetLock = true
-    return new Promise((resolve, reject) => {
-      uni.showActionSheet({
-        itemList,
-        success(res) {
-          sheetLock = false
-          resolve({
-            index: res.tapIndex,
-            title: itemList[res.tapIndex],
-          })
-        },
-        fail(e) {
-          sheetLock = false
-          reject(e)
-        },
-      })
-    })
-  }
-
   // 获取平台名称 (android, ios)
   getPlatform() {
     return uni.getSystemInfoSync().platform

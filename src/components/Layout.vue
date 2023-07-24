@@ -1,10 +1,4 @@
 <script setup>
-
-import { useUniAppSystemRectInfo } from '@tuniao/tnui-vue3-uniapp/hooks/use-uniapp-system-rect-info/index'
-const { navBarInfo } = useUniAppSystemRectInfo()
-
-const titleheight = computed(() => `${navBarInfo.height - navBarInfo.statusHeight}px`)
-
 const props = defineProps({
   hideIcon: { type: Boolean, default: false },
   hideNavbar: { type: Boolean, default: false },
@@ -14,6 +8,9 @@ const props = defineProps({
 })
 
 defineEmits(['loadmore'])
+
+// 获取平台信息，如果是支付宝小程序隐藏左侧导航
+const platform = $computed(() => uni.$store.platform)
 
 // 弹出层：notify
 const notifyRef = $ref()
@@ -81,21 +78,19 @@ defineExpose({
 <view>
   <view :class="[styles.bg || 'bg-default']">
     <tn-navbar
-        v-if="!hideNavbar"
-        frosted
-        fixed="fixed"
-        :back-icon="hideIcon ? '' : 'left'"
-        :home-icon="hideIcon ? '' : 'home-capsule-fill'"
-        :safe-area-inset-right="hideIcon ? false : true"
+      v-if="platform !== 'mp-alipay' && !hideNavbar"
+      frosted
+      fixed="fixed"
+      :back-icon="platform === 'mp-alipay' || hideIcon ? '' : 'left'"
+      :home-icon="platform === 'mp-alipay' || hideIcon ? '' : 'home-capsule-fill'"
+      :safe-area-inset-right="platform === 'mp-alipay' || hideIcon ? false : true"
     >
       <view>{{ title }}</view>
     </tn-navbar>
     <view v-else><slot name="navbar"></slot></view>
-    <view>
-      <scroll-view class="scroll-view" scroll-y="scroll-y" @scrolltolower="$emit('loadmore')">
-        <slot></slot>
-        <view class="w-full h-footer"></view>
-      </scroll-view>
+    <view class="wrapper">
+      <slot></slot>
+      <view class="w-full h-footer"></view>
     </view>
     <view class="fixed bottom-0 w-full h-footer bg-white z-100"></view>
   </view>
@@ -114,9 +109,7 @@ defineExpose({
 </view>
 </template>
 
-<style>
-.scroll-view {
-  width: 100vw;
-  height: calc(100vh - v-bind(titleheight));
-}
+<style scoped lang="stylus">
+.wrapper
+  width 100vw
 </style>

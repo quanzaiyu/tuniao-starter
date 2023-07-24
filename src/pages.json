@@ -2,7 +2,15 @@
 	"pages": [
 		{ "path": "pages/index/index" },
 		{ "path": "pages/test/index" },
-		{ "path": "pages/test/index-header" },
+		{ "path": "pages/test/index-header",
+      "style": {
+        "mp-alipay": {
+          "allowsBounceVertical": "NO",
+          "transparentTitle": "auto",
+          "titlePenetrate": "YES"
+        }
+      }
+    },
 		{ "path": "pages/test/index-popup" },
 		{ "path": "pages/test/index-api" },
 		{ "path": "pages/test/index-upload" },
@@ -26,7 +34,12 @@
 		]
 	},
 	"globalStyle": {
-    "navigationStyle": "custom"
+    "navigationStyle": "custom",
+    "mp-alipay": {
+      "allowsBounceVertical": "NO",
+      "transparentTitle": "none",
+      "titlePenetrate": "YES"
+    }
 	},
 	"easycom": {
 		"autoscan": true,

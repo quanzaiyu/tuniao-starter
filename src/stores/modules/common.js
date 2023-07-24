@@ -6,9 +6,8 @@ export default {
      * 系统相关的状态
      */
     // 系统信息
-    systemInfo: uni.getSystemInfoSync(), // 获取系统信息
-    platform: uni.getSystemInfoSync().platform, // 获取平台信息，返回 ios android
-    env: process.env.UNI_PLATFORM, // 获取运行环境，返回 h5 mp-weixin mp-alipay 等
+    systemInfo: uni.getSystemInfoSync(), // 获取系统信息, 通过 systemInfo.platform 可获取平台信息，返回 ios android
+    platform: process.env.UNI_PLATFORM, // 获取运行环境，返回 h5 mp-weixin mp-alipay 等
     /*
      * 业务相关的状态
      */

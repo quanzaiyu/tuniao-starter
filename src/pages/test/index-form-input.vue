@@ -1,5 +1,5 @@
 <script setup>
-// const layout = $ref(null)
+const layout = $ref(null)
 
 const formConfig = $ref({
   // labelPosition: 'left', // 表单整体的标签位置，可选: top | left | right，默认 top
