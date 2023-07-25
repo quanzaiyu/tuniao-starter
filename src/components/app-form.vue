@@ -65,41 +65,43 @@ function findObjectByValue(tree, value, valueKey = 'value', childrenKey = 'child
 }
 
 // 选择器方法处理
+// item 当前选择框实例
+// value 当前选择框的值
 // type 类型 1 单列选择器  2 多列选择器 3 树状选择器
-// index 多列选择器的当前列下标
-function selectConfirm(item, e, type, arrayType) {
+// arrayType 数组中元素的类型（是字符串数组还是对象数组）
+function selectConfirm(item, value, type, arrayType) {
   if (type === 1) {
     // 单列选择器
     if (arrayType === 'object') {
       // 对象数组
-      e = findObjectByValue(item.data, e, item.valueKey, item.childrenKey)
-      item.value = e[item.labelKey]
+      value = findObjectByValue(item.data, value, item.valueKey, item.childrenKey)
+      item.value = value[item.labelKey]
     } else if (arrayType === 'string') {
       // 字符串数组
-      item.value = e
+      item.value = value
     }
     // 当前选中的数据
-    item.current = e
+    item.current = value
   } else if (type === 2) {
     // 多列选择器
     item.value = [] // 当前显示的值
     item.current = [] // 当前选中的数据
-    for (const i in e) {
+    for (const i in value) {
       if (arrayType === 'object') {
-        const currentValue = findObjectByValue(item.data[i], e[i], item.valueKey, item.childrenKey)
+        const currentValue = findObjectByValue(item.data[i], value[i], item.valueKey, item.childrenKey)
         item.value.push(currentValue[item.labelKey])
         item.current.push(currentValue)
       } else if (arrayType === 'string') {
-        item.value.push(e[i])
-        item.current.push(e[i])
+        item.value.push(value[i])
+        item.current.push(value[i])
       }
     }
   } else if (type === 3) {
     // 树状选择器
     item.value = [] // 当前显示的值
     item.current = [] // 当前选中的数据
-    for (const i in e) {
-      const currentValue = findObjectByValue(item.data, e[i], item.valueKey, item.childrenKey)
+    for (const i in value) {
+      const currentValue = findObjectByValue(item.data, value[i], item.valueKey, item.childrenKey)
       item.value.push(currentValue[item.labelKey])
       item.current.push(currentValue)
     }
@@ -107,7 +109,7 @@ function selectConfirm(item, e, type, arrayType) {
 }
 
 // 调用自定义方法
-function invokeEventFunc(item, method, e) {
+function invokeEventFunc(item, method, value) {
   // 选择框
   if (method === 'click') {
     // 点击打开选择器，如果禁用则不弹出选择框
@@ -117,18 +119,18 @@ function invokeEventFunc(item, method, e) {
     item.open = true
   } else if (item.type === 'select') {
     if (method === 'confirm') {
-      if (checkElementType(e) === 'array') {
+      if (checkElementType(value) === 'array') {
         const arrayType = checkArrayElementType(item.data[0])
         if (arrayType === undefined) {
           // 树状选择器
-          selectConfirm(item, e, 3)
+          selectConfirm(item, value, 3)
         } else {
           // 多列选择器
-          selectConfirm(item, e, 2, arrayType)
+          selectConfirm(item, value, 2, arrayType)
         }
       } else {
         // 单列选择框
-        selectConfirm(item, e, 1, item.arrayType)
+        selectConfirm(item, value, 1, item.arrayType)
       }
     } else if (method === 'cancel') {
       // 取消，恢复上次被选中的值
@@ -159,7 +161,7 @@ function invokeEventFunc(item, method, e) {
   }
 
   // 调用自定义方法
-  item?.[method]?.(e)
+  item?.[method]?.(value)
 }
 
 const form = $ref(null)
