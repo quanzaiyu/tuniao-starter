@@ -23,13 +23,11 @@ function checkElementType(element) {
 const computedConfig = computed(() => {
   const config = props.config
   config.columns = config.columns.map(item => {
-    if (!item.type) {
-      // 没有指定类型，默认为输入框
-      return { ...item, componentType: 'input' }
-    }
-    if (['text', 'number', 'idcard', 'digit', 'textarea', 'password', 'select'].includes(item.type)) {
-      // 选择框类型
+    // !item.type：没有指定类型，默认为输入框
+    // 或者类型为 'text', 'number', 'idcard', 'digit', 'textarea', 'password', 'select' 的输入框
+    if (!item.type || ['text', 'number', 'idcard', 'digit', 'textarea', 'password', 'select'].includes(item.type)) {
       if (item.type === 'select') {
+        // 选择框
         item.open = item.open ?? false // 控制Picker的显示与隐藏
         item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
         item.pickerValue = item.pickerValue ?? '' // 当前选择器的值，可以不指定，主要用于回显
@@ -39,11 +37,12 @@ const computedConfig = computed(() => {
         item.current = '' // 设置默认选中的值
         item.arrayType = checkArrayElementType(item.data)
       } else {
+        // 输入框
         item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
       }
-      // 输入框类型
       return { ...item, componentType: 'input' }
     }
+    // 其他类型
     return { ...item, componentType: item.type }
   })
   return config
@@ -65,39 +64,77 @@ function findObjectByValue(tree, value, valueKey = 'value') {
   return null
 }
 
+// 选择器方法处理
+// type 类型 1 多列选择器 2 单列选择器
+// index 多列选择器的当前列下标
+function selectMethod(item, method, e, type, arrayType, index) {
+  if (method === 'confirm') {
+    // 确定
+    if (arrayType === 'object') {
+      // 对象数组
+      if (type === 1) {
+        e = findObjectByValue(item.data[index], e)
+        item.value.push(e[item.labelKey])
+      } else {
+        e = findObjectByValue(item.data, e)
+        item.value = e[item.labelKey]
+      }
+    } else if (arrayType === 'string') {
+      // 字符串数组
+      if (type === 1) {
+        item.value.push(e)
+      } else {
+        item.value = e
+      }
+    }
+    // 当前选中的数据
+    if (type === 1) {
+      item.current.push(e)
+    } else {
+      item.current = e
+    }
+  }
+}
+
 // 调用自定义方法
 function invokeEventFunc(item, method, e) {
   // 选择框
-  if (item.type === 'select') {
-    if (checkElementType(e) === 'array') {
-      // 多列选择器
-      item.value = e
-    } else {
-      // 单列选择器
-      if (method === 'click') {
-        // 点击打开选择器，如果禁用则不弹出选择框
-        if (item.disabled) {
-          return
+  if (method === 'click') {
+    // 点击打开选择器，如果禁用则不弹出选择框
+    if (item.disabled) {
+      return
+    }
+    item.open = true
+  } else if (item.type === 'select') {
+    if (method === 'confirm') {
+      if (checkElementType(e) === 'array') {
+        // 多列选择器
+        const arrayType = checkArrayElementType(item.data[0])
+
+        item.value = []
+        item.current = []
+        for (const i in e) {
+          selectMethod(item, method, e[i], 1, arrayType, i)
         }
-        item.open = true
-      } else if (method === 'confirm') {
-        // 确定
-        if (item.arrayType === 'object') {
-          // 对象数组
-          e = findObjectByValue(item.data, e)
-          item.value = e[item.labelKey]
-        } else if (item.arrayType === 'string') {
-          // 字符串数组
-          item.value = e
-        }
-        item.current = e
-      } else if (method === 'cancel' || method === 'change') {
-        // 取消，恢复上次被选中的值
-        if (item.arrayType === 'object') {
-        // 对象数组
-          item.pickerValue = item.current?.[item.valueKey]
-        } else if (item.arrayType === 'string') {
-        // 字符串数组
+      } else {
+      // 单列选择框
+        selectMethod(item, method, e, 2, item.arrayType)
+      }
+    } else if (method === 'cancel') {
+      // 取消，恢复上次被选中的值
+      if (item.arrayType === 'object') {
+        //  单列选择：对象数组
+        item.pickerValue = item.current?.[item.valueKey]
+      } else if (item.arrayType === 'string') {
+        // 单列选择：字符串数组
+        item.pickerValue = item.current
+      } else if (item.arrayType === 'array') {
+        const arrayType = checkArrayElementType(item.current)
+        if (arrayType === 'object') {
+          // 多列选择：对象数组
+          item.pickerValue = item.current.map(i => i[item.valueKey])
+        } else if (arrayType === 'string') {
+          // 多列选择：字符串数组
           item.pickerValue = item.current
         }
       }
@@ -157,7 +194,7 @@ const form = $ref(null)
           :children-key="item.childrenKey"
           :mask="item.mask ?? true"
           :z-index="item.zIndex ?? 1000"
-          @change="(value, index) => invokeEventFunc(item, 'change', { value, index })"
+          @change="invokeEventFunc(item, 'change', $event)"
           @confirm="invokeEventFunc(item, 'confirm', $event)"
           @cancel="invokeEventFunc(item, 'cancel', $event)"
         />
