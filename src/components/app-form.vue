@@ -38,6 +38,8 @@ const computedConfig = computed(() => {
         item.childrenKey = item.childrenKey ?? 'children'
         item.current = '' // 设置默认选中的值
         item.arrayType = checkArrayElementType(item.data)
+      } else {
+        item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
       }
       // 输入框类型
       return { ...item, componentType: 'input' }

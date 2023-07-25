@@ -5,7 +5,7 @@ const formConfig = $ref({
   columns: [
     {
       label: '简单选择框',
-      prop: 'select',
+      prop: 'select1',
       type: 'select',
       placeholder: '点击弹出简单选择框',
       data: ['选项1', '选项2', '选项3', '选项4', '选项5'],
@@ -17,7 +17,7 @@ const formConfig = $ref({
     },
     {
       label: '对象选择框',
-      prop: 'select',
+      prop: 'select2',
       type: 'select',
       placeholder: '点击弹出对象选择框',
       data: [
@@ -35,7 +35,7 @@ const formConfig = $ref({
     },
     {
       label: '默认选中值',
-      prop: 'select',
+      prop: 'select3',
       type: 'select',
       value: '选项3', // 当前输入框显示的值，可以不指定，主要用于回显
       pickerValue: 3, // 当前选择器的值，可以不指定，主要用于回显
@@ -50,7 +50,7 @@ const formConfig = $ref({
     },
     {
       label: '对象选择框（自定义key-value）',
-      prop: 'select',
+      prop: 'select4',
       type: 'select',
       labelKey: 'text', // 不指定的话，默认为 label
       valueKey: 'value', // 不指定的话，默认为 value
@@ -66,7 +66,7 @@ const formConfig = $ref({
     },
     {
       label: '多列简单选择框（非联动）',
-      prop: 'select',
+      prop: 'select5',
       type: 'select',
       placeholder: '点击弹出多列选择框',
       data: [
@@ -77,7 +77,7 @@ const formConfig = $ref({
     },
     {
       label: '多列对象选择框（非联动）',
-      prop: 'select',
+      prop: 'select6',
       type: 'select',
       placeholder: '点击弹出多列选择框',
       data: [
@@ -106,7 +106,7 @@ const formConfig = $ref({
     },
     {
       label: '多列对象选择框（联动）',
-      prop: 'select',
+      prop: 'select7',
       type: 'select',
       placeholder: '点击弹出多列选择框',
       data: [
@@ -294,7 +294,7 @@ const formConfig = $ref({
     },
     {
       label: '禁用选择框',
-      prop: 'disabled',
+      prop: 'select8',
       type: 'select',
       disabled: true, // 是否禁用，可选: true | false
       placeholder: '禁用选择框',
@@ -302,7 +302,7 @@ const formConfig = $ref({
     },
     {
       label: '隐藏取消按钮',
-      prop: 'disabled',
+      prop: 'select9',
       type: 'select',
       placeholder: '隐藏取消按钮的选择框',
       data: ['选项1', '选项2', '选项3', '选项4', '选项5'],
@@ -311,7 +311,7 @@ const formConfig = $ref({
     },
     {
       label: '自定义按钮',
-      prop: 'disabled',
+      prop: 'select10',
       type: 'select',
       placeholder: '自定义按钮的选择框',
       cancelText: 'cancel', // 取消按钮的文本
