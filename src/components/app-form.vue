@@ -49,13 +49,13 @@ const computedConfig = computed(() => {
 })
 
 // 从树中查找指定的对象
-function findObjectByValue(tree, value, valueKey = 'value') {
+function findObjectByValue(tree, value, valueKey = 'value', childrenKey = 'children') {
   for (let i = 0; i < tree.length; i++) {
     if (tree[i][valueKey] === value) {
       return tree[i]
     }
-    if (tree[i].children) {
-      const result = findObjectByValue(tree[i].children, value, valueKey)
+    if (tree[i][childrenKey]) {
+      const result = findObjectByValue(tree[i].children, value, valueKey, childrenKey)
       if (result) {
         return result
       }
@@ -65,33 +65,43 @@ function findObjectByValue(tree, value, valueKey = 'value') {
 }
 
 // 选择器方法处理
-// type 类型 1 多列选择器 2 单列选择器
+// type 类型 1 单列选择器  2 多列选择器 3 树状选择器
 // index 多列选择器的当前列下标
-function selectMethod(item, method, e, type, arrayType, index) {
-  if (method === 'confirm') {
-    // 确定
+function selectConfirm(item, e, type, arrayType) {
+  if (type === 1) {
+    // 单列选择器
     if (arrayType === 'object') {
       // 对象数组
-      if (type === 1) {
-        e = findObjectByValue(item.data[index], e)
-        item.value.push(e[item.labelKey])
-      } else {
-        e = findObjectByValue(item.data, e)
-        item.value = e[item.labelKey]
-      }
+      e = findObjectByValue(item.data, e, item.valueKey, item.childrenKey)
+      item.value = e[item.labelKey]
     } else if (arrayType === 'string') {
       // 字符串数组
-      if (type === 1) {
-        item.value.push(e)
-      } else {
-        item.value = e
-      }
+      item.value = e
     }
     // 当前选中的数据
-    if (type === 1) {
-      item.current.push(e)
-    } else {
-      item.current = e
+    item.current = e
+  } else if (type === 2) {
+    // 多列选择器
+    item.value = [] // 当前显示的值
+    item.current = [] // 当前选中的数据
+    for (const i in e) {
+      if (arrayType === 'object') {
+        const currentValue = findObjectByValue(item.data[i], e[i], item.valueKey, item.childrenKey)
+        item.value.push(currentValue[item.labelKey])
+        item.current.push(currentValue)
+      } else if (arrayType === 'string') {
+        item.value.push(e[i])
+        item.current.push(e[i])
+      }
+    }
+  } else if (type === 3) {
+    // 树状选择器
+    item.value = [] // 当前显示的值
+    item.current = [] // 当前选中的数据
+    for (const i in e) {
+      const currentValue = findObjectByValue(item.data, e[i], item.valueKey, item.childrenKey)
+      item.value.push(currentValue[item.labelKey])
+      item.current.push(currentValue)
     }
   }
 }
@@ -108,23 +118,30 @@ function invokeEventFunc(item, method, e) {
   } else if (item.type === 'select') {
     if (method === 'confirm') {
       if (checkElementType(e) === 'array') {
-        // 多列选择器
         const arrayType = checkArrayElementType(item.data[0])
-
-        item.value = []
-        item.current = []
-        for (const i in e) {
-          selectMethod(item, method, e[i], 1, arrayType, i)
+        if (arrayType === undefined) {
+          // 树状选择器
+          selectConfirm(item, e, 3)
+        } else {
+          // 多列选择器
+          selectConfirm(item, e, 2, arrayType)
         }
       } else {
-      // 单列选择框
-        selectMethod(item, method, e, 2, item.arrayType)
+        // 单列选择框
+        selectConfirm(item, e, 1, item.arrayType)
       }
     } else if (method === 'cancel') {
       // 取消，恢复上次被选中的值
       if (item.arrayType === 'object') {
-        //  单列选择：对象数组
-        item.pickerValue = item.current?.[item.valueKey]
+        // eslint-disable-next-line no-prototype-builtins
+        const isTree = item.data[0].hasOwnProperty(item.childrenKey)
+        if (isTree) {
+          // 树状选择器
+          item.pickerValue = item.current.map(i => i[item.valueKey])
+        } else {
+          // 单列选择：对象数组
+          item.pickerValue = item.current?.[item.valueKey]
+        }
       } else if (item.arrayType === 'string') {
         // 单列选择：字符串数组
         item.pickerValue = item.current

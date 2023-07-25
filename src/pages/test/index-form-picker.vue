@@ -105,10 +105,10 @@ const formConfig = $ref({
       ],
     },
     {
-      label: '多列对象选择框（联动）',
+      label: '树形选择框（联动）',
       prop: 'select7',
       type: 'select',
-      placeholder: '点击弹出多列选择框',
+      placeholder: '点击弹出树形选择框',
       data: [
         {
           label: '小学部',
