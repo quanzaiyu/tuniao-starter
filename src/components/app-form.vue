@@ -61,7 +61,7 @@ const computedConfig = computed(() => {
         item.format = format[item.mode]
       }
     } else {
-      // 其他类型，包括：radio、checkbox、switch、numberBox
+      // 其他类型，包括：radio、checkbox、switch、numberBox、slider
       item.componentType = item.type
     }
     return item
@@ -379,10 +379,27 @@ const form = $ref(null)
           :step="item.step"
           :min="item.min"
           :max="item.max"
+          :disabled="item.disabled ?? false"
           :size="item.size || 'lg'"
           :text-color="item.textColor"
           :bg-color="item.bgColor"
           :input-disabled="item.inputDisabled ?? true"
+          @input="invokeEventFunc(item, 'input', $event)"
+          @change="invokeEventFunc(item, 'change', $event)"
+        />
+        <!-- 滑动条 -->
+        <tn-slider
+          v-if="item.componentType === 'slider'"
+          v-model="item.value"
+          :step="item.step"
+          :min="item.min"
+          :max="item.max"
+          :disabled="item.disabled ?? false"
+          :size="item.size || 'lg'"
+          :active-color="item.activeColor"
+          :inactive-color="item.inactiveColor"
+          :slider-bar-size="item.sliderBarSize"
+          :slider-height="item.sliderHeight"
           @input="invokeEventFunc(item, 'input', $event)"
           @change="invokeEventFunc(item, 'change', $event)"
         />

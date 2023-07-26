@@ -132,6 +132,9 @@ const formConfig = $ref({
       type: 'switch',
       value: true,
       activeColor: 'tn-orangered',
+      change(e) {
+        console.info('当前选中的值', e, this.value)
+      },
     },
     {
       label: '步进器',
@@ -144,6 +147,21 @@ const formConfig = $ref({
       max: 20,
       bgColor: '#01beff',
       textColor: '#fff',
+      change(e) {
+        console.info('current value: ', e, this.value)
+      },
+    },
+    {
+      label: '滑动条',
+      prop: 'slider',
+      type: 'slider',
+      value: 10, // 默认值
+      step: 5,
+      min: 0,
+      max: 20,
+      change(e) {
+        console.info('current value: ', e, this.value)
+      },
     },
   ],
 })
