@@ -70,6 +70,28 @@ const formConfig = $ref({
         console.info(this.pickerValue)
       },
     },
+    {
+      label: '地区选择器',
+      prop: 'regionPicker',
+      type: 'regionPicker',
+      placeholder: '点击弹出地区选择器',
+      mask: true,
+      confirm(e) {
+        console.info(this.value)
+        console.info(this.pickerValue)
+      },
+    },
+    {
+      label: '地区选择器：默认值',
+      prop: 'regionPicker',
+      type: 'regionPicker',
+      value: ['53', '5301', '530102'],
+      placeholder: '点击弹出地区选择器',
+      confirm(e) {
+        console.info(this.value)
+        console.info(this.pickerValue)
+      },
+    },
   ],
 })
 </script>

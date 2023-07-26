@@ -32,15 +32,13 @@ const computedConfig = computed(() => {
       item.componentType = 'input'
       item.inputType = item.type
       item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
-    } else if (['select', 'calendar', 'dateTimePicker'].includes(item.type)) {
+    } else if (['select', 'calendar', 'dateTimePicker', 'regionPicker'].includes(item.type)) {
       // select 选择框
       // calendar 日历
       // dateTimePicker 日期时间选择器
       item.componentType = 'input'
       item.inputType = 'select'
       item.open = item.open ?? false // 控制Picker的显示与隐藏
-      item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
-      item.pickerValue = item.pickerValue ?? '' // 当前选择器的值，可以不指定，主要用于回显
       if (item.type === 'select') {
         item.labelKey = item.labelKey ?? 'label' // 不指定的话，默认为 label
         item.valueKey = item.valueKey ?? 'value' // 不指定的话，默认为 value
@@ -59,6 +57,14 @@ const computedConfig = computed(() => {
           time: 'HH:mm:ss',
         }
         item.format = format[item.mode]
+      }
+
+      if (item.type === 'regionPicker') {
+        item.value = item.value ?? [] // 当前输入框显示的值，可以不指定，主要用于回显
+        item.pickerValue = item.pickerValue ?? [] // 当前选择器的值，可以不指定，主要用于回显
+      } else {
+        item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
+        item.pickerValue = item.pickerValue ?? '' // 当前选择器的值，可以不指定，主要用于回显
       }
     } else {
       // 其他类型，包括：radio、checkbox、switch、numberBox、slider
@@ -131,6 +137,7 @@ function selectConfirm(item, value, type, arrayType) {
 
 // 调用自定义方法
 function invokeEventFunc(item, method, value) {
+  console.log(value)
   // 选择框
   if (item.inputType === 'select') {
     if (method === 'click') {
@@ -142,8 +149,8 @@ function invokeEventFunc(item, method, value) {
     } else if (method === 'confirm') {
       if (item.type === 'select') {
         // 如果没有选中任何值，则直接关闭选择器弹窗
+        item.open = false
         if (!item.pickerValue) {
-          item.open = false
           return
         }
 
@@ -171,7 +178,6 @@ function invokeEventFunc(item, method, value) {
           item.pickerValue = dayjs(item.pickerValue).format(item.format)
         }
         item.value = item.pickerValue
-        item.open = false
       } else if (item.type === 'dateTimePicker') {
         // 日期时间选择器
         if (item.mode === 'time') {
@@ -179,7 +185,8 @@ function invokeEventFunc(item, method, value) {
         }
         item.pickerValue = dayjs(item.pickerValue).format(item.format)
         item.value = item.pickerValue
-        item.open = false
+      } else if (item.type === 'regionPicker') {
+        item.value = item.pickerValue
       }
     } else if (method === 'cancel') {
       // 取消，恢复上次被选中的值
@@ -361,6 +368,23 @@ const form = $ref(null)
           :mask="item.mask ?? true"
           :min-time="item.minTime"
           :max-time="item.maxTime"
+          :show-cancel="item.showCancel ?? true"
+          :cancel-text="item.cancelText ?? '取消'"
+          :cancel-color="item.cancelColor"
+          :show-confirm="item.showConfirm ?? true"
+          :confirm-text="item.confirmText ?? '确定'"
+          :confirm-color="item.confirmColor"
+          :z-index="item.zIndex ?? 1000"
+          @change="invokeEventFunc(item, 'change', $event)"
+          @confirm="invokeEventFunc(item, 'confirm', $event)"
+          @cancel="invokeEventFunc(item, 'cancel', $event)"
+        />
+        <!-- 地区选择器 -->
+        <tn-region-picker
+          v-if="item.componentType === 'input' && item.type === 'regionPicker'"
+          v-model="item.pickerValue"
+          v-model:open="item.open"
+          :mask="item.mask ?? true"
           :show-cancel="item.showCancel ?? true"
           :cancel-text="item.cancelText ?? '取消'"
           :cancel-color="item.cancelColor"
