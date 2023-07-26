@@ -25,7 +25,12 @@ const computedConfig = computed(() => {
   config.columns = config.columns.map(item => {
     // !item.type：没有指定类型，默认为输入框
     // 或者类型为 'text', 'number', 'idcard', 'digit', 'textarea', 'password', 'select' 的输入框
-    if (!item.type || ['text', 'number', 'idcard', 'digit', 'textarea', 'password', 'select'].includes(item.type)) {
+    if (!item.type || ['text', 'number', 'idcard', 'digit', 'textarea', 'password', 'select', 'calendar'].includes(item.type)) {
+      if (!item.type) {
+        item.inputType = 'text'
+      } else {
+        item.inputType = item.type
+      }
       if (item.type === 'select') {
         // 选择框
         item.open = item.open ?? false // 控制Picker的显示与隐藏
@@ -36,6 +41,12 @@ const computedConfig = computed(() => {
         item.childrenKey = item.childrenKey ?? 'children'
         item.current = '' // 设置默认选中的值
         item.arrayType = checkArrayElementType(item.data)
+      } else if (item.type === 'calendar') {
+        // 日历
+        item.inputType = 'select'
+        item.open = item.open ?? false // 控制Popup的显示与隐藏
+        item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
+        item.pickerValue = item.pickerValue ?? '' // 当前选择器的值，可以不指定，主要用于回显
       } else {
         // 输入框
         item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
@@ -111,26 +122,45 @@ function selectConfirm(item, value, type, arrayType) {
 // 调用自定义方法
 function invokeEventFunc(item, method, value) {
   // 选择框
-  if (method === 'click') {
-    // 点击打开选择器，如果禁用则不弹出选择框
-    if (item.disabled) {
-      return
-    }
-    item.open = true
-  } else if (item.type === 'select') {
-    if (method === 'confirm') {
-      if (checkElementType(value) === 'array') {
-        const arrayType = checkArrayElementType(item.data[0])
-        if (arrayType === undefined) {
-          // 树状选择器
-          selectConfirm(item, value, 3)
+  if (item.inputType === 'select') {
+    if (method === 'click') {
+      // 点击打开选择器，如果禁用则不弹出选择框
+      if (item.disabled) {
+        return
+      }
+      item.open = true
+    } else if (method === 'confirm') {
+      if (item.type === 'select') {
+        // 选择器
+        if (checkElementType(value) === 'array') {
+          const arrayType = checkArrayElementType(item.data[0])
+          if (arrayType === undefined) {
+            // 树状选择器
+            selectConfirm(item, value, 3)
+          } else {
+            // 多列选择器
+            selectConfirm(item, value, 2, arrayType)
+          }
         } else {
-          // 多列选择器
-          selectConfirm(item, value, 2, arrayType)
-        }
-      } else {
         // 单列选择框
-        selectConfirm(item, value, 1, item.arrayType)
+          selectConfirm(item, value, 1, item.arrayType)
+        }
+      } else if (item.type === 'calendar') {
+        // 日历
+        if (!item.pickerValue) {
+          item.open = false
+          return
+        }
+
+        if (['multi', 'range'].includes(item.mode)) {
+          // 多选模式
+          item.pickerValue = item.pickerValue.map(val => dayjs(val).format(item.format ?? 'YYYY-MM-DD'))
+        } else {
+          // 单选模式
+          item.pickerValue = dayjs(item.pickerValue).format(item.format ?? 'YYYY-MM-DD')
+        }
+        item.value = item.pickerValue
+        item.open = false
       }
     } else if (method === 'cancel') {
       // 取消，恢复上次被选中的值
@@ -181,7 +211,7 @@ const form = $ref(null)
           :placeholder="item.placeholder ?? `请输入${item.label}`"
           :text-align="item.textAlign ?? 'left'"
           :size="item.size ?? 'lg'"
-          :type="item.type ?? 'text'"
+          :type="item.inputType ?? 'text'"
           :disabled="item.disabled ?? false"
           :height="item.height"
           :placeholder-style="item.placeholderStyle"
@@ -261,7 +291,49 @@ const form = $ref(null)
           :active-color="item.activeColor"
           @change="invokeEventFunc(item, 'change', $event)"
         />
+        <!-- 日历 -->
+        <tn-popup
+          v-if="item.componentType === 'input' && item.type === 'calendar'"
+          v-model="item.open"
+          :overlay-closeable="false"
+          open-direction="bottom"
+        >
+          <view class="tn-pt">
+            <tn-calendar
+              v-model="item.pickerValue"
+              :mode="item.mode"
+              :range-start-desc="item.rangeStartDesc"
+              :range-end-desc="item.rangeEndDesc"
+              :min-date="item.minDate"
+              :max-date="item.maxDate"
+              :active-bg-color="item.activeBgColor"
+              :active-text-color="item.activeTextColor"
+              :range-bg-color="item.rangeBgColor"
+              :range-text-color="item.rangeTextColor"
+              :show-lunar="item.showLunar ?? false"
+            />
+          </view>
+          <view class="tn-mt tn-w-full tn-pb">
+            <tn-button
+              font-size="36"
+              custom-class="popup-calendar-button"
+              @click="invokeEventFunc(item, 'confirm', $event)"
+            >
+              确定
+            </tn-button>
+          </view>
+        </tn-popup>
       </tn-form-item>
     </tn-form>
   </view>
 </template>
+
+<style lang="scss" scoped>
+/* 弹框日期样式 start */
+.popup-calendar-button {
+  margin: 0rpx 30rpx;
+  width: calc(100% - 60rpx) !important;
+  padding: 20rpx 30rpx !important;
+}
+/* 弹框日期样式 end */
+</style>
