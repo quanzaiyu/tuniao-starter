@@ -93,7 +93,7 @@ const formConfig = $ref({
 </script>
 
 <template>
-  <Layout ref="layout" title="日期时间、日历示例">
+  <Layout ref="layout" title="日历选择器示例">
     <app-form :config="formConfig"></app-form>
   </Layout>
 </template>

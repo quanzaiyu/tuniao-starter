@@ -25,9 +25,10 @@ const computedConfig = computed(() => {
   config.columns = config.columns.map(item => {
     // !item.type：没有指定类型，默认为输入框
     // 或者类型为 'text', 'number', 'idcard', 'digit', 'textarea', 'password', 'select' 的输入框
-    if (!item.type || ['text', 'number', 'idcard', 'digit', 'textarea', 'password', 'select', 'calendar'].includes(item.type)) {
+    if (!item.type || ['text', 'number', 'idcard', 'digit', 'textarea', 'password', 'select', 'calendar', 'dateTimePicker'].includes(item.type)) {
+      item.componentType = 'input' // 组件类型
       if (!item.type) {
-        item.inputType = 'text'
+        item.inputType = 'text' // 输入框类型
       } else {
         item.inputType = item.type
       }
@@ -41,6 +42,12 @@ const computedConfig = computed(() => {
         item.childrenKey = item.childrenKey ?? 'children'
         item.current = '' // 设置默认选中的值
         item.arrayType = checkArrayElementType(item.data)
+      } else if (item.type === 'dateTimePicker') {
+        // 日期时间选择器
+        item.inputType = 'select'
+        item.open = item.open ?? false // 控制Popup的显示与隐藏
+        item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
+        item.pickerValue = item.pickerValue ?? '' // 当前选择器的值，可以不指定，主要用于回显
       } else if (item.type === 'calendar') {
         // 日历
         item.inputType = 'select'
@@ -51,10 +58,11 @@ const computedConfig = computed(() => {
         // 输入框
         item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
       }
-      return { ...item, componentType: 'input' }
+    } else {
+      // 其他类型，包括：radio、checkbox、switch
+      item.componentType = item.type
     }
-    // 其他类型
-    return { ...item, componentType: item.type }
+    return item
   })
   return config
 })
@@ -323,6 +331,15 @@ const form = $ref(null)
             </tn-button>
           </view>
         </tn-popup>
+        <!-- 时间选择器 -->
+        <tn-date-time-picker
+          v-if="item.componentType === 'input' && item.type === 'dateTimePicker'"
+          v-model="item.value"
+          v-model:open="item.open"
+          @change="invokeEventFunc(item, 'change', $event)"
+          @confirm="invokeEventFunc(item, 'confirm', $event)"
+          @cancel="invokeEventFunc(item, 'cancel', $event)"
+        />
       </tn-form-item>
     </tn-form>
   </view>
