@@ -322,16 +322,6 @@ const formConfig = $ref({
       zIndex: 2000, // Picker选择器的zIndex
       data: ['选项1', '选项2', '选项3', '选项4', '选项5'],
     },
-    {
-      label: '日期选择器',
-      prop: 'dateTimePicker1',
-      type: 'dateTimePicker',
-      placeholder: '点击弹出日期选择器',
-      confirm(e) {
-        console.info(this.value) // 当前输入框显示的值
-        console.info(this.pickerValue) // 当前选择器的值
-      },
-    },
   ],
 })
 </script>

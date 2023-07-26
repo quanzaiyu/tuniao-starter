@@ -47,6 +47,21 @@ const computedConfig = computed(() => {
         item.childrenKey = item.childrenKey ?? 'children' // 不指定的话，默认为 children
         item.current = item.current ?? '' // 设置默认选中的值
         item.arrayType = checkArrayElementType(item.data) // 选择器数组元素类型
+      } else if (item.type === 'calendar') {
+        item.format = 'YYYY-MM-DD'
+      } else if (item.type === 'dateTimePicker') {
+        item.mode = item.mode ?? 'date'
+        if (item.mode === 'date') {
+          item.format = 'YYYY-MM-DD'
+        } else if (item.mode === 'datetime') {
+          item.format = 'YYYY-MM-DD HH:mm:ss'
+        } else if (item.mode === 'time') {
+          item.format = 'HH:mm:ss'
+        } else if (item.mode === 'yearmonth') {
+          item.format = 'YYYY-MM'
+        } else if (item.mode === 'year') {
+          item.format = 'YYYY'
+        }
       }
     } else {
       // 其他类型，包括：radio、checkbox、switch
@@ -129,6 +144,12 @@ function invokeEventFunc(item, method, value) {
       item.open = true
     } else if (method === 'confirm') {
       if (item.type === 'select') {
+        // 如果没有选中任何值，则直接关闭选择器弹窗
+        if (!item.pickerValue) {
+          item.open = false
+          return
+        }
+
         // 选择器
         if (checkElementType(value) === 'array') {
           const arrayType = checkArrayElementType(item.data[0])
@@ -145,18 +166,21 @@ function invokeEventFunc(item, method, value) {
         }
       } else if (item.type === 'calendar') {
         // 日历
-        if (!item.pickerValue) {
-          item.open = false
-          return
-        }
-
         if (['multi', 'range'].includes(item.mode)) {
           // 多选模式
-          item.pickerValue = item.pickerValue.map(val => dayjs(val).format(item.format ?? 'YYYY-MM-DD'))
+          item.pickerValue = item.pickerValue.map(val => dayjs(val).format(item.format))
         } else {
           // 单选模式
-          item.pickerValue = dayjs(item.pickerValue).format(item.format ?? 'YYYY-MM-DD')
+          item.pickerValue = dayjs(item.pickerValue).format(item.format)
         }
+        item.value = item.pickerValue
+        item.open = false
+      } else if (item.type === 'dateTimePicker') {
+        // 日期时间选择器
+        if (item.mode === 'time') {
+          item.pickerValue = dayjs().format('YYYY-MM-DD') + ' ' + item.pickerValue
+        }
+        item.pickerValue = dayjs(item.pickerValue).format(item.format)
         item.value = item.pickerValue
         item.open = false
       }
@@ -324,8 +348,11 @@ const form = $ref(null)
         <!-- 时间选择器 -->
         <tn-date-time-picker
           v-if="item.componentType === 'input' && item.type === 'dateTimePicker'"
-          v-model="item.value"
+          v-model="item.pickerValue"
           v-model:open="item.open"
+          :mode="item.mode"
+          :min-time="item.minTime"
+          :max-time="item.maxTime"
           @change="invokeEventFunc(item, 'change', $event)"
           @confirm="invokeEventFunc(item, 'confirm', $event)"
           @cancel="invokeEventFunc(item, 'cancel', $event)"
