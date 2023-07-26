@@ -23,40 +23,30 @@ function checkElementType(element) {
 const computedConfig = computed(() => {
   const config = props.config
   config.columns = config.columns.map(item => {
-    // !item.type：没有指定类型，默认为输入框
-    // 或者类型为 'text', 'number', 'idcard', 'digit', 'textarea', 'password', 'select' 的输入框
-    if (!item.type || ['text', 'number', 'idcard', 'digit', 'textarea', 'password', 'select', 'calendar', 'dateTimePicker'].includes(item.type)) {
+    if (!item.type) {
+      // 没有指定type的话，默认为输入框
       item.componentType = 'input' // 组件类型
-      if (!item.type) {
-        item.inputType = 'text' // 输入框类型
-      } else {
-        item.inputType = item.type
-      }
+      item.inputType = 'text' // 输入框类型
+    } else if (['text', 'number', 'idcard', 'digit', 'textarea', 'password'].includes(item.type)) {
+      // 输入框
+      item.componentType = 'input'
+      item.inputType = item.type
+      item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
+    } else if (['select', 'calendar', 'dateTimePicker'].includes(item.type)) {
+      // select 选择框
+      // calendar 日历
+      // dateTimePicker 日期时间选择器
+      item.componentType = 'input'
+      item.inputType = 'select'
+      item.open = item.open ?? false // 控制Picker的显示与隐藏
+      item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
+      item.pickerValue = item.pickerValue ?? '' // 当前选择器的值，可以不指定，主要用于回显
       if (item.type === 'select') {
-        // 选择框
-        item.open = item.open ?? false // 控制Picker的显示与隐藏
-        item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
-        item.pickerValue = item.pickerValue ?? '' // 当前选择器的值，可以不指定，主要用于回显
         item.labelKey = item.labelKey ?? 'label' // 不指定的话，默认为 label
         item.valueKey = item.valueKey ?? 'value' // 不指定的话，默认为 value
-        item.childrenKey = item.childrenKey ?? 'children'
-        item.current = '' // 设置默认选中的值
-        item.arrayType = checkArrayElementType(item.data)
-      } else if (item.type === 'dateTimePicker') {
-        // 日期时间选择器
-        item.inputType = 'select'
-        item.open = item.open ?? false // 控制Popup的显示与隐藏
-        item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
-        item.pickerValue = item.pickerValue ?? '' // 当前选择器的值，可以不指定，主要用于回显
-      } else if (item.type === 'calendar') {
-        // 日历
-        item.inputType = 'select'
-        item.open = item.open ?? false // 控制Popup的显示与隐藏
-        item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
-        item.pickerValue = item.pickerValue ?? '' // 当前选择器的值，可以不指定，主要用于回显
-      } else {
-        // 输入框
-        item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
+        item.childrenKey = item.childrenKey ?? 'children' // 不指定的话，默认为 children
+        item.current = item.current ?? '' // 设置默认选中的值
+        item.arrayType = checkArrayElementType(item.data) // 选择器数组元素类型
       }
     } else {
       // 其他类型，包括：radio、checkbox、switch
@@ -150,7 +140,7 @@ function invokeEventFunc(item, method, value) {
             selectConfirm(item, value, 2, arrayType)
           }
         } else {
-        // 单列选择框
+          // 单列选择框
           selectConfirm(item, value, 1, item.arrayType)
         }
       } else if (item.type === 'calendar') {
