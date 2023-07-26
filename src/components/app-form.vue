@@ -51,20 +51,17 @@ const computedConfig = computed(() => {
         item.format = 'YYYY-MM-DD'
       } else if (item.type === 'dateTimePicker') {
         item.mode = item.mode ?? 'date'
-        if (item.mode === 'date') {
-          item.format = 'YYYY-MM-DD'
-        } else if (item.mode === 'datetime') {
-          item.format = 'YYYY-MM-DD HH:mm:ss'
-        } else if (item.mode === 'time') {
-          item.format = 'HH:mm:ss'
-        } else if (item.mode === 'yearmonth') {
-          item.format = 'YYYY-MM'
-        } else if (item.mode === 'year') {
-          item.format = 'YYYY'
+        const format = {
+          year: 'YYYY',
+          yearmonth: 'YYYY-MM',
+          date: 'YYYY-MM-DD',
+          datetime: 'YYYY-MM-DD HH:mm:ss',
+          time: 'HH:mm:ss',
         }
+        item.format = format[item.mode]
       }
     } else {
-      // 其他类型，包括：radio、checkbox、switch
+      // 其他类型，包括：radio、checkbox、switch、numberBox
       item.componentType = item.type
     }
     return item
@@ -210,6 +207,16 @@ function invokeEventFunc(item, method, value) {
         }
       }
     }
+  } else if (item.type === 'numberBox') {
+    // 步进器
+    if (method === 'input') {
+      // 验证输入值范围
+      if (value < item.min) {
+        item.value = item.min
+      } else if (value > item.max) {
+        item.value = item.max
+      }
+    }
   }
 
   // 调用自定义方法
@@ -345,17 +352,39 @@ const form = $ref(null)
             </tn-button>
           </view>
         </tn-popup>
-        <!-- 时间选择器 -->
+        <!-- 日期时间选择器 -->
         <tn-date-time-picker
           v-if="item.componentType === 'input' && item.type === 'dateTimePicker'"
           v-model="item.pickerValue"
           v-model:open="item.open"
           :mode="item.mode"
+          :mask="item.mask ?? true"
           :min-time="item.minTime"
           :max-time="item.maxTime"
+          :show-cancel="item.showCancel ?? true"
+          :cancel-text="item.cancelText ?? '取消'"
+          :cancel-color="item.cancelColor"
+          :show-confirm="item.showConfirm ?? true"
+          :confirm-text="item.confirmText ?? '确定'"
+          :confirm-color="item.confirmColor"
+          :z-index="item.zIndex ?? 1000"
           @change="invokeEventFunc(item, 'change', $event)"
           @confirm="invokeEventFunc(item, 'confirm', $event)"
           @cancel="invokeEventFunc(item, 'cancel', $event)"
+        />
+        <!-- 步进器 -->
+        <tn-number-box
+          v-if="item.componentType === 'numberBox'"
+          v-model="item.value"
+          :step="item.step"
+          :min="item.min"
+          :max="item.max"
+          :size="item.size || 'lg'"
+          :text-color="item.textColor"
+          :bg-color="item.bgColor"
+          :input-disabled="item.inputDisabled ?? true"
+          @input="invokeEventFunc(item, 'input', $event)"
+          @change="invokeEventFunc(item, 'change', $event)"
         />
       </tn-form-item>
     </tn-form>

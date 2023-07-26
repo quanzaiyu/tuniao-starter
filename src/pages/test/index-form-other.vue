@@ -133,6 +133,18 @@ const formConfig = $ref({
       value: true,
       activeColor: 'tn-orangered',
     },
+    {
+      label: '步进器',
+      prop: 'numberBox',
+      type: 'numberBox',
+      inputDisabled: true, // 禁止输入
+      value: 10, // 默认值
+      step: 5,
+      min: 0,
+      max: 20,
+      bgColor: '#01beff',
+      textColor: '#fff',
+    },
   ],
 })
 </script>
