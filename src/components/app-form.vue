@@ -169,8 +169,8 @@ const form = $ref(null)
 
 <template>
   <view class="p-20">
-    <tn-form ref="form" :label-position="computedConfig.labelPosition || 'top'">
-      <tn-form-item v-for="(item, index) in computedConfig.columns" :key="index" :label-position="item.labelPosition || 'top'" :rules="item.rules">
+    <tn-form ref="form" :label-position="computedConfig.labelPosition ?? 'top'">
+      <tn-form-item v-for="(item, index) in computedConfig.columns" :key="index" :label-position="item.labelPosition ?? computedConfig.labelPosition ?? 'top'" :rules="item.rules">
         <template #label>
           <text>{{ item.label }}</text>
         </template>
@@ -251,6 +251,16 @@ const form = $ref(null)
             :active-color="checkbox.activeColor"
           >{{ checkbox.label }}</tn-checkbox>
         </tn-checkbox-group>
+        <!-- 开关 -->
+        <tn-switch
+          v-if="item.componentType === 'switch'"
+          v-model="item.value"
+          :disabled="item.disabled ?? false"
+          :active-value="item.activeValue ?? true"
+          :inactive-value="item.inactiveValue ?? false"
+          :active-color="item.activeColor"
+          @change="invokeEventFunc(item, 'change', $event)"
+        />
       </tn-form-item>
     </tn-form>
   </view>
