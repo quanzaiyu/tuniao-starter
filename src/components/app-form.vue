@@ -217,7 +217,40 @@ const form = $ref(null)
           @confirm="invokeEventFunc(item, 'confirm', $event)"
           @cancel="invokeEventFunc(item, 'cancel', $event)"
         />
-
+        <!-- 单选框 -->
+        <tn-radio-group
+          v-if="item.componentType === 'radio'"
+          v-model="item.value"
+          :border="item.border ?? false"
+          :disabled="item.disabled ?? false"
+          :label-disabled="item.disabled ?? false"
+          :active-color="item.activeColor"
+          @change="invokeEventFunc(item, 'change', $event)"
+        >
+          <tn-radio
+            v-for="(radio, radioIndex) in item.data"
+            :key="radioIndex"
+            :label="radio.value"
+            :active-color="radio.activeColor"
+          >{{ radio.label }}</tn-radio>
+        </tn-radio-group>
+        <!-- 复选框 -->
+        <tn-checkbox-group
+          v-if="item.componentType === 'checkbox'"
+          v-model="item.value"
+          :border="item.border ?? false"
+          :disabled="item.disabled ?? false"
+          :label-disabled="item.disabled ?? false"
+          :active-color="item.activeColor"
+          @change="invokeEventFunc(item, 'change', $event)"
+        >
+          <tn-checkbox
+            v-for="(checkbox, checkboxndex) in item.data"
+            :key="checkboxndex"
+            :label="checkbox.value"
+            :active-color="checkbox.activeColor"
+          >{{ checkbox.label }}</tn-checkbox>
+        </tn-checkbox-group>
       </tn-form-item>
     </tn-form>
   </view>

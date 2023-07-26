@@ -7,7 +7,7 @@ const formConfig = $ref({
 </script>
 
 <template>
-  <Layout ref="layout" title="表单提交示例">
+  <Layout ref="layout" title="表单验证与提交示例">
     <app-form :config="formConfig"></app-form>
   </Layout>
 </template>
