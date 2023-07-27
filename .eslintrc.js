@@ -4,7 +4,17 @@ module.exports = {
     node: true,
     'vue/setup-compiler-macros': true,
   },
-  plugins: ['@typescript-eslint'],
+  parser: 'vue-eslint-parser',
+  plugins: ['@typescript-eslint', 'vue'],
+  parserOptions: {
+    parser: '@typescript-eslint/parser',
+    // parser: ['@typescript-eslint/parser', 'babel-eslint'],
+    sourceType: 'module',
+    ecmaVersion: 2020,
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
   extends: [
     '@nuxtjs',
     'plugin:vue-pug/vue3-recommended',

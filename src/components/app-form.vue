@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const form = $ref(null)
 
 const props = defineProps({
@@ -108,7 +108,7 @@ function findObjectByValue(tree, value, valueKey = 'value', childrenKey = 'child
 // value 当前选择框的值
 // type 类型 1 单列选择器  2 多列选择器 3 树状选择器
 // arrayType 数组中元素的类型（是字符串数组还是对象数组）
-function selectConfirm(item, value, type, arrayType) {
+function selectConfirm(item, value: string | number | boolean | Array<number | string>, type: number, arrayType?: string): void {
   if (type === 1) {
     // 单列选择器
     if (arrayType === 'object') {
@@ -125,7 +125,7 @@ function selectConfirm(item, value, type, arrayType) {
     // 多列选择器
     item.value = [] // 当前显示的值
     item.current = [] // 当前选中的数据
-    for (const i in value) {
+    for (let i = 0; i < (value as Array<any>).length; i++) {
       if (arrayType === 'object') {
         const currentValue = findObjectByValue(item.data[i], value[i], item.valueKey, item.childrenKey)
         item.value.push(currentValue[item.labelKey])
@@ -139,7 +139,7 @@ function selectConfirm(item, value, type, arrayType) {
     // 树状选择器
     item.value = [] // 当前显示的值
     item.current = [] // 当前选中的数据
-    for (const i in value) {
+    for (let i = 0; i < (value as Array<any>).length; i++) {
       const currentValue = findObjectByValue(item.data, value[i], item.valueKey, item.childrenKey)
       item.value.push(currentValue[item.labelKey])
       item.current.push(currentValue)

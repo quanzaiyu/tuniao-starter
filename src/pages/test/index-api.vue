@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import md5 from 'js-md5'
 const layout = ref(null)
 

@@ -102,6 +102,7 @@
     "@volar-plugins/vetur": "^0.1.0",
     "@vue-macros/reactivity-transform": "^0.2.5",
     "@vue/tsconfig": "^0.4.0",
+    "@vue/typescript": "^1.8.8",
     "commitizen": "^4.3.0",
     "commitlint": "^17.4.4",
     "esbuild": "0.17.19",

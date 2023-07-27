@@ -1,4 +1,6 @@
-<script setup>
+<script setup lang="ts">
+import type { TnNotifyInstance, TnModalInstance, TnActionSheetInstance } from '@tuniao/tnui-vue3-uniapp'
+
 const props = defineProps({
   hideIcon: { type: Boolean, default: false },
   hideNavbar: { type: Boolean, default: false },
@@ -13,9 +15,9 @@ defineEmits(['loadmore'])
 const platform = $computed(() => uni.$store.platform)
 
 // 弹出层：notify
-const notifyRef = $ref()
+const notifyRef = $ref<TnNotifyInstance>()
 function showNotify(options) {
-  notifyRef?.show({ position: 'center', type: 'primary', ...options })
+  notifyRef.show({ position: 'center', type: 'primary', ...options })
 }
 
 // 弹出层：loading
@@ -46,13 +48,13 @@ function showOverlay() {
 }
 
 // 弹出层：modal
-const modalRef = $ref()
+const modalRef = $ref<TnModalInstance>()
 function showModal(options) {
-  modalRef?.showModal(options)
+  modalRef.showModal(options)
 }
 
 // 弹出层：actionSheetRef
-const actionSheetRef = $ref()
+const actionSheetRef = $ref<TnActionSheetInstance>()
 function showActionSheet(options) {
   actionSheetRef.show(options)
 }
@@ -80,7 +82,7 @@ defineExpose({
     <tn-navbar
       v-if="platform !== 'mp-alipay' && !hideNavbar"
       frosted
-      fixed="fixed"
+      :fixed="true"
       :back-icon="platform === 'mp-alipay' || hideIcon ? '' : 'left'"
       :home-icon="platform === 'mp-alipay' || hideIcon ? '' : 'home-capsule-fill'"
       :safe-area-inset-right="platform === 'mp-alipay' || hideIcon ? false : true"
@@ -88,7 +90,7 @@ defineExpose({
       <view>{{ title }}</view>
     </tn-navbar>
     <view v-else><slot name="navbar"></slot></view>
-    <view class="wrapper">
+    <view class="w-100vw">
       <slot></slot>
       <view class="w-full h-footer"></view>
     </view>
@@ -99,7 +101,7 @@ defineExpose({
   <tn-action-sheet ref="actionSheetRef"></tn-action-sheet>
   <tn-popup v-model="loading.show" :width="200" :height="300" bg-color="transparent" :overlay-closeable="false">
     <view class="w-full h-full flex-center flex-col">
-      <tn-loading :show="loading.show" animation="animation" mode="flower" type="primary" size="100rpx"></tn-loading>
+      <tn-loading :show="loading.show" :animation="true" mode="flower" type="primary" size="100rpx"></tn-loading>
       <view class="mt-20 text-toast">{{ loading.title }}</view>
     </view>
   </tn-popup>
@@ -110,6 +112,4 @@ defineExpose({
 </template>
 
 <style scoped lang="stylus">
-.wrapper
-  width 100vw
 </style>

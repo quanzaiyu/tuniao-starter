@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 // 图片上传
 const imageList = $ref([])
 async function upload(e) {
