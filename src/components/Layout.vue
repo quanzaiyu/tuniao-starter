@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { TnNotifyInstance, TnModalInstance, TnActionSheetInstance } from '@tuniao/tnui-vue3-uniapp'
-
 const props = defineProps({
   hideIcon: { type: Boolean, default: false },
   hideNavbar: { type: Boolean, default: false },

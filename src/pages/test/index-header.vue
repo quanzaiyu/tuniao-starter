@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useUniAppSystemRectInfo } from '@tuniao/tnui-vue3-uniapp'
 const { navBarInfo } = useUniAppSystemRectInfo()
 
 const headerHeight = computed(() => navBarInfo.height + 'px')

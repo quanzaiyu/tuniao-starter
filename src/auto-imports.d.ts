@@ -73,6 +73,7 @@ declare global {
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVars: typeof import('vue')['useCssVars']
   const useSlots: typeof import('vue')['useSlots']
+  const useUniAppSystemRectInfo: typeof import('@tuniao/tnui-vue3-uniapp')['useUniAppSystemRectInfo']
   const utils: typeof import('./library/modules/utils.js')['default']
   const watch: typeof import('vue')['watch']
   const watchEffect: typeof import('vue')['watchEffect']
@@ -83,4 +84,6 @@ declare global {
 declare global {
   // @ts-ignore
   export type { Component, ComponentPublicInstance, ComputedRef, InjectionKey, PropType, Ref, VNode } from 'vue'
+  // @ts-ignore
+  export type { TnNotifyInstance, TnModalInstance, TnActionSheetInstance } from '@tuniao/tnui-vue3-uniapp'
 }

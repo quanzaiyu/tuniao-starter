@@ -17,7 +17,7 @@ module.exports = {
   extends: [
     '@nuxtjs',
     'plugin:vue-pug/vue3-recommended',
-    '@vue/typescript',
+    '@vue/typescript/recommended',
     '.eslintrc-auto-import.json',
   ],
   rules: {
