@@ -388,6 +388,10 @@ console.info('初始化表单数据：', computedConfig)
             <tn-button
               font-size="36"
               custom-class="popup-calendar-button"
+              :custom-style="{
+                margin: '0rpx 30rpx',
+                width: 'calc(100% - 60rpx)',
+                padding: '20rpx 30rpx' }"
               @click="invokeEventFunc(item, 'confirm', $event)"
             >
               确定
@@ -469,11 +473,4 @@ console.info('初始化表单数据：', computedConfig)
 </template>
 
 <style lang="scss" scoped>
-/* 弹框日期样式 start */
-.popup-calendar-button {
-  margin: 0rpx 30rpx;
-  width: calc(100% - 60rpx) !important;
-  padding: 20rpx 30rpx !important;
-}
-/* 弹框日期样式 end */
 </style>

@@ -4,7 +4,6 @@ module.exports = {
     node: true,
     'vue/setup-compiler-macros': true,
   },
-  parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
   extends: [
     '@nuxtjs',
