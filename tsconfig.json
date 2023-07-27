@@ -6,7 +6,10 @@
     "baseUrl": ".",
     "allowJs": true,
     "target": "ES2015",
-    "moduleResolution": "classic",
+    "moduleResolution": "node",
+    "preserveValueImports": false,
+    "importsNotUsedAsValues": "remove",
+    "verbatimModuleSyntax": true,
     "lib": ["ESNext", "Dom", "DOM.Iterable"],
     "types": [
       "@dcloudio/types",
@@ -18,7 +21,18 @@
     ],
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "module": "esnext",
+    "strict": false,
+    "jsx": "preserve"
   },
-  "include": ["**/*.js", "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "include": [
+    "src/**/*.js",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "node_modules/@tuniao/tnui-vue3-uniapp/global.d.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
 }

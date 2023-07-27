@@ -9,5 +9,5 @@ export const skin = {
   beforeUpdate() {},
   updated: setSkin,
   beforeUnmount() {},
-  unmounted() {}
+  unmounted() {},
 }

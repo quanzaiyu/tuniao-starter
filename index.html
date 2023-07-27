@@ -3,6 +3,8 @@
 
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script>
     var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') ||
       CSS.supports('top: constant(a)'))
@@ -14,13 +16,13 @@
   <style>
     :root,
     html {
+      -webkit-text-size-adjust: 100% !important;
       text-size-adjust: 100% !important;
     }
 
     html {
       overflow: hidden;
     }
-
   </style>
   <title></title>
   <!--preload-links-->
@@ -29,7 +31,7 @@
 
 <body>
   <div id="app"><!--app-html--></div>
-  <script type="module" src="/src/main.js"></script>
+  <script type="module" src="/src/main.ts"></script>
 </body>
 
 </html>
