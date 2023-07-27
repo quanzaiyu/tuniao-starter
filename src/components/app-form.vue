@@ -464,7 +464,7 @@ console.info('初始化表单数据：', computedConfig)
         />
       </tn-form-item>
     </tn-form>
-    <tn-button size="lg" custom-class="confirm-button" @click="submitForm"> 提交 </tn-button>
+    <tn-button size="lg" :custom-style="{width: '100%', height: '100rpx' }" @click="submitForm"> 提交 </tn-button>
   </view>
 </template>
 
@@ -476,9 +476,4 @@ console.info('初始化表单数据：', computedConfig)
   padding: 20rpx 30rpx !important;
 }
 /* 弹框日期样式 end */
-
-.confirm-button {
-  width: 100%;
-  height: 100rpx;
-}
 </style>

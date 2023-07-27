@@ -1,5 +1,5 @@
 <script setup>
-// const layout = $ref(null)
+const layout = $ref(null)
 
 const formConfig = $ref({
   columns: [
