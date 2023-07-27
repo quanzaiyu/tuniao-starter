@@ -7,8 +7,7 @@ module.exports = {
   parser: 'vue-eslint-parser',
   plugins: ['@typescript-eslint', 'vue'],
   parserOptions: {
-    parser: '@typescript-eslint/parser',
-    // parser: ['@typescript-eslint/parser', 'babel-eslint'],
+    parser: ['@typescript-eslint/parser', 'babel-eslint'],
     sourceType: 'module',
     ecmaVersion: 2020,
     ecmaFeatures: {
@@ -18,6 +17,7 @@ module.exports = {
   extends: [
     '@nuxtjs',
     'plugin:vue-pug/vue3-recommended',
+    '@vue/typescript',
     '.eslintrc-auto-import.json',
   ],
   rules: {
