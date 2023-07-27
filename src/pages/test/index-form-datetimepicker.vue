@@ -72,7 +72,7 @@ const formConfig = $ref({
     },
     {
       label: '地区选择器',
-      prop: 'regionPicker',
+      prop: 'regionPicker1',
       type: 'regionPicker',
       placeholder: '点击弹出地区选择器',
       mask: true,
@@ -83,7 +83,7 @@ const formConfig = $ref({
     },
     {
       label: '地区选择器：默认值',
-      prop: 'regionPicker',
+      prop: 'regionPicker2',
       type: 'regionPicker',
       value: ['53', '5301', '530102'],
       placeholder: '点击弹出地区选择器',
@@ -97,7 +97,7 @@ const formConfig = $ref({
 </script>
 
 <template>
-  <Layout ref="layout" title="选择器示例">
+  <Layout ref="layout" title="日期时间和区域选择器示例">
     <app-form :config="formConfig"></app-form>
   </Layout>
 </template>

@@ -1,7 +1,11 @@
 <script setup>
+const form = $ref(null)
+
 const props = defineProps({
   config: { type: Object, default: () => ({}) },
 })
+
+const emit = defineEmits(['confirm'])
 
 // 判断数组的元素类型
 function checkArrayElementType(arr) {
@@ -20,18 +24,21 @@ function checkElementType(element) {
 }
 
 // 初始化表单数据
-const computedConfig = computed(() => {
+const computedConfig = $computed(() => {
   const config = props.config
+  config.formModel = {}
   config.columns = config.columns.map(item => {
     if (!item.type) {
       // 没有指定type的话，默认为输入框
       item.componentType = 'input' // 组件类型
       item.inputType = 'text' // 输入框类型
+      config.formModel[item.prop] = item.value
     } else if (['text', 'number', 'idcard', 'digit', 'textarea', 'password'].includes(item.type)) {
       // 输入框
       item.componentType = 'input'
       item.inputType = item.type
       item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
+      config.formModel[item.prop] = item.value
     } else if (['select', 'calendar', 'dateTimePicker', 'regionPicker'].includes(item.type)) {
       // select 选择框
       // calendar 日历
@@ -39,6 +46,16 @@ const computedConfig = computed(() => {
       item.componentType = 'input'
       item.inputType = 'select'
       item.open = item.open ?? false // 控制Picker的显示与隐藏
+
+      // 设置表单的默认值
+      if (item.type === 'regionPicker') {
+        item.value = item.value ?? [] // 当前输入框显示的值，可以不指定，主要用于回显
+        item.pickerValue = item.pickerValue ?? [] // 当前选择器的值，可以不指定，主要用于回显
+      } else {
+        item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
+        item.pickerValue = item.pickerValue ?? '' // 当前选择器的值，可以不指定，主要用于回显
+      }
+
       if (item.type === 'select') {
         item.labelKey = item.labelKey ?? 'label' // 不指定的话，默认为 label
         item.valueKey = item.valueKey ?? 'value' // 不指定的话，默认为 value
@@ -59,16 +76,11 @@ const computedConfig = computed(() => {
         item.format = format[item.mode]
       }
 
-      if (item.type === 'regionPicker') {
-        item.value = item.value ?? [] // 当前输入框显示的值，可以不指定，主要用于回显
-        item.pickerValue = item.pickerValue ?? [] // 当前选择器的值，可以不指定，主要用于回显
-      } else {
-        item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
-        item.pickerValue = item.pickerValue ?? '' // 当前选择器的值，可以不指定，主要用于回显
-      }
+      config.formModel[item.prop] = item.pickerValue
     } else {
       // 其他类型，包括：radio、checkbox、switch、numberBox、slider
       item.componentType = item.type
+      config.formModel[item.prop] = item.value
     }
     return item
   })
@@ -137,7 +149,6 @@ function selectConfirm(item, value, type, arrayType) {
 
 // 调用自定义方法
 function invokeEventFunc(item, method, value) {
-  console.log(value)
   // 选择框
   if (item.inputType === 'select') {
     if (method === 'click') {
@@ -147,9 +158,9 @@ function invokeEventFunc(item, method, value) {
       }
       item.open = true
     } else if (method === 'confirm') {
+      item.open = false
       if (item.type === 'select') {
         // 如果没有选中任何值，则直接关闭选择器弹窗
-        item.open = false
         if (!item.pickerValue) {
           return
         }
@@ -230,16 +241,40 @@ function invokeEventFunc(item, method, value) {
   item?.[method]?.(value)
 }
 
-const form = $ref(null)
+// 提交表单
+function submitForm() {
+  console.info('提交的表单：', computedConfig.formModel)
+  form?.validate(valid => {
+    if (valid) {
+      emit('confirm', computedConfig.formModel)
+    } else {
+      uni.showToast({
+        title: '表单校验失败',
+        icon: 'none',
+      })
+    }
+  })
+}
+
+console.info('初始化表单数据：', computedConfig)
 </script>
 
 <template>
   <view class="p-20">
-    <tn-form ref="form" :label-position="computedConfig.labelPosition ?? 'top'">
-      <tn-form-item v-for="(item, index) in computedConfig.columns" :key="index" :label-position="item.labelPosition ?? computedConfig.labelPosition ?? 'top'" :rules="item.rules">
-        <template #label>
-          <text>{{ item.label }}</text>
-        </template>
+    <tn-form
+      ref="form"
+      :model="computedConfig.formModel"
+      :label-position="computedConfig.labelPosition ?? 'top'"
+      :label-width="computedConfig.labelWidth ?? 'auto'"
+    >
+      <tn-form-item
+        v-for="(item, index) in computedConfig.columns"
+        :key="index"
+        :prop="item.prop"
+        :label="item.label"
+        :label-position="item.labelPosition ?? computedConfig.labelPosition ?? 'top'"
+        :rules="item.rules"
+      >
         <!-- 输入框 -->
         <tn-input
           v-if="item.componentType === 'input'"
@@ -429,6 +464,7 @@ const form = $ref(null)
         />
       </tn-form-item>
     </tn-form>
+    <tn-button size="lg" custom-class="confirm-button" @click="submitForm"> 提交 </tn-button>
   </view>
 </template>
 
@@ -440,4 +476,9 @@ const form = $ref(null)
   padding: 20rpx 30rpx !important;
 }
 /* 弹框日期样式 end */
+
+.confirm-button {
+  width: 100%;
+  height: 100rpx;
+}
 </style>

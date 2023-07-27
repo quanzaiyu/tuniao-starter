@@ -38,7 +38,7 @@ const formConfig = $ref({
     },
     {
       label: '日历选择器：区间：自定义文案',
-      prop: 'calendar3',
+      prop: 'calendar4',
       type: 'calendar',
       mode: 'range',
       rangeStartDesc: '入住', // 默认“开始”
@@ -51,7 +51,7 @@ const formConfig = $ref({
     },
     {
       label: '日历选择器：区间：指定可选择范围',
-      prop: 'calendar3',
+      prop: 'calendar5',
       type: 'calendar',
       mode: 'range',
       minDate: dayjs().add(-1, 'week').format('YYYY-MM-DD'), // 开始日期
@@ -64,7 +64,7 @@ const formConfig = $ref({
     },
     {
       label: '日历选择器：自定义样式',
-      prop: 'calendar1',
+      prop: 'calendar6',
       type: 'calendar',
       mode: 'range',
       activeTextColor: 'tn-orangered', // 激活文字颜色
@@ -79,7 +79,7 @@ const formConfig = $ref({
     },
     {
       label: '日历选择器：显示农历',
-      prop: 'calendar1',
+      prop: 'calendar7',
       type: 'calendar',
       showLunar: true, // 显示农历
       placeholder: '点击弹出日历选择器',
