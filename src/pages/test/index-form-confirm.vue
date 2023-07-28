@@ -68,6 +68,20 @@ const formConfig = $ref({
         { pattern: /^1\d{10}$/, message: '请输入正确的手机号码', trigger: ['change', 'blur'] },
       ],
     },
+    {
+      label: '头像',
+      prop: 'avatar',
+      type: 'upload',
+      value: ['upload/20230728/b43395411ccaa2eb0575475e29ce6b34.jpg', 'upload/20230728/2eeaa6952b7480c77273a458998580ad.jpg'],
+      placeholder: '请上传头像',
+      // disabled: true, // 是否禁用
+      limit: 3, // 允许上传的文件个数，可省略，默认1
+      maxSize: 1 * 1024 * 1024, // 1MB，可省略，默认3MB
+      extensions: ['jpg', 'png'], // 允许上传的文件类型，可省略，默认 ['jpg','jpeg', 'png']
+      rules: [
+        { required: true, message: '请上传头像', trigger: ['change', 'blur'] },
+      ],
+    },
   ],
 })
 

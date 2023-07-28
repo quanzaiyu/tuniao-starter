@@ -48,6 +48,8 @@ module.exports = {
       order: ['script', 'template', 'style'],
     }],
     'vue/html-quotes': ['error', 'double', { avoidEscape: true }],
+    '@typescript-eslint/no-unused-vars': 1,
+    '@typescript-eslint/no-explicit-any': 1,
   },
   globals: {
     wx: 'readonly',

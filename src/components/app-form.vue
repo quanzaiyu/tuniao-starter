@@ -32,23 +32,28 @@ const computedConfig = $computed(() => {
       // 没有指定type的话，默认为输入框
       item.componentType = 'input' // 组件类型
       item.inputType = 'text' // 输入框类型
+      item.placeholder = item.placeholder ?? `请输入${item.label}`
       config.formModel[item.prop] = item.value
     } else if (['text', 'number', 'idcard', 'digit', 'textarea', 'password'].includes(item.type)) {
       // 输入框
       item.componentType = 'input'
       item.inputType = item.type
       item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
+      item.placeholder = item.placeholder ?? `请输入${item.label}`
       config.formModel[item.prop] = item.value
-    } else if (['select', 'calendar', 'dateTimePicker', 'regionPicker'].includes(item.type)) {
+    } else if (['select', 'calendar', 'dateTimePicker', 'regionPicker', 'upload'].includes(item.type)) {
       // select 选择框
       // calendar 日历
       // dateTimePicker 日期时间选择器
+      // regionPicker 地区选择器
+      // upload 上传
       item.componentType = 'input'
       item.inputType = 'select'
       item.open = item.open ?? false // 控制Picker的显示与隐藏
+      item.placeholder = item.placeholder ?? `请选择${item.label}`
 
       // 设置表单的默认值
-      if (item.type === 'regionPicker') {
+      if (['regionPicker', 'upload'].includes(item.type)) {
         item.value = item.value ?? [] // 当前输入框显示的值，可以不指定，主要用于回显
         item.pickerValue = item.pickerValue ?? [] // 当前选择器的值，可以不指定，主要用于回显
       } else {
@@ -74,6 +79,21 @@ const computedConfig = $computed(() => {
           time: 'HH:mm:ss',
         }
         item.format = format[item.mode]
+      } else if (item.type === 'upload') {
+        if (item.value.length) {
+          for (let i = 0; i < item.value.length; i++) {
+            const img = item.value[i]
+            if (!img.includes(import.meta.env.VITE_APP_OSS)) {
+              item.pickerValue[i] = img
+              // 将传入值加上前缀
+              item.value[i] = import.meta.env.VITE_APP_OSS + img
+            } else {
+              item.pickerValue[i] = img.split(import.meta.env.VITE_APP_OSS)[1]
+            }
+          }
+        }
+        item.componentType = 'upload'
+        item.placeholder = item.placeholder ?? `请上传${item.label}`
       }
 
       config.formModel[item.prop] = item.pickerValue
@@ -145,6 +165,35 @@ function selectConfirm(item, value: string | number | boolean | Array<number | s
       item.current.push(currentValue)
     }
   }
+}
+
+// 文件上传
+async function upload(e, item) {
+  const res = await api.upload(e)
+  /*
+  返回的结构：
+  {
+    "link": "http://www.yunsuinfo.com:8090/bladex/upload/20230717/1362c26632d868d568e499a4f1a55a2c.png",
+    "domain": "http://www.yunsuinfo.com:8090/bladex",
+    "name": "upload/20230717/1362c26632d868d568e499a4f1a55a2c.png",
+    "originalName": "logo_80.png",
+    "attachId": null
+  }
+  */
+  return res.link
+}
+
+// 文件删除
+function remove(e, item) {
+  for (const index in item.pickerValue) {
+    if (Object.prototype.hasOwnProperty.call(item.pickerValue, index)) {
+      const img = item.pickerValue[index]
+      if (e.url.includes(img)) {
+        item.pickerValue.splice(index, 1)
+      }
+    }
+  }
+  return true
 }
 
 // 调用自定义方法
@@ -279,7 +328,7 @@ console.info('初始化表单数据：', computedConfig)
         <tn-input
           v-if="item.componentType === 'input'"
           v-model="item.value"
-          :placeholder="item.placeholder ?? `请输入${item.label}`"
+          :placeholder="item.placeholder"
           :text-align="item.textAlign ?? 'left'"
           :size="item.size ?? 'lg'"
           :type="item.inputType ?? 'text'"
@@ -466,6 +515,23 @@ console.info('初始化表单数据：', computedConfig)
           @input="invokeEventFunc(item, 'input', $event)"
           @change="invokeEventFunc(item, 'change', $event)"
         />
+        <!-- 文件上传 -->
+        <tn-image-upload
+          v-if="item.componentType === 'upload'"
+          v-model="item.value"
+          action=""
+          :disabled="item.disabled ?? false"
+          :custom-upload-handler="e => upload(e, item)"
+          :before-remove="e => remove(e, item)"
+          :limit="item.limit ?? 1"
+          :multiple="item.multiple ?? true"
+          :max-size="item.maxSize ?? 3 * 1024 * 1024"
+          :extensions="item.extensions ?? ['jpg','jpeg', 'png']"
+          :size-type="item.sizeType ?? ['original', 'compressed']"
+          :source-type="item.sourceType ?? ['album', 'camera']"
+          :auto-remove-faild-file="item.autoRemoveFaildFile ?? true"
+          @oversize-or-no-support="invokeEventFunc(item, 'oversizeOrNoSupport', $event)"
+        ></tn-image-upload>
       </tn-form-item>
     </tn-form>
     <tn-button size="lg" :custom-style="{width: '100%', height: '100rpx' }" @click="submitForm"> 提交 </tn-button>
