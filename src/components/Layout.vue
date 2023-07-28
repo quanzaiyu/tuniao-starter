@@ -75,38 +75,50 @@ defineExpose({
 </script>
 
 <template>
-<view>
-  <view :class="[styles.bg || 'bg-default']">
-    <tn-navbar
-      v-if="platform !== 'mp-alipay' && !hideNavbar"
-      frosted
-      :fixed="true"
-      :back-icon="platform === 'mp-alipay' || hideIcon ? '' : 'left'"
-      :home-icon="platform === 'mp-alipay' || hideIcon ? '' : 'home-capsule-fill'"
-      :safe-area-inset-right="platform === 'mp-alipay' || hideIcon ? false : true"
+  <view>
+    <view :class="[styles.bg || 'bg-default']">
+      <tn-navbar
+        v-if="platform !== 'mp-alipay' && !hideNavbar"
+        frosted
+        :fixed="true"
+        :back-icon="platform === 'mp-alipay' || hideIcon ? '' : 'left'"
+        :home-icon="platform === 'mp-alipay' || hideIcon ? '' : 'home-capsule-fill'"
+        :safe-area-inset-right="platform === 'mp-alipay' || hideIcon ? false : true"
+      >
+        <view>{{ title }}</view>
+      </tn-navbar>
+      <view v-else><slot name="navbar"></slot></view>
+      <view class="w-100vw">
+        <slot></slot>
+        <view class="w-full h-footer"></view>
+      </view>
+      <view class="fixed bottom-0 w-full h-footer bg-white z-100"></view>
+    </view>
+    <tn-notify ref="notifyRef"></tn-notify>
+    <tn-modal ref="modalRef"></tn-modal>
+    <tn-action-sheet ref="actionSheetRef"></tn-action-sheet>
+    <tn-popup
+      v-model="loading.show"
+      :width="200"
+      :height="300"
+      bg-color="transparent"
+      :overlay-closeable="false"
     >
-      <view>{{ title }}</view>
-    </tn-navbar>
-    <view v-else><slot name="navbar"></slot></view>
-    <view class="w-100vw">
-      <slot></slot>
-      <view class="w-full h-footer"></view>
-    </view>
-    <view class="fixed bottom-0 w-full h-footer bg-white z-100"></view>
+      <view class="w-full h-full flex-center flex-col">
+        <tn-loading
+          :show="loading.show"
+          :animation="true"
+          mode="flower"
+          type="primary"
+          size="100rpx"
+        ></tn-loading>
+        <view class="mt-20 text-toast">{{ loading.title }}</view>
+      </view>
+    </tn-popup>
+    <tn-overlay v-model:show="overlay.show" :opacity="0.4">
+      <slot name="overlay"></slot>
+    </tn-overlay>
   </view>
-  <tn-notify ref="notifyRef"></tn-notify>
-  <tn-modal ref="modalRef"></tn-modal>
-  <tn-action-sheet ref="actionSheetRef"></tn-action-sheet>
-  <tn-popup v-model="loading.show" :width="200" :height="300" bg-color="transparent" :overlay-closeable="false">
-    <view class="w-full h-full flex-center flex-col">
-      <tn-loading :show="loading.show" :animation="true" mode="flower" type="primary" size="100rpx"></tn-loading>
-      <view class="mt-20 text-toast">{{ loading.title }}</view>
-    </view>
-  </tn-popup>
-  <tn-overlay v-model:show="overlay.show" :opacity="0.4">
-    <slot name="overlay"></slot>
-  </tn-overlay>
-</view>
 </template>
 
 <style scoped lang="stylus">

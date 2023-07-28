@@ -2,10 +2,10 @@
 </script>
 
 <template>
-<Layout title="样式渲染">
-  <view class="box1"></view>
-  <view class="box2"></view>
-</Layout>
+  <Layout title="样式渲染">
+    <view class="box1"></view>
+    <view class="box2"></view>
+  </Layout>
 </template>
 
 <style lang="stylus" scoped>

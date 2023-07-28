@@ -27,18 +27,18 @@ function getDict() {
 </script>
 
 <template>
-<Layout ref="layout" title="接口请求">
-  <tn-input v-model="form.username" placeholder="请输入用户名"></tn-input>
-  <tn-input v-model="form.password" placeholder="请输入密码" type="password"></tn-input>
-  <button @click="login">登录（获取token请求示例）</button>
-  <button @click="getDict">获取字典值（携带token请求示例）</button>
-  <view class="flex">
-    <view v-for="(item, index) in sexMap" :key="index" class="mr-20">{{ index }}: {{ item }}</view>
-  </view>
-  <view class="flex">
-    <view v-for="(item, index) in sexList" :key="index" class="mr-20">{{ item.dictKey }}: {{ item.dictValue }}</view>
-  </view>
-</Layout>
+  <Layout ref="layout" title="接口请求">
+    <tn-input v-model="form.username" placeholder="请输入用户名"></tn-input>
+    <tn-input v-model="form.password" placeholder="请输入密码" type="password"></tn-input>
+    <button @click="login">登录（获取token请求示例）</button>
+    <button @click="getDict">获取字典值（携带token请求示例）</button>
+    <view class="flex">
+      <view v-for="(item, index) in sexMap" :key="index" class="mr-20">{{ index }}: {{ item }}</view>
+    </view>
+    <view class="flex">
+      <view v-for="(item, index) in sexList" :key="index" class="mr-20">{{ item.dictKey }}: {{ item.dictValue }}</view>
+    </view>
+  </Layout>
 </template>
 
 <style lang="stylus" scoped>

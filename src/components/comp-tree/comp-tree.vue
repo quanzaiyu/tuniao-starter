@@ -273,13 +273,23 @@ export default {
     <view class="tki-tree-mask" :class="{'show':showTree}" @tap="_cancel" />
     <view class="tki-tree-cnt" :class="{'show':showTree}">
       <view class="tki-tree-bar">
-        <view class="tki-tree-bar-cancel" :style="{'color':cancelColor}" hover-class="hover-c" @tap="_cancel">
+        <view
+          class="tki-tree-bar-cancel"
+          :style="{'color':cancelColor}"
+          hover-class="hover-c"
+          @tap="_cancel"
+        >
           取消
         </view>
         <view class="tki-tree-bar-title" :style="{'color':titleColor}">
           {{ title }}
         </view>
-        <view class="tki-tree-bar-confirm" :style="{'color':confirmColor}" hover-class="hover-c" @tap="_confirm">
+        <view
+          class="tki-tree-bar-confirm"
+          :style="{'color':confirmColor}"
+          hover-class="hover-c"
+          @tap="_confirm"
+        >
           确定
         </view>
       </view>
@@ -305,10 +315,20 @@ export default {
                 {{ item.name }}
               </view>
               <view v-if="canSelect(item)" class="tki-tree-check" @tap.stop="_treeItemSelect(item, index)">
-                <view v-if="item.checked" class="tki-tree-check-yes" :class="{'radio':!multiple}" :style="{'border-color':confirmColor}">
+                <view
+                  v-if="item.checked"
+                  class="tki-tree-check-yes"
+                  :class="{'radio':!multiple}"
+                  :style="{'border-color':confirmColor}"
+                >
                   <view class="tki-tree-check-yes-b" :style="{'background-color':confirmColor}" />
                 </view>
-                <view v-else class="tki-tree-check-no" :class="{'radio':!multiple}" :style="{'border-color':confirmColor}" />
+                <view
+                  v-else
+                  class="tki-tree-check-no"
+                  :class="{'radio':!multiple}"
+                  :style="{'border-color':confirmColor}"
+                />
               </view>
             </view>
           </block>
