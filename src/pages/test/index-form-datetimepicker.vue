@@ -1,14 +1,14 @@
-<script setup>
+<script setup lang="ts">
 const layout = $ref(null)
 
-const formConfig = $ref({
+const formConfig = $ref<AppForm>({
   columns: [
     {
       label: '日期时间选择器：年月日',
       prop: 'dateTimePicker1',
       type: 'dateTimePicker',
       placeholder: '点击弹出日期时间选择器',
-      confirm(e) {
+      confirm() {
         console.info(this.value)
         console.info(this.pickerValue)
       },
@@ -19,7 +19,7 @@ const formConfig = $ref({
       type: 'dateTimePicker',
       mode: 'year',
       placeholder: '点击弹出日期时间选择器',
-      confirm(e) {
+      confirm() {
         console.info(this.value)
         console.info(this.pickerValue)
       },
@@ -30,7 +30,7 @@ const formConfig = $ref({
       type: 'dateTimePicker',
       mode: 'yearmonth',
       placeholder: '点击弹出日期时间选择器',
-      confirm(e) {
+      confirm() {
         console.info(this.value)
         console.info(this.pickerValue)
       },
@@ -41,7 +41,7 @@ const formConfig = $ref({
       type: 'dateTimePicker',
       mode: 'time',
       placeholder: '点击弹出日期时间选择器',
-      confirm(e) {
+      confirm() {
         console.info(this.value)
         console.info(this.pickerValue)
       },
@@ -52,7 +52,7 @@ const formConfig = $ref({
       type: 'dateTimePicker',
       mode: 'datetime',
       placeholder: '点击弹出日期时间选择器',
-      confirm(e) {
+      confirm() {
         console.info(this.value)
         console.info(this.pickerValue)
       },
@@ -65,7 +65,7 @@ const formConfig = $ref({
       minTime: dayjs().add(-1, 'week').format('YYYY-MM-DD'), // 开始日期
       maxTime: dayjs().add(1, 'week').format('YYYY-MM-DD'), // 结束日期
       placeholder: '点击弹出日期时间选择器',
-      confirm(e) {
+      confirm() {
         console.info(this.value)
         console.info(this.pickerValue)
       },
@@ -76,7 +76,7 @@ const formConfig = $ref({
       type: 'regionPicker',
       placeholder: '点击弹出地区选择器',
       mask: true,
-      confirm(e) {
+      confirm() {
         console.info(this.value)
         console.info(this.pickerValue)
       },
@@ -87,7 +87,7 @@ const formConfig = $ref({
       type: 'regionPicker',
       value: ['53', '5301', '530102'],
       placeholder: '点击弹出地区选择器',
-      confirm(e) {
+      confirm() {
         console.info(this.value)
         console.info(this.pickerValue)
       },

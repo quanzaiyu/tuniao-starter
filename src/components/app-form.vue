@@ -145,7 +145,7 @@ function selectConfirm(item, value: string | number | boolean | Array<number | s
     // 多列选择器
     item.value = [] // 当前显示的值
     item.current = [] // 当前选中的数据
-    for (let i = 0; i < (value as Array<any>).length; i++) {
+    for (let i = 0; i < (value as unknown as Array<AnyObject>).length; i++) {
       if (arrayType === 'object') {
         const currentValue = findObjectByValue(item.data[i], value[i], item.valueKey, item.childrenKey)
         item.value.push(currentValue[item.labelKey])
@@ -159,7 +159,7 @@ function selectConfirm(item, value: string | number | boolean | Array<number | s
     // 树状选择器
     item.value = [] // 当前显示的值
     item.current = [] // 当前选中的数据
-    for (let i = 0; i < (value as Array<any>).length; i++) {
+    for (let i = 0; i < (value as unknown as Array<AnyObject>).length; i++) {
       const currentValue = findObjectByValue(item.data, value[i], item.valueKey, item.childrenKey)
       item.value.push(currentValue[item.labelKey])
       item.current.push(currentValue)
@@ -168,18 +168,8 @@ function selectConfirm(item, value: string | number | boolean | Array<number | s
 }
 
 // 文件上传
-async function upload(e, item) {
-  const res = await api.upload(e)
-  /*
-  返回的结构：
-  {
-    "link": "http://www.yunsuinfo.com:8090/bladex/upload/20230717/1362c26632d868d568e499a4f1a55a2c.png",
-    "domain": "http://www.yunsuinfo.com:8090/bladex",
-    "name": "upload/20230717/1362c26632d868d568e499a4f1a55a2c.png",
-    "originalName": "logo_80.png",
-    "attachId": null
-  }
-  */
+async function upload(e) {
+  const res: UploadResult = await api.upload(e) as UploadResult
   return res.link
 }
 
@@ -522,7 +512,7 @@ console.info('初始化表单数据：', computedConfig)
           v-model="item.value"
           action=""
           :disabled="item.disabled ?? false"
-          :custom-upload-handler="e => upload(e, item)"
+          :custom-upload-handler="e => upload(e)"
           :before-remove="e => remove(e, item)"
           :limit="item.limit ?? 1"
           :multiple="item.multiple ?? true"

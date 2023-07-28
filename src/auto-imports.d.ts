@@ -23,7 +23,7 @@ declare global {
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent']
   const defineComponent: typeof import('vue')['defineComponent']
   const effectScope: typeof import('vue')['effectScope']
-  const filter: typeof import('./library/modules/filter.js')['default']
+  const filter: typeof import('./library/modules/filter')['default']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
   const h: typeof import('vue')['h']
@@ -32,8 +32,9 @@ declare global {
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
   const isRef: typeof import('vue')['isRef']
+  const library: typeof import('./library/index')['default']
   const markRaw: typeof import('vue')['markRaw']
-  const navigator: typeof import('./library/modules/navigator.js')['default']
+  const nav: typeof import('./library/modules/nav')['default']
   const nextTick: typeof import('vue')['nextTick']
   const onActivated: typeof import('vue')['onActivated']
   const onBeforeMount: typeof import('vue')['onBeforeMount']
@@ -63,7 +64,7 @@ declare global {
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
-  const to: typeof import('./library/modules/to.js')['default']
+  const to: typeof import('./library/modules/to')['default']
   const toRaw: typeof import('vue')['toRaw']
   const toRef: typeof import('vue')['toRef']
   const toRefs: typeof import('vue')['toRefs']
@@ -75,7 +76,7 @@ declare global {
   const useCssVars: typeof import('vue')['useCssVars']
   const useSlots: typeof import('vue')['useSlots']
   const useUniAppSystemRectInfo: typeof import('@tuniao/tnui-vue3-uniapp')['useUniAppSystemRectInfo']
-  const utils: typeof import('./library/modules/utils.js')['default']
+  const utils: typeof import('./library/utils')['default']
   const watch: typeof import('vue')['watch']
   const watchEffect: typeof import('vue')['watchEffect']
   const watchPostEffect: typeof import('vue')['watchPostEffect']
@@ -88,5 +89,5 @@ declare global {
   // @ts-ignore
   export type { TnNotifyInstance, TnModalInstance, TnActionSheetInstance } from '@tuniao/tnui-vue3-uniapp'
   // @ts-ignore
-  export type { RequestSuccessCallbackResult } from '@dcloudio/uni-app'
+  export type { RequestSuccessCallbackResult, Page } from '@dcloudio/uni-app'
 }

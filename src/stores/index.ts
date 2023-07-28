@@ -10,7 +10,7 @@ for (const key in files) {
 // 获取模块内部状态
 const getInnerStates = type => {
   return Object.entries(modules)
-    .map(module => module[1].default[type])
+    .map((module: Array<AnyObject>) => module[1].default[type])
     .reduce((sum, cur) => ({ ...(sum || {}), ...cur }))
 }
 

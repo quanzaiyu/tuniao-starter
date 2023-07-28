@@ -1,6 +1,6 @@
-<script setup>
+<script setup lang="ts">
 function go(page) {
-  navigator.navigateTo(page)
+  nav.to(page)
 }
 </script>
 

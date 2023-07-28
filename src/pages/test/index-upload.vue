@@ -1,18 +1,9 @@
 <script setup lang="ts">
 // 图片上传
 const imageList = $ref([])
+
 async function upload(e) {
-  const res = await api.upload(e)
-  /*
-  返回的结构：
-  {
-    "link": "http://www.yunsuinfo.com:8090/bladex/upload/20230717/1362c26632d868d568e499a4f1a55a2c.png",
-    "domain": "http://www.yunsuinfo.com:8090/bladex",
-    "name": "upload/20230717/1362c26632d868d568e499a4f1a55a2c.png",
-    "originalName": "logo_80.png",
-    "attachId": null
-  }
-  */
+  const res: UploadResult = await api.upload(e) as UploadResult
   return res.link
 }
 </script>

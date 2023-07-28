@@ -13,8 +13,8 @@ const formConfig = $ref({
         { label: '男', value: 1 },
         { label: '女', value: 2 },
       ],
-      change(e) {
-        console.info('当前选中的值', e, this.value)
+      change() {
+        console.info('当前选中的值', this.value)
       },
     },
     {
@@ -61,8 +61,8 @@ const formConfig = $ref({
         { label: '苹果', value: 1 },
         { label: '香蕉', value: 2 },
       ],
-      change(e) {
-        console.info('当前选中的值', e, this.value)
+      change() {
+        console.info('当前选中的值', this.value)
       },
     },
     {
@@ -104,8 +104,8 @@ const formConfig = $ref({
       prop: 'switch1',
       type: 'switch',
       value: false, // 设置开关的默认值
-      change(e) {
-        console.info('当前选中的值', e, this.value)
+      change() {
+        console.info('当前选中的值', this.value)
       },
     },
     {
@@ -115,8 +115,8 @@ const formConfig = $ref({
       value: 1,
       activeValue: 1,
       inactiveValue: 0,
-      change(e) {
-        console.info('当前选中的值', e, this.value)
+      change() {
+        console.info('当前选中的值', this.value)
       },
     },
     {
@@ -132,8 +132,8 @@ const formConfig = $ref({
       type: 'switch',
       value: true,
       activeColor: 'tn-orangered',
-      change(e) {
-        console.info('当前选中的值', e, this.value)
+      change() {
+        console.info('当前选中的值', this.value)
       },
     },
     {
@@ -147,8 +147,8 @@ const formConfig = $ref({
       max: 20,
       bgColor: '#01beff',
       textColor: '#fff',
-      change(e) {
-        console.info('current value: ', e, this.value)
+      change() {
+        console.info('当前选中的值', this.value)
       },
     },
     {
@@ -159,8 +159,8 @@ const formConfig = $ref({
       step: 5,
       min: 0,
       max: 20,
-      change(e) {
-        console.info('current value: ', e, this.value)
+      change() {
+        console.info('当前选中的值', this.value)
       },
     },
   ],

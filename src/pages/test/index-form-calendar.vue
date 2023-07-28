@@ -1,7 +1,7 @@
-<script setup>
+<script setup lang="ts">
 const layout = $ref(null)
 
-const formConfig = $ref({
+const formConfig = $ref<AppForm>({
   columns: [
     {
       label: '日历选择器：单选',
@@ -9,7 +9,7 @@ const formConfig = $ref({
       type: 'calendar',
       format: 'YYYY-MM-DD', // 日期格式，可省略，默认 YYYY-MM-DD
       placeholder: '点击弹出日历选择器',
-      confirm(e) {
+      confirm() {
         console.info(this.value) // 当前输入框显示的值
         console.info(this.pickerValue) // 当前选择器的值
       },
@@ -20,7 +20,7 @@ const formConfig = $ref({
       type: 'calendar',
       mode: 'multi',
       placeholder: '点击弹出日历选择器',
-      confirm(e) {
+      confirm() {
         console.info(this.value) // 当前输入框显示的值
         console.info(this.pickerValue) // 当前选择器的值
       },
@@ -31,7 +31,7 @@ const formConfig = $ref({
       type: 'calendar',
       mode: 'range',
       placeholder: '点击弹出日历选择器',
-      confirm(e) {
+      confirm() {
         console.info(this.value) // 当前输入框显示的值
         console.info(this.pickerValue) // 当前选择器的值
       },
@@ -44,7 +44,7 @@ const formConfig = $ref({
       rangeStartDesc: '入住', // 默认“开始”
       rangeEndDesc: '离店', // 默认“结束”
       placeholder: '点击弹出日历选择器',
-      confirm(e) {
+      confirm() {
         console.info(this.value) // 当前输入框显示的值
         console.info(this.pickerValue) // 当前选择器的值
       },
@@ -57,7 +57,7 @@ const formConfig = $ref({
       minDate: dayjs().add(-1, 'week').format('YYYY-MM-DD'), // 开始日期
       maxDate: dayjs().add(1, 'week').format('YYYY-MM-DD'), // 结束日期
       placeholder: '点击弹出日历选择器',
-      confirm(e) {
+      confirm() {
         console.info(this.value) // 当前输入框显示的值
         console.info(this.pickerValue) // 当前选择器的值
       },
@@ -72,7 +72,7 @@ const formConfig = $ref({
       rangeTextColor: 'tn-orangered', // 区间文字颜色
       rangeBgColor: 'tn-gray-disabled', // 区间背景颜色
       placeholder: '点击弹出日历选择器',
-      confirm(e) {
+      confirm() {
         console.info(this.value) // 当前输入框显示的值
         console.info(this.pickerValue) // 当前选择器的值
       },
@@ -83,7 +83,7 @@ const formConfig = $ref({
       type: 'calendar',
       showLunar: true, // 显示农历
       placeholder: '点击弹出日历选择器',
-      confirm(e) {
+      confirm() {
         console.info(this.value) // 当前输入框显示的值
         console.info(this.pickerValue) // 当前选择器的值
       },

@@ -27,7 +27,7 @@ export default {
       uni.setStorage({ key: 'userInfo', data: this.userInfo })
 
       if (!options.noJump) {
-        navigator.redirectTo('/pages/index/index')
+        nav.replace('/pages/index/index')
       }
     },
     // 通过sessionId登录
@@ -49,7 +49,7 @@ export default {
         uni.setStorage({ key: 'sessionId', data: sessionId })
         uni.setStorage({ key: 'userInfo', data: this.userInfo })
 
-        navigator.redirectTo('/pages/index/index')
+        nav.replace('/pages/index/index')
       }
     },
     // 获取省市区列表

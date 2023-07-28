@@ -1,7 +1,7 @@
-<script setup>
+<script setup lang="ts">
 const layout = $ref(null)
 
-const formConfig = $ref({
+const formConfig = $ref<AppForm>({
   labelPosition: 'left',
   labelWidth: 150,
   columns: [
@@ -9,7 +9,7 @@ const formConfig = $ref({
       label: '姓名',
       prop: 'name',
       placeholder: '请输入姓名',
-      input(e) {
+      input() {
         console.info(this.value)
       },
       rules: [
@@ -22,7 +22,7 @@ const formConfig = $ref({
       type: 'calendar',
       format: 'YYYY-MM-DD', // 日期格式，可省略，默认 YYYY-MM-DD
       placeholder: '请选择生日',
-      confirm(e) {
+      confirm() {
         console.info(this.value) // 当前输入框显示的值
         console.info(this.pickerValue) // 当前选择器的值
       },
@@ -40,8 +40,8 @@ const formConfig = $ref({
         { label: '男', value: 1 },
         { label: '女', value: 2 },
       ],
-      change(e) {
-        console.info('当前选中的值', e, this.value)
+      change() {
+        console.info('当前选中的值', this.value)
       },
       rules: [
         { required: true, message: '请选择性别', trigger: ['change', 'blur'] },

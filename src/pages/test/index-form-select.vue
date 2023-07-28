@@ -9,7 +9,7 @@ const formConfig = $ref({
       type: 'select',
       placeholder: '点击弹出简单选择框',
       data: ['选项1', '选项2', '选项3', '选项4', '选项5'],
-      confirm(e) {
+      confirm() {
         console.info(this.current) // 当前选择框的值
         console.info(this.value) // 当前输入框显示的值
         console.info(this.pickerValue) // 当前选择器的值
@@ -27,7 +27,7 @@ const formConfig = $ref({
         { label: '对象选项4', value: 4 },
         { label: '对象选项5', value: 5 },
       ],
-      confirm(e) {
+      confirm() {
         console.info(this.current) // 当前选择框的值
         console.info(this.value) // 当前输入框显示的值
         console.info(this.pickerValue) // 当前选择器的值

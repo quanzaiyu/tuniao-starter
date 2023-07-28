@@ -50,7 +50,7 @@ class Utils {
   isPhone(num, msg) {
     if (!/^1[3456789]\d{9}$/.test(num)) {
       if (msg) {
-        this.toast(msg)
+        uni.showToast({ title: msg, icon: 'none' })
       }
       return false
     }
@@ -61,7 +61,7 @@ class Utils {
   isEmail(num, msg) {
     if (!/^[a-z\d]+(\.[a-z\d]+)*@([\da-z](-[\da-z])?)+(\.{1,2}[a-z]+)+$/.test(num)) {
       if (msg) {
-        this.toast(msg)
+        uni.showToast({ title: msg, icon: 'none' })
       }
       return false
     }
@@ -69,12 +69,12 @@ class Utils {
   }
 
   // 验证是否是身份证号
-  isIdcard(num, msg) {
+  isIdcard(num: string, msg?: string) {
     num = num.toUpperCase()
     // 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X。
     if (!/(^\d{15}$)|(^\d{17}([0-9]|X)$)/.test(num)) {
       if (msg) {
-        this.toast(msg)
+        uni.showToast({ title: msg, icon: 'none' })
       }
       return false
     }
@@ -93,7 +93,7 @@ class Utils {
         dtmBirth.getDate() === Number(arrSplit[4])
       if (!bCorrectDay) {
         if (msg) {
-          this.toast(msg)
+          uni.showToast({ title: msg, icon: 'none' })
         }
         return false
       } else {
@@ -104,7 +104,7 @@ class Utils {
         let nTemp = 0
         num = num.substr(0, 6) + '19' + num.substr(6, num.length - 6)
         for (let i = 0; i < 17; i++) {
-          nTemp += num.substr(i, 1) * arrInt[i]
+          nTemp += Number(num.substr(i, 1)) * arrInt[i]
         }
         num += arrCh[nTemp % 11]
         return true
@@ -122,7 +122,7 @@ class Utils {
         dtmBirth.getDate() === Number(arrSplit[4])
       if (!bCorrectDay) {
         if (msg) {
-          this.toast(msg)
+          uni.showToast({ title: msg, icon: 'none' })
         }
         return false
       } else {
@@ -132,12 +132,12 @@ class Utils {
         const arrCh = ['1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2']
         let nTemp = 0
         for (let i = 0; i < 17; i++) {
-          nTemp += num.substr(i, 1) * arrInt[i]
+          nTemp += Number(num.substr(i, 1)) * arrInt[i]
         }
         const valnum = arrCh[nTemp % 11]
         if (valnum !== num.substr(17, 1)) {
           if (msg) {
-            this.toast(msg)
+            uni.showToast({ title: msg, icon: 'none' })
           }
           return false
         }
@@ -145,7 +145,7 @@ class Utils {
       }
     }
     if (msg) {
-      this.toast(msg)
+      uni.showToast({ title: msg, icon: 'none' })
     }
     return false
   }
@@ -153,7 +153,7 @@ class Utils {
   isUniSCID(num, msg) {
     if (!/^9[0-9A-HJ-NPQRTUWXY]\d{6}[0-9A-HJ-NPQRTUWXY]{10}/.test(num)) {
       if (msg) {
-        this.toast(msg)
+        uni.showToast({ title: msg, icon: 'none' })
       }
       return false
     }
@@ -196,10 +196,10 @@ class Utils {
   checkBrowser() {
     // #ifdef H5
     const browser = navigator.userAgent.toLowerCase()
-    if (browser.match(/Alipay/i) === 'alipay') {
-      // 支付宝环境
+    if (browser.includes('alipay')) {
+      // 支付宝内置浏览器
       return 'alipay'
-    } else if (browser.match(/MicroMessenger/i) === 'micromessenger') {
+    } else if (browser.includes('micromessenger')) {
       // 微信内置浏览器
       return 'wxpay'
     }

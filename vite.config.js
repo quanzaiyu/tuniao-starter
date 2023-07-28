@@ -44,12 +44,12 @@ export default defineConfig({
         },
         {
           from: '@dcloudio/uni-app',
-          imports: ['RequestSuccessCallbackResult'],
+          imports: ['RequestSuccessCallbackResult', 'Page'],
           type: true,
         },
       ],
 			resolvers: [],
-      dirs: ['src/composables', 'src/library/modules/**'],
+      dirs: ['src/composables', 'src/library/**'],
       dts: 'src/auto-imports.d.ts',
       eslintrc: {
         enabled: true,

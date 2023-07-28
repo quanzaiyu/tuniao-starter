@@ -35,7 +35,7 @@ const mountObj = {
   $api: api, // 请求方法挂载全局
   $filter: library.filter, // 异步函数封装挂载全局
   $utils: library.utils, // 各类系统方法挂载全局
-  $navigator: library.navigator, // 路由跳转挂载全局
+  $nav: library.nav, // 路由跳转挂载全局
   $to: library.to, // 异步函数封装挂载全局
   $env: {
     oss: import.meta.env.VITE_APP_OSS,

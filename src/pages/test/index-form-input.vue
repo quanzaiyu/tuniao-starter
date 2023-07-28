@@ -1,14 +1,14 @@
-<script setup>
+<script setup lang="ts">
 const layout = $ref(null)
 
-const formConfig = $ref({
+const formConfig = $ref<AppForm>({
   columns: [
     {
       label: '文本框',
       prop: 'text',
       // type: 'text', // 输入框类型，可选: text | number | idcard | digit | textarea | password | select ，默认值text可省略
       placeholder: '请输入文本',
-      input(e) {
+      input() {
         // 获取输入框的值
         console.info(this.value)
       },
@@ -27,7 +27,7 @@ const formConfig = $ref({
       prop: 'text',
       value: 'Hi', // 当前输入框的值，可以不指定，主要用于回显
       placeholder: '请输入文本',
-      input(e) {
+      input() {
         console.info(this.value)
       },
     },

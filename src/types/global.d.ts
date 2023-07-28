@@ -10,6 +10,10 @@ declare global {
     app: any;
   }
 
+  interface Date {
+    getYear: () => number;
+  }
+
   /**
    * 拓展全局变量import.meta
    */

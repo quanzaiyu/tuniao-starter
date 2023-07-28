@@ -2,14 +2,18 @@
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
     "ignoreDeprecations": "5.0",
-    "sourceMap": true,
     "baseUrl": ".",
+    "sourceMap": true,
     "allowJs": true,
+    "strict": false,
     "target": "ES2015",
-    "moduleResolution": "node",
-    "preserveValueImports": false,
-    "importsNotUsedAsValues": "remove",
+    "noImplicitThis": false,
     "verbatimModuleSyntax": true,
+    "preserveValueImports": false,
+    "moduleResolution": "node",
+    "importsNotUsedAsValues": "remove",
+    "module": "esnext",
+    "jsx": "preserve",
     "lib": ["ESNext", "Dom", "DOM.Iterable"],
     "types": [
       "@dcloudio/types",
@@ -21,10 +25,7 @@
     ],
     "paths": {
       "@/*": ["./src/*"]
-    },
-    "module": "esnext",
-    "strict": false,
-    "jsx": "preserve"
+    }
   },
   "include": [
     "src/**/*.js",

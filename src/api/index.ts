@@ -6,12 +6,9 @@ export interface IQuery {
 }
 
 interface IAPIOptions {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  query?: any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  header?: any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  pathParams?: any
+  query?: AnyObject
+  header?: AnyObject
+  pathParams?: AnyObject
   needMarketSponsorInfoId?: boolean
 }
 
@@ -52,7 +49,7 @@ class API {
     url = url.includes('http') ? url : this.baseProjectUrl + url
 
     // 添加头部信息
-    let header = {
+    let header: AnyObject = {
       'Content-Type': contentType,
       Authorization: 'Basic c2FiZXI6c2FiZXJfc2VjcmV0',
       ...options.header,
@@ -63,7 +60,7 @@ class API {
     if (role === Role.COMPANY || role === Role.MONITOR) {
       // 企业端或监管端需要携带 token
       header = {
-        'Blade-Auth': userInfo.access_token,
+        'Blade-Auth': userInfo?.access_token,
         ...header,
       }
     }
