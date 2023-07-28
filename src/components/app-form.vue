@@ -440,7 +440,8 @@ console.info('初始化表单数据：', computedConfig)
               :custom-style="{
                 margin: '0rpx 30rpx',
                 width: 'calc(100% - 60rpx)',
-                padding: '20rpx 30rpx' }"
+                padding: '20rpx 30rpx'
+              }"
               @click="invokeEventFunc(item, 'confirm', $event)"
             >
               确定
@@ -526,7 +527,7 @@ console.info('初始化表单数据：', computedConfig)
           :limit="item.limit ?? 1"
           :multiple="item.multiple ?? true"
           :max-size="item.maxSize ?? 3 * 1024 * 1024"
-          :extensions="item.extensions ?? ['jpg','jpeg', 'png']"
+          :extensions="item.extensions ?? ['jpg', 'jpeg', 'png']"
           :size-type="item.sizeType ?? ['original', 'compressed']"
           :source-type="item.sourceType ?? ['album', 'camera']"
           :auto-remove-faild-file="item.autoRemoveFaildFile ?? true"
@@ -534,7 +535,7 @@ console.info('初始化表单数据：', computedConfig)
         ></tn-image-upload>
       </tn-form-item>
     </tn-form>
-    <tn-button size="lg" :custom-style="{width: '100%', height: '100rpx' }" @click="submitForm"> 提交 </tn-button>
+    <tn-button size="lg" :custom-style="{ width: '100%', height: '100rpx' }" @click="submitForm"> 提交 </tn-button>
   </view>
 </template>
 

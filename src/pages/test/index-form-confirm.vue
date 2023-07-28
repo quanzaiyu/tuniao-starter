@@ -102,5 +102,4 @@ const confirm = function (formData) {
 </template>
 
 <style lang="scss" scoped>
-
 </style>
