@@ -87,4 +87,6 @@ declare global {
   export type { Component, ComponentPublicInstance, ComputedRef, InjectionKey, PropType, Ref, VNode } from 'vue'
   // @ts-ignore
   export type { TnNotifyInstance, TnModalInstance, TnActionSheetInstance } from '@tuniao/tnui-vue3-uniapp'
+  // @ts-ignore
+  export type { RequestSuccessCallbackResult } from '@dcloudio/uni-app'
 }

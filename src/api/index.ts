@@ -1,4 +1,23 @@
+import type { APIType } from './urls'
+import { ContentType, Role } from './urls'
+
+export interface IQuery {
+  [key: string]: [string, string, number, number?]
+}
+
+interface IAPIOptions {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  query?: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  header?: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  pathParams?: any
+  needMarketSponsorInfoId?: boolean
+}
+
 class API {
+  baseProjectUrl = ''
+
   constructor() {
     // #ifdef H5
     this.baseProjectUrl = import.meta.env.VITE_APP_BASE_API_H5
@@ -14,9 +33,9 @@ class API {
   }
 
   resolve(
-    type,
+    type: APIType,
     data = {}, // get请求的query或者post请求的body
-    options = {}
+    options: IAPIOptions = {}
   ) {
     options = {
       query: {}, // post请求中的query
@@ -27,12 +46,10 @@ class API {
     }
 
     // eslint-disable-next-line prefer-const
-    let [url, method, requestType] = type
+    let [url, method, contentType, role] = type
 
     // 请求路径
     url = url.includes('http') ? url : this.baseProjectUrl + url
-    // contentType
-    const contentType = ['', 'application/x-www-form-urlencoded;charset=UTF-8', 'application/json', 'multipart/form-data'][requestType]
 
     // 添加头部信息
     let header = {
@@ -43,15 +60,15 @@ class API {
 
     // 添加参数
     const userInfo = uni.$store.userInfo
-    if (userInfo) {
-      // token
+    if (role === Role.COMPANY || role === Role.MONITOR) {
+      // 企业端或监管端需要携带 token
       header = {
         'Blade-Auth': userInfo.access_token,
         ...header,
       }
     }
 
-    if (requestType !== 3) {
+    if (contentType !== ContentType.FORM) {
       // 删除无用的键值
       for (const key in data) {
         if (data[key] === undefined || data[key] === null) {
@@ -66,7 +83,7 @@ class API {
         method,
         data,
         header,
-        success(res) {
+        success(res: RequestSuccessCallbackResult) {
           const statusCode = Number(res.statusCode)
           const success = Number(res.data?.success)
           if (statusCode === 200) {

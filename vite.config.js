@@ -42,6 +42,11 @@ export default defineConfig({
           imports: ['TnNotifyInstance', 'TnModalInstance', 'TnActionSheetInstance'],
           type: true,
         },
+        {
+          from: '@dcloudio/uni-app',
+          imports: ['RequestSuccessCallbackResult'],
+          type: true,
+        },
       ],
 			resolvers: [],
       dirs: ['src/composables', 'src/library/modules/**'],
