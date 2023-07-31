@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 function go() {
   nav.to('/pages/test/index', { a: 1, b: 2 })
 }

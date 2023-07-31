@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 onLaunch(function (options) {
   // 通过sessionId登录
   // await uni.$store.loginBySessionId(options)

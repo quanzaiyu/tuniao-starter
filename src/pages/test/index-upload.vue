@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const layout = $ref(null)
 // 图片上传
 const imageList = $ref([])
 
@@ -9,7 +10,7 @@ async function upload(e) {
 </script>
 
 <template>
-  <Layout title="上传图片">
+  <Layout ref="layout" title="上传图片">
     <tn-image-upload
       v-model="imageList"
       action=""

@@ -1,7 +1,7 @@
-<script setup>
+<script setup lang="ts">
 const layout = $ref(null)
 
-const formConfig = $ref({
+const formConfig = $ref<AppForm>({
   labelPosition: 'left', // 表单整体的标签位置，可选: top | left | right，默认 top
   columns: [
     {

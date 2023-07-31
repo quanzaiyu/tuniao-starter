@@ -1,11 +1,12 @@
 <script setup lang="ts">
+const layout = $ref(null)
 function go(page) {
   nav.to(page)
 }
 </script>
 
 <template>
-  <Layout title="示例">
+  <Layout ref="layout" title="示例">
     <button @click="go('/pages/test/index-header')">自定义头部</button>
     <button @click="go('/pages/test/index-popup')">弹出层</button>
     <button @click="go('/pages/test/index-api')">接口请求</button>

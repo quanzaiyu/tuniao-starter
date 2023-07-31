@@ -43,12 +43,36 @@ interface AppFormItem {
   rangeTextColor?: string
   rangeBgColor?: string
   showLunar?: boolean
+
   mask?: boolean
+  zIndex?: number
+
   disabled?: boolean
   border?: boolean
   borderColor?: string
   placeholderStyle?: {}
   height?: number | string
+
+  activeValue?: number | string | boolean
+  inactiveValue?: number | string | boolean
+  activeColor?: string
+  inputDisabled?: boolean
+  step?: number
+  min?: number
+  max?: number
+  bgColor?: string
+  textColor?: string
+
+  labelKey?: string
+  valueKey?: string
+  childrenKey?: string
+
+  showConfirm?: boolean
+  showCancel?: boolean
+  cancelText?: string
+  cancelColor?: string
+  confirmText?: string
+  confirmColor?: string
 
   click?: () => void
   input?: () => void

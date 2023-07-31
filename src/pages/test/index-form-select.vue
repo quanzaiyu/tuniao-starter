@@ -1,7 +1,7 @@
-<script setup>
+<script setup lang="ts">
 const layout = $ref(null)
 
-const formConfig = $ref({
+const formConfig = $ref<AppForm>({
   columns: [
     {
       label: '简单选择框',
