@@ -62,8 +62,8 @@ const formConfig = $ref<AppForm>({
       prop: 'dateTimePicker6',
       type: 'dateTimePicker',
       mode: 'datetime',
-      minTime: dayjs().add(-1, 'week').format('YYYY-MM-DD'), // 开始日期
-      maxTime: dayjs().add(1, 'week').format('YYYY-MM-DD'), // 结束日期
+      minTime: dayjs().add(-1, 'week').format('YYYY-MM-DD'),
+      maxTime: dayjs().add(1, 'week').format('YYYY-MM-DD'),
       placeholder: '点击弹出日期时间选择器',
       confirm() {
         console.info(this.value)

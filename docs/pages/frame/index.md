@@ -8,25 +8,50 @@
 
 ```
 .
-├─index.html
-├─src # 项目目录
-│  ├─api # 接口
-│  ├─composables # 混合式API
-│  ├─components # 公共组件
-│  ├─pages # 路由页面
-│  │   ├─index # 首页
-│  │   └─test # 测试页面
-│  ├─style # 公共样式
-│  ├─stores # 状态管理
-│  ├─static # 静态资源
-│  │   ├─icons # 图标
-│  │   └─images # 图片
-│  ├─library # 项目库文件
-│  ├─App.vue # 项目启动文件
-│  └─main.js # 项目入口
-├─scripts # auto-import 配置
-└─docs # 项目文档
-
+├── docs # vitepress文档
+├── src
+│   ├── App.vue # 项目启动文件
+│   ├── api # 接口
+│   ├── auto-imports.d.ts # AutoImports自动生成
+│   ├── components # 公共组件
+│   ├── composables # 混合式API
+│   ├── directive # 自定义指令
+│   ├── env.d.ts # 类型定义
+│   ├── library # 项目库
+│   ├── main.ts # 入口文件
+│   ├── manifest.json # uniapp清单
+│   ├── mixin # 混入
+│   ├── pages.json # 页面路由配置
+│   ├── pages # 页面文件
+│   ├── ployfill.js # 叠片
+│   ├── static # 静态资源
+│   ├── stores # pinia状态管理
+│   ├── style # 公共样式
+│   ├── types # typescript类型定义
+│   ├── uni.scss
+│   └── uni_modules
+├── .editorconfig
+├── .env
+├── .env.dev
+├── .env.prod
+├── .env.test
+├── .eslintignore
+├── .eslintrc.js
+├── .gitignore
+├── .hintrc
+├── .npmrc
+├── .stylelintrc
+├── .vscode
+├── CHANGELOG.md
+├── README.md
+├── commitlint.config.js
+├── index.html
+├── package.json
+├── pnpm-lock.yaml
+├── tsconfig.json
+├── unocss.config.js
+├── vite.config.js
+└── volar.config.js
 ```
 
 ## 页面模块
@@ -58,8 +83,6 @@
 在`components`下，已存的组件如下：
 
 - `Layout` 布局组件
-- `AppToast` 吐司组件
-- `AppLoading` Loading组件
 - `AppTreeRadio` 树形单选组件
 - `AppTreeMultiply` 树形多选组件
 
@@ -79,16 +102,7 @@
 pnpm dev
 ```
 
-运行地址：http://localhost:8000/
-
-
-或者使用：
-
-```
-pnpm dev:h5
-```
-
-运行地址：http://localhost:5173/
+运行地址：[http://localhost:8000/](http://localhost:8000/)
 
 ### 运行到支付宝小程序
 

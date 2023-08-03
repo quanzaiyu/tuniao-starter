@@ -20,7 +20,7 @@ const formConfig = $ref<AppForm>({
       label: '生日',
       prop: 'birthday',
       type: 'calendar',
-      format: 'YYYY-MM-DD', // 日期格式，可省略，默认 YYYY-MM-DD
+      format: 'YYYY-MM-DD',
       placeholder: '请选择生日',
       confirm() {
         console.info(this.value) // 当前输入框显示的值
@@ -62,7 +62,7 @@ const formConfig = $ref<AppForm>({
       prop: 'phone',
       type: 'number',
       placeholder: '请输入11位手机号码',
-      maxlength: 11, // 输入框最大长度，number
+      maxlength: 11,
       rules: [
         { required: true, message: '请输入手机号码', trigger: ['change', 'blur'] },
         { pattern: /^1\d{10}$/, message: '请输入正确的手机号码', trigger: ['change', 'blur'] },
@@ -75,9 +75,9 @@ const formConfig = $ref<AppForm>({
       value: ['upload/20230728/b43395411ccaa2eb0575475e29ce6b34.jpg', 'upload/20230728/2eeaa6952b7480c77273a458998580ad.jpg'],
       placeholder: '请上传头像',
       // disabled: true, // 是否禁用
-      limit: 3, // 允许上传的文件个数，可省略，默认1
-      maxSize: 1 * 1024 * 1024, // 1MB，可省略，默认3MB
-      extensions: ['jpg', 'png'], // 允许上传的文件类型，可省略，默认 ['jpg','jpeg', 'png']
+      limit: 3,
+      maxSize: 1 * 1024 * 1024,
+      extensions: ['jpg', 'png'],
       rules: [
         { required: true, message: '请上传头像', trigger: ['change', 'blur'] },
       ],

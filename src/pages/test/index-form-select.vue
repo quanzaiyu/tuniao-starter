@@ -28,17 +28,17 @@ const formConfig = $ref<AppForm>({
         { label: '对象选项5', value: 5 },
       ],
       confirm() {
-        console.info(this.current) // 当前选择框的值
-        console.info(this.value) // 当前输入框显示的值
-        console.info(this.pickerValue) // 当前选择器的值
+        console.info(this.current)
+        console.info(this.value)
+        console.info(this.pickerValue)
       },
     },
     {
       label: '默认选中值',
       prop: 'select3',
       type: 'select',
-      value: '选项3', // 当前输入框显示的值，可以不指定，主要用于回显
-      pickerValue: 3, // 当前选择器的值，可以不指定，主要用于回显
+      value: '选项3',
+      pickerValue: 3,
       placeholder: '点击弹出简单选择框',
       data: [
         { label: '对象选项1', value: 1 },
@@ -52,9 +52,9 @@ const formConfig = $ref<AppForm>({
       label: '对象选择框（自定义key-value）',
       prop: 'select4',
       type: 'select',
-      labelKey: 'text', // 不指定的话，默认为 label
-      valueKey: 'value', // 不指定的话，默认为 value
-      childrenKey: 'children', // 不指定的话，默认为 children
+      labelKey: 'text',
+      valueKey: 'value',
+      childrenKey: 'children',
       placeholder: '点击弹出对象选择框',
       data: [
         { text: '对象选项1', value: 1 },
@@ -296,7 +296,7 @@ const formConfig = $ref<AppForm>({
       label: '禁用选择框',
       prop: 'select8',
       type: 'select',
-      disabled: true, // 是否禁用，可选: true | false
+      disabled: true,
       placeholder: '禁用选择框',
       data: ['选项1', '选项2', '选项3', '选项4', '选项5'],
     },
@@ -306,20 +306,20 @@ const formConfig = $ref<AppForm>({
       type: 'select',
       placeholder: '隐藏取消按钮的选择框',
       data: ['选项1', '选项2', '选项3', '选项4', '选项5'],
-      showConfirm: true, // 是否显示确定按钮，可选: true | false，默认 true
-      showCancel: false, // 是否显示取消按钮，可选: true | false，默认 true
+      showConfirm: true,
+      showCancel: false,
     },
     {
       label: '自定义按钮',
       prop: 'select10',
       type: 'select',
       placeholder: '自定义按钮的选择框',
-      cancelText: 'cancel', // 取消按钮的文本
-      cancelColor: '#090', // 取消按钮的字体颜色
-      confirmText: 'confirm', // 确认按钮的文本
-      confirmColor: '#00f', // 确认按钮的字体颜色
-      mask: true, // 显示遮罩
-      zIndex: 2000, // Picker选择器的zIndex
+      cancelText: 'cancel',
+      cancelColor: '#090',
+      confirmText: 'confirm',
+      confirmColor: '#00f',
+      mask: true,
+      zIndex: 2000,
       data: ['选项1', '选项2', '选项3', '选项4', '选项5'],
     },
   ],

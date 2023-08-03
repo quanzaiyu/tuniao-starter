@@ -76,7 +76,7 @@ declare global {
   const useCssVars: typeof import('vue')['useCssVars']
   const useSlots: typeof import('vue')['useSlots']
   const useUniAppSystemRectInfo: typeof import('@tuniao/tnui-vue3-uniapp')['useUniAppSystemRectInfo']
-  const utils: typeof import('./library/utils')['default']
+  const utils: typeof import('./library/modules/utils')['default']
   const watch: typeof import('vue')['watch']
   const watchEffect: typeof import('vue')['watchEffect']
   const watchPostEffect: typeof import('vue')['watchPostEffect']

@@ -7,7 +7,7 @@ const formConfig = $ref<AppForm>({
       label: '日历选择器：单选',
       prop: 'calendar1',
       type: 'calendar',
-      format: 'YYYY-MM-DD', // 日期格式，可省略，默认 YYYY-MM-DD
+      format: 'YYYY-MM-DD',
       placeholder: '点击弹出日历选择器',
       confirm() {
         console.info(this.value) // 当前输入框显示的值
@@ -21,8 +21,8 @@ const formConfig = $ref<AppForm>({
       mode: 'multi',
       placeholder: '点击弹出日历选择器',
       confirm() {
-        console.info(this.value) // 当前输入框显示的值
-        console.info(this.pickerValue) // 当前选择器的值
+        console.info(this.value)
+        console.info(this.pickerValue)
       },
     },
     {
@@ -32,8 +32,8 @@ const formConfig = $ref<AppForm>({
       mode: 'range',
       placeholder: '点击弹出日历选择器',
       confirm() {
-        console.info(this.value) // 当前输入框显示的值
-        console.info(this.pickerValue) // 当前选择器的值
+        console.info(this.value)
+        console.info(this.pickerValue)
       },
     },
     {
@@ -41,12 +41,12 @@ const formConfig = $ref<AppForm>({
       prop: 'calendar4',
       type: 'calendar',
       mode: 'range',
-      rangeStartDesc: '入住', // 默认“开始”
-      rangeEndDesc: '离店', // 默认“结束”
+      rangeStartDesc: '入住',
+      rangeEndDesc: '离店',
       placeholder: '点击弹出日历选择器',
       confirm() {
-        console.info(this.value) // 当前输入框显示的值
-        console.info(this.pickerValue) // 当前选择器的值
+        console.info(this.value)
+        console.info(this.pickerValue)
       },
     },
     {
@@ -54,12 +54,12 @@ const formConfig = $ref<AppForm>({
       prop: 'calendar5',
       type: 'calendar',
       mode: 'range',
-      minDate: dayjs().add(-1, 'week').format('YYYY-MM-DD'), // 开始日期
-      maxDate: dayjs().add(1, 'week').format('YYYY-MM-DD'), // 结束日期
+      minDate: dayjs().add(-1, 'week').format('YYYY-MM-DD'),
+      maxDate: dayjs().add(1, 'week').format('YYYY-MM-DD'),
       placeholder: '点击弹出日历选择器',
       confirm() {
-        console.info(this.value) // 当前输入框显示的值
-        console.info(this.pickerValue) // 当前选择器的值
+        console.info(this.value)
+        console.info(this.pickerValue)
       },
     },
     {
@@ -67,25 +67,25 @@ const formConfig = $ref<AppForm>({
       prop: 'calendar6',
       type: 'calendar',
       mode: 'range',
-      activeTextColor: 'tn-orangered', // 激活文字颜色
-      activeBgColor: 'tn-gray-disabled', // 激活背景颜色
-      rangeTextColor: 'tn-orangered', // 区间文字颜色
-      rangeBgColor: 'tn-gray-disabled', // 区间背景颜色
+      activeTextColor: 'tn-orangered',
+      activeBgColor: 'tn-gray-disabled',
+      rangeTextColor: 'tn-orangered',
+      rangeBgColor: 'tn-gray-disabled',
       placeholder: '点击弹出日历选择器',
       confirm() {
-        console.info(this.value) // 当前输入框显示的值
-        console.info(this.pickerValue) // 当前选择器的值
+        console.info(this.value)
+        console.info(this.pickerValue)
       },
     },
     {
       label: '日历选择器：显示农历',
       prop: 'calendar7',
       type: 'calendar',
-      showLunar: true, // 显示农历
+      showLunar: true,
       placeholder: '点击弹出日历选择器',
       confirm() {
-        console.info(this.value) // 当前输入框显示的值
-        console.info(this.pickerValue) // 当前选择器的值
+        console.info(this.value)
+        console.info(this.pickerValue)
       },
     },
   ],

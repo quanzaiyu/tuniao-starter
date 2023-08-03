@@ -6,13 +6,11 @@ const formConfig = $ref<AppForm>({
     {
       label: '文本框',
       prop: 'text',
-      // type: 'text', // 输入框类型，可选: text | number | idcard | digit | textarea | password | select ，默认值text可省略
       placeholder: '请输入文本',
       input() {
         // 获取输入框的值
         console.info(this.value)
       },
-      // 表单校验规则，可以是数组或对象
       rules: [
         { required: true, message: '请输入用户名', trigger: ['change', 'blur'] },
         {
@@ -25,7 +23,7 @@ const formConfig = $ref<AppForm>({
     {
       label: '带默认值的输入框',
       prop: 'text',
-      value: 'Hi', // 当前输入框的值，可以不指定，主要用于回显
+      value: 'Hi',
       placeholder: '请输入文本',
       input() {
         console.info(this.value)
@@ -36,7 +34,7 @@ const formConfig = $ref<AppForm>({
       prop: 'number',
       type: 'number',
       placeholder: '请输入11位手机号码',
-      maxlength: 11, // 输入框最大长度，number
+      maxlength: 11,
       rules: {
         required: true,
       },
@@ -86,33 +84,32 @@ const formConfig = $ref<AppForm>({
     {
       label: '禁用输入框',
       prop: 'disabled',
-      disabled: true, // 是否禁用，可选: true | false
+      disabled: true,
     },
     {
       label: '文本对齐方式',
       prop: 'align',
-      textAlign: 'center', // 输入框对齐方式，可选: left | center | right，默认 left
+      textAlign: 'center',
     },
     {
       label: '尺寸大小',
       prop: 'size',
-      size: 'sm', // 输入框尺寸，可选: sm | lg，默认 lg
+      size: 'sm',
     },
     {
       label: '标签位置',
-      labelPosition: 'left', // 标签位置，可选: top | left | right，默认 top
+      labelPosition: 'left',
       prop: 'labelPosition',
     },
     {
       label: '边框样式',
       prop: 'border',
-      border: true, // 是否显示边框，可选: true | false
-      borderColor: '#009900', // 边框颜色，在border为true时有效，支持图鸟内置的边框颜色、hex、rgb、rgba
+      border: true,
+      borderColor: '#009900',
     },
     {
       label: '自定义占位符样式',
       prop: 'placeholder',
-      // 自定义占位符样式
       placeholderStyle: {
         fontSize: '40rpx',
         color: '#990000',
@@ -122,7 +119,7 @@ const formConfig = $ref<AppForm>({
     {
       label: '自定义输入框高度',
       prop: 'height',
-      height: '200rpx', // 输入框高度，number | string
+      height: '200rpx',
     },
   ],
 })

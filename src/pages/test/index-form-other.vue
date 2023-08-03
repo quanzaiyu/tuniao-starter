@@ -2,7 +2,7 @@
 const layout = $ref(null)
 
 const formConfig = $ref<AppForm>({
-  labelPosition: 'left', // 表单整体的标签位置，可选: top | left | right，默认 top
+  labelPosition: 'left',
   columns: [
     {
       label: '单选框：基础设置',
@@ -140,7 +140,7 @@ const formConfig = $ref<AppForm>({
       label: '步进器',
       prop: 'numberBox',
       type: 'numberBox',
-      inputDisabled: true, // 禁止输入
+      inputDisabled: true,
       value: 10, // 默认值
       step: 5,
       min: 0,
