@@ -23,7 +23,8 @@
     { "path": "pages/test/index-form-datetimepicker" },
     { "path": "pages/test/index-form-calendar" },
     { "path": "pages/test/index-form-other" },
-    { "path": "pages/test/index-form-confirm" }
+    { "path": "pages/test/index-form-confirm" },
+    { "path": "pages/test/index-form-confirm-init" }
 	],
 	"condition": {
 		"current": 0,

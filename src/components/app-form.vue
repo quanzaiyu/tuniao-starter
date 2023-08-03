@@ -24,82 +24,98 @@ function checkElementType(element) {
 }
 
 // 初始化表单数据
+;(async () => {
+  if (props.config) {
+    const config = props.config
+
+    let data = null
+    if (props.config?.initData) {
+      data = await props.config.initData()
+    }
+
+    config.formModel = {}
+    config.columns = config.columns.map(item => {
+      if (!item.type) {
+        // 没有指定type的话，默认为输入框
+        item.componentType = 'input' // 组件类型
+        item.inputType = 'text' // 输入框类型
+        item.value = data?.[item.prop] ?? item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
+        item.placeholder = item.placeholder ?? `请输入${item.label}`
+        config.formModel[item.prop] = item.value
+      } else if (['text', 'number', 'idcard', 'digit', 'textarea', 'password'].includes(item.type)) {
+        // 输入框
+        item.componentType = 'input'
+        item.inputType = item.type
+        item.value = data?.[item.prop] ?? item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
+        item.placeholder = item.placeholder ?? `请输入${item.label}`
+        config.formModel[item.prop] = item.value
+      } else if (['select', 'calendar', 'dateTimePicker', 'regionPicker', 'upload'].includes(item.type)) {
+        // select 选择框
+        // calendar 日历
+        // dateTimePicker 日期时间选择器
+        // regionPicker 地区选择器
+        // upload 上传
+        item.componentType = 'input'
+        item.inputType = 'select'
+        item.open = item.open ?? false // 控制Picker的显示与隐藏
+        item.placeholder = item.placeholder ?? `请选择${item.label}`
+
+        // 设置表单的默认值
+        if (['regionPicker'].includes(item.type)) {
+          item.value = data?.[item.prop] ?? item.value ?? [] // 当前输入框显示的值，可以不指定，主要用于回显
+          item.pickerValue = data?.[item.prop] ?? item.pickerValue ?? [] // 当前选择器的值，可以不指定，主要用于回显
+        } else if (item.type === 'upload') {
+          if (typeof data?.[item.prop] === 'string') {
+            data[item.prop] = data[item.prop].split(',')
+          }
+          item.value = (data?.[item.prop] ?? item.value ?? []).map(img => import.meta.env.VITE_APP_OSS + img) // 当前上传框显示的图片
+          item.pickerValue = data?.[item.prop] ?? item.pickerValue ?? [] // 当前上传框的值，不含域名
+          item.componentType = 'upload'
+          item.placeholder = item.placeholder ?? `请上传${item.label}`
+        } else {
+          item.value = data?.[item.prop] ?? item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
+          item.pickerValue = data?.[item.prop] ?? item.pickerValue ?? '' // 当前选择器的值，可以不指定，主要用于回显
+        }
+
+        if (item.type === 'select') {
+          item.labelKey = item.labelKey ?? 'label' // 不指定的话，默认为 label
+          item.valueKey = item.valueKey ?? 'value' // 不指定的话，默认为 value
+          item.childrenKey = item.childrenKey ?? 'children' // 不指定的话，默认为 children
+          item.current = item.current ?? '' // 设置默认选中的值
+          item.arrayType = checkArrayElementType(item.data) // 选择器数组元素类型
+        } else if (item.type === 'calendar') {
+          item.format = 'YYYY-MM-DD'
+        } else if (item.type === 'dateTimePicker') {
+          item.mode = item.mode ?? 'date'
+          const format = {
+            year: 'YYYY',
+            yearmonth: 'YYYY-MM',
+            date: 'YYYY-MM-DD',
+            datetime: 'YYYY-MM-DD HH:mm:ss',
+            time: 'HH:mm:ss',
+          }
+          item.format = format[item.mode]
+        }
+        config.formModel[item.prop] = item.pickerValue
+      } else {
+        // 其他类型，包括：radio、checkbox、switch、numberBox、slider
+        item.componentType = item.type
+        item.value = data?.[item.prop] ?? item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
+        config.formModel[item.prop] = item.value
+      }
+      return item
+    })
+  }
+})()
+
+// 计算表单值
 const computedConfig = $computed(() => {
   const config = props.config
   config.formModel = {}
   config.columns = config.columns.map(item => {
-    if (!item.type) {
-      // 没有指定type的话，默认为输入框
-      item.componentType = 'input' // 组件类型
-      item.inputType = 'text' // 输入框类型
-      item.placeholder = item.placeholder ?? `请输入${item.label}`
-      config.formModel[item.prop] = item.value
-    } else if (['text', 'number', 'idcard', 'digit', 'textarea', 'password'].includes(item.type)) {
-      // 输入框
-      item.componentType = 'input'
-      item.inputType = item.type
-      item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
-      item.placeholder = item.placeholder ?? `请输入${item.label}`
-      config.formModel[item.prop] = item.value
-    } else if (['select', 'calendar', 'dateTimePicker', 'regionPicker', 'upload'].includes(item.type)) {
-      // select 选择框
-      // calendar 日历
-      // dateTimePicker 日期时间选择器
-      // regionPicker 地区选择器
-      // upload 上传
-      item.componentType = 'input'
-      item.inputType = 'select'
-      item.open = item.open ?? false // 控制Picker的显示与隐藏
-      item.placeholder = item.placeholder ?? `请选择${item.label}`
-
-      // 设置表单的默认值
-      if (['regionPicker', 'upload'].includes(item.type)) {
-        item.value = item.value ?? [] // 当前输入框显示的值，可以不指定，主要用于回显
-        item.pickerValue = item.pickerValue ?? [] // 当前选择器的值，可以不指定，主要用于回显
-      } else {
-        item.value = item.value ?? '' // 当前输入框显示的值，可以不指定，主要用于回显
-        item.pickerValue = item.pickerValue ?? '' // 当前选择器的值，可以不指定，主要用于回显
-      }
-
-      if (item.type === 'select') {
-        item.labelKey = item.labelKey ?? 'label' // 不指定的话，默认为 label
-        item.valueKey = item.valueKey ?? 'value' // 不指定的话，默认为 value
-        item.childrenKey = item.childrenKey ?? 'children' // 不指定的话，默认为 children
-        item.current = item.current ?? '' // 设置默认选中的值
-        item.arrayType = checkArrayElementType(item.data) // 选择器数组元素类型
-      } else if (item.type === 'calendar') {
-        item.format = 'YYYY-MM-DD'
-      } else if (item.type === 'dateTimePicker') {
-        item.mode = item.mode ?? 'date'
-        const format = {
-          year: 'YYYY',
-          yearmonth: 'YYYY-MM',
-          date: 'YYYY-MM-DD',
-          datetime: 'YYYY-MM-DD HH:mm:ss',
-          time: 'HH:mm:ss',
-        }
-        item.format = format[item.mode]
-      } else if (item.type === 'upload') {
-        if (item.value.length) {
-          for (let i = 0; i < item.value.length; i++) {
-            const img = item.value[i]
-            if (!img.includes(import.meta.env.VITE_APP_OSS)) {
-              item.pickerValue[i] = img
-              // 将传入值加上前缀
-              item.value[i] = import.meta.env.VITE_APP_OSS + img
-            } else {
-              item.pickerValue[i] = img.split(import.meta.env.VITE_APP_OSS)[1]
-            }
-          }
-        }
-        item.componentType = 'upload'
-        item.placeholder = item.placeholder ?? `请上传${item.label}`
-      }
-
+    if (['select', 'calendar', 'dateTimePicker', 'regionPicker', 'upload'].includes(item.type)) {
       config.formModel[item.prop] = item.pickerValue
     } else {
-      // 其他类型，包括：radio、checkbox、switch、numberBox、slider
-      item.componentType = item.type
       config.formModel[item.prop] = item.value
     }
     return item
@@ -168,8 +184,9 @@ function selectConfirm(item, value: string | number | boolean | Array<number | s
 }
 
 // 文件上传
-async function upload(e) {
+async function upload(e, item) {
   const res: UploadResult = await api.upload(e) as UploadResult
+  item.pickerValue.push(res.name)
   return res.link
 }
 
@@ -512,7 +529,7 @@ console.info('初始化表单数据：', computedConfig)
           v-model="item.value"
           action=""
           :disabled="item.disabled ?? false"
-          :custom-upload-handler="e => upload(e)"
+          :custom-upload-handler="e => upload(e, item)"
           :before-remove="e => remove(e, item)"
           :limit="item.limit ?? 1"
           :multiple="item.multiple ?? true"

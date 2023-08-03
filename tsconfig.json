@@ -6,7 +6,7 @@
     "sourceMap": true,
     "allowJs": true,
     "strict": false,
-    "target": "ES2015",
+    "target": "es2020",
     "noImplicitThis": false,
     "verbatimModuleSyntax": true,
     "preserveValueImports": false,
@@ -20,7 +20,6 @@
       "@tuniao/tnui-vue3-uniapp/global",
       "@vue-macros/reactivity-transform/macros-global",
       "miniprogram-api-typings",
-      "mini-types",
       "@types/node"
     ],
     "paths": {

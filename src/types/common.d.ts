@@ -22,7 +22,8 @@ type CalendarMode = 'multi' | 'range'
 interface AppForm {
   columns: Array<AppFormItem>
   labelPosition?: LabelPosition // 表单整体的标签位置，默认 top
-  labelWidth?: number
+  labelWidth?: number, // 标签宽度
+  initData?: () => void // 初始化数据
 }
 
 // JSON表单项

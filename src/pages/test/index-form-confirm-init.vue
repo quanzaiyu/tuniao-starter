@@ -4,6 +4,20 @@ const layout = $ref(null)
 const formConfig = $ref<AppForm>({
   labelPosition: 'left',
   labelWidth: 150,
+  initData() {
+    return new Promise(resolve => {
+      const data = {
+        name: 'quanzaiyu',
+        birthday: '2023-01-01',
+        sex: 2,
+        age: 18,
+        phone: 18388019888,
+        // avatar: ['upload/20230728/b43395411ccaa2eb0575475e29ce6b34.jpg', 'upload/20230728/2eeaa6952b7480c77273a458998580ad.jpg'],
+        avatar: 'upload/20230728/b43395411ccaa2eb0575475e29ce6b34.jpg,upload/20230728/2eeaa6952b7480c77273a458998580ad.jpg',
+      }
+      resolve(data)
+    })
+  },
   columns: [
     {
       label: '姓名',
@@ -73,7 +87,6 @@ const formConfig = $ref<AppForm>({
       prop: 'avatar',
       type: 'upload',
       value: [],
-      // value: ['upload/20230728/b43395411ccaa2eb0575475e29ce6b34.jpg', 'upload/20230728/2eeaa6952b7480c77273a458998580ad.jpg'],
       placeholder: '请上传头像',
       // disabled: true, // 是否禁用
       limit: 3,
@@ -97,7 +110,7 @@ const confirm = function (formData) {
 </script>
 
 <template>
-  <Layout ref="layout" title="表单验证与提交示例">
+  <Layout ref="layout" title="表单数据初始化示例">
     <app-form :config="formConfig" @confirm="confirm"></app-form>
   </Layout>
 </template>
