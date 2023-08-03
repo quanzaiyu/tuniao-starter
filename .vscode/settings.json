@@ -15,5 +15,6 @@
   ],
   "i18n-ally.localesPaths": [
     "src/components/uni-ui/uni-load-more/i18n"
-  ]
+  ],
+  "vue.codeActions.enabled": false
 }

@@ -123,66 +123,6 @@ const computedConfig = $computed(() => {
   return config
 })
 
-// 从树中查找指定的对象
-function findObjectByValue(tree, value, valueKey = 'value', childrenKey = 'children') {
-  for (let i = 0; i < tree.length; i++) {
-    if (tree[i][valueKey] === value) {
-      return tree[i]
-    }
-    if (tree[i][childrenKey]) {
-      const result = findObjectByValue(tree[i].children, value, valueKey, childrenKey)
-      if (result) {
-        return result
-      }
-    }
-  }
-  return null
-}
-
-// 选择器方法处理
-// item 当前选择框实例
-// value 当前选择框的值
-// type 类型 1 单列选择器  2 多列选择器 3 树状选择器
-// arrayType 数组中元素的类型（是字符串数组还是对象数组）
-function selectConfirm(item, value: string | number | boolean | Array<number | string>, type: number, arrayType?: string): void {
-  if (type === 1) {
-    // 单列选择器
-    if (arrayType === 'object') {
-      // 对象数组
-      value = findObjectByValue(item.data, value, item.valueKey, item.childrenKey)
-      item.value = value[item.labelKey]
-    } else if (arrayType === 'string') {
-      // 字符串数组
-      item.value = value
-    }
-    // 当前选中的数据
-    item.current = value
-  } else if (type === 2) {
-    // 多列选择器
-    item.value = [] // 当前显示的值
-    item.current = [] // 当前选中的数据
-    for (let i = 0; i < (value as unknown as Array<AnyObject>).length; i++) {
-      if (arrayType === 'object') {
-        const currentValue = findObjectByValue(item.data[i], value[i], item.valueKey, item.childrenKey)
-        item.value.push(currentValue[item.labelKey])
-        item.current.push(currentValue)
-      } else if (arrayType === 'string') {
-        item.value.push(value[i])
-        item.current.push(value[i])
-      }
-    }
-  } else if (type === 3) {
-    // 树状选择器
-    item.value = [] // 当前显示的值
-    item.current = [] // 当前选中的数据
-    for (let i = 0; i < (value as unknown as Array<AnyObject>).length; i++) {
-      const currentValue = findObjectByValue(item.data, value[i], item.valueKey, item.childrenKey)
-      item.value.push(currentValue[item.labelKey])
-      item.current.push(currentValue)
-    }
-  }
-}
-
 // 文件上传
 async function upload(e, item) {
   const res: UploadResult = await api.upload(e) as UploadResult
@@ -223,17 +163,13 @@ function invokeEventFunc(item, method, value) {
 
         // 选择器
         if (checkElementType(value) === 'array') {
-          const arrayType = checkArrayElementType(item.data[0])
-          if (arrayType === undefined) {
-            // 树状选择器
-            selectConfirm(item, value, 3)
-          } else {
-            // 多列选择器
-            selectConfirm(item, value, 2, arrayType)
-          }
+          // 多列选择器，树状选择器
+          item.value = value.map(val => typeof val === 'string' ? val : val[item.labelKey])
+          item.current = value
         } else {
-          // 单列选择框
-          selectConfirm(item, value, 1, item.arrayType)
+          // 单列选择器
+          item.value = typeof value === 'string' ? value : value[item.labelKey] // 当前显示的值
+          item.current = value // 当前选中的数据
         }
       } else if (item.type === 'calendar') {
         // 日历
@@ -253,32 +189,8 @@ function invokeEventFunc(item, method, value) {
         item.pickerValue = dayjs(item.pickerValue).format(item.format)
         item.value = item.pickerValue
       } else if (item.type === 'regionPicker') {
-        item.value = item.pickerValue
-      }
-    } else if (method === 'cancel') {
-      // 取消，恢复上次被选中的值
-      if (item.arrayType === 'object') {
-        // eslint-disable-next-line no-prototype-builtins
-        const isTree = item.data[0].hasOwnProperty(item.childrenKey)
-        if (isTree) {
-          // 树状选择器
-          item.pickerValue = item.current.map(i => i[item.valueKey])
-        } else {
-          // 单列选择：对象数组
-          item.pickerValue = item.current?.[item.valueKey]
-        }
-      } else if (item.arrayType === 'string') {
-        // 单列选择：字符串数组
-        item.pickerValue = item.current
-      } else if (item.arrayType === 'array') {
-        const arrayType = checkArrayElementType(item.current)
-        if (arrayType === 'object') {
-          // 多列选择：对象数组
-          item.pickerValue = item.current.map(i => i[item.valueKey])
-        } else if (arrayType === 'string') {
-          // 多列选择：字符串数组
-          item.pickerValue = item.current
-        }
+        // 地区选择器
+        item.value = value.map(val => val.name)
       }
     }
   } else if (item.type === 'numberBox') {
@@ -370,9 +282,8 @@ console.info('初始化表单数据：', computedConfig)
           :children-key="item.childrenKey"
           :mask="item.mask ?? true"
           :z-index="item.zIndex ?? 1000"
-          @change="invokeEventFunc(item, 'change', $event)"
-          @confirm="invokeEventFunc(item, 'confirm', $event)"
-          @cancel="invokeEventFunc(item, 'cancel', $event)"
+          @change="(val, index, nodeItem) => invokeEventFunc(item, 'change', nodeItem)"
+          @confirm="(val, nodeItem) => invokeEventFunc(item, 'confirm', nodeItem)"
         />
         <!-- 单选框 -->
         <tn-radio-group
@@ -473,7 +384,6 @@ console.info('初始化表单数据：', computedConfig)
           :z-index="item.zIndex ?? 1000"
           @change="invokeEventFunc(item, 'change', $event)"
           @confirm="invokeEventFunc(item, 'confirm', $event)"
-          @cancel="invokeEventFunc(item, 'cancel', $event)"
         />
         <!-- 地区选择器 -->
         <tn-region-picker
@@ -488,9 +398,8 @@ console.info('初始化表单数据：', computedConfig)
           :confirm-text="item.confirmText ?? '确定'"
           :confirm-color="item.confirmColor"
           :z-index="item.zIndex ?? 1000"
-          @change="invokeEventFunc(item, 'change', $event)"
-          @confirm="invokeEventFunc(item, 'confirm', $event)"
-          @cancel="invokeEventFunc(item, 'cancel', $event)"
+          @change="(val, nodeItem) => invokeEventFunc(item, 'change', nodeItem)"
+          @confirm="(val, nodeItem) => invokeEventFunc(item, 'confirm', nodeItem)"
         />
         <!-- 步进器 -->
         <tn-number-box
