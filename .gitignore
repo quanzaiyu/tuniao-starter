@@ -19,3 +19,5 @@ project.*
 
 yarn.lock
 package-lock.json
+
+.vitepress/cache/deps_temp
