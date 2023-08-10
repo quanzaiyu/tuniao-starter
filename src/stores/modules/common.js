@@ -8,16 +8,18 @@ export default {
     // 系统信息
     systemInfo: uni.getSystemInfoSync(), // 获取系统信息, 通过 systemInfo.platform 可获取平台信息，返回 ios android
     platform: process.env.UNI_PLATFORM, // 获取运行环境，返回 h5 mp-weixin mp-alipay 等
+    fromLogin: false, // 是否从登录页面跳转过来
     /*
      * 业务相关的状态
      */
     sessionId: '', // 用户登录的sessionId
     userInfo: uni.getStorageSync('userInfo') || null, // 用户信息
-    sexMap: {}, // 销售者属性
-    sexList: [], // 销售者属性列表
+    sexMap: {}, // 性别属性
+    sexList: [], // 性别列表
   },
   getters: {},
   actions: {
+    // 登录
     async login(options) {
       this.userInfo = await api.resolve(URLS.login, {
         tenantId: '000000',
@@ -28,6 +30,20 @@ export default {
 
       if (!options.noJump) {
         nav.replace('/pages/index/index')
+      }
+    },
+    // 退出登录
+    logout() {
+      // 清除登录状态
+      this.userInfo = null
+      uni.removeStorageSync('userInfo')
+
+      // 删除缓存
+      const list = ['sex']
+      for (const item of list) {
+        this[item + 'List'] = []
+        this[item + 'Map'] = {}
+        uni.removeStorageSync(item + 'List')
       }
     },
     // 通过sessionId登录
