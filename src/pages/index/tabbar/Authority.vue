@@ -49,20 +49,36 @@ function logout() {
     currentTabbarIndex.value = 0
   }, 2000)
 }
+
+function go(page) {
+  nav.to(page)
+}
+const { navBarInfo } = useUniAppSystemRectInfo()
 </script>
 
 <template>
-  <view v-if="isLogin">
-    <view>已登录</view>
+  <view v-if="isLogin" class="p20">
+    <tn-sticky :offset-top="navBarInfo.height">
+      <view class="tn-gradient-bg__cool-6 tn-white_text tn-radius tn-p tn-flex-center tn-text-lg">
+        已登录
+      </view>
+    </tn-sticky>
 
-    <button @click="getDict">获取字典值（携带token请求）</button>
-    <view class="flex">
-      <view v-for="(item, index) in sexMap" :key="index" class="mr-20">{{ index }}: {{ item }}</view>
-    </view>
-    <view class="flex">
-      <view v-for="(item, index) in sexList" :key="index" class="mr-20">{{ item.dictKey }}: {{ item.dictValue }}</view>
+    <tn-list-item right-icon="right" @click="go('/pages/demos/function/upload')">上传图片</tn-list-item>
+    <view class="p-24 mt-20 flex flex-center rounded-15 tn-border tn-type-primary_border" @click="getDict">获取字典值（携带token请求）</view>
+
+    <view class="p20">
+      <view class="flex">
+        <view v-for="(item, index) in sexMap" :key="index" class="mr-20">{{ index }}: {{ item }}</view>
+      </view>
+      <view class="flex">
+        <view v-for="(item, index) in sexList" :key="index" class="mr-20">{{ item.dictKey }}: {{ item.dictValue }}</view>
+      </view>
     </view>
 
-    <button @click="logout">退出登录</button>
+    <view class="p-24 mt-20 flex flex-center rounded-15 tn-border tn-red_border" @click="logout">退出登录</view>
   </view>
 </template>
+
+<style lang="stylus" scoped>
+</style>

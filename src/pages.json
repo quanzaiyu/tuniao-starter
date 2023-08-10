@@ -6,6 +6,7 @@
     { "path": "pages/demos/ui/index" },
     { "path": "pages/demos/ui/popup" },
     { "path": "pages/demos/ui/style" },
+    { "path": "pages/demos/ui/icons" },
     { "path": "pages/demos/ui/tuniao" },
     { "path": "pages/demos/ui/uni-ui" },
 		{ "path": "pages/demos/ui/header",

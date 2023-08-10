@@ -4,13 +4,6 @@ import Examples from './tabbar/Examples.vue'
 import Authority from './tabbar/Authority.vue'
 import UCenter from './tabbar/UCenter.vue'
 
-const { navBarInfo } = useUniAppSystemRectInfo()
-
-// 计算自定义头部的高度
-const headerHeight = computed(() => navBarInfo.height + 'px')
-const navBarHeight = computed(() => navBarInfo.statusHeight + 'px')
-const titleHeight = computed(() => `${navBarInfo.height - navBarInfo.statusHeight}px`)
-
 const layout = ref(null) // 布局组件引用
 let hideNavbar = $ref(false) // 是否隐藏默认导航栏
 let title = $ref('') // 是否隐藏默认导航栏
@@ -60,10 +53,7 @@ provide('layout', layout)
     :hide-navbar="hideNavbar"
   >
     <template #navbar>
-      <view :style="{height: headerHeight}" class="tn-gradient-bg__purplered ">
-        <view :style="{height: navBarHeight}"></view>
-        <view :style="{height: titleHeight}" class="flex-center text-white text-30">首页自定义头部</view>
-      </view>
+      <view :style="{height: '300rpx'}" class="tn-gradient-bg__cool-6 tn-bg-image"></view>
     </template>
     <Home v-if="currentTabbarIndex === 0"></Home>
     <Examples v-if="currentTabbarIndex === 1"></Examples>

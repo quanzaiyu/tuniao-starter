@@ -61,7 +61,7 @@ function fabClick() {
 </script>
 
 <template>
-  <Layout ref="layout" title="页面模板">
+  <Layout ref="layout" title="uni-ui">
     <uni-fab
       ref="fab"
       :pattern="pattern"

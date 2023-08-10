@@ -92,7 +92,7 @@ defineExpose({
         <slot></slot>
         <view class="w-full h-footer"></view>
       </view>
-      <view class="fixed bottom-0 w-full h-footer bg-white z-100"></view>
+      <view class="fixed bottom-0 w-full h-footer z-100"></view>
     </view>
     <tn-notify ref="notifyRef"></tn-notify>
     <tn-modal ref="modalRef"></tn-modal>

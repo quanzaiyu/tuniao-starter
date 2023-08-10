@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <view>
+  <view class="p20">
     我的
   </view>
 </template>

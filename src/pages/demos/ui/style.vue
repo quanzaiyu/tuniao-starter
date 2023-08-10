@@ -14,9 +14,6 @@ const layout = $ref(null)
       <view class="rounded-full w-100 h-100 bg-teal"></view>
       <view class="rounded-full w-100 h-100 bg-toast"></view>
     </view>
-    <view>
-      <view i="mdi-chevron-down" class="text-36 text-main-5" />
-    </view>
   </Layout>
 </template>
 

@@ -100,10 +100,10 @@ export default defineConfig({
   theme: {
     colors: {
       default: {
-        DEFAULT: '#F5F5F5',
-      }, // 背景色
+        DEFAULT: '#fff',
+      },
       main: {
-        1: '#4583E4', // 主要banner文字颜色
+        1: '#4583E4',
       },
       toast: '#01beff',
     },
@@ -129,7 +129,7 @@ export default defineConfig({
       half: '50%',
     },
   },
-  safelist: ['text-25', 'text-main-4'],
+  safelist: ['i-mdi-chevron-up', 'i-mdi-chevron-down', 'i-mdi-account', 'i-mdi-home', 'i-mdi-cloud-upload-outline', 'i-mdi-plus-box'],
   preflights: [
     {
       getCSS: ({ theme }) => `

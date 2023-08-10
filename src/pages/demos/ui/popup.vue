@@ -56,12 +56,14 @@ function showOverlay() {
 
 <template>
   <Layout ref="layout" title="弹出层">
-    <button @click="showNotify">showNotify</button>
-    <button @click="showLoading">showLoading</button>
-    <button @click="hideLoading">hideLoading</button>
-    <button @click="showOverlay">showOverlay</button>
-    <button @click="showModal">showModal</button>
-    <button @click="showActionSheet">showActionSheet</button>
+    <view class="flex flex-col flex-center p-20 bg-white">
+      <view class="shadow-item tn-shadow tn-type-primary_shadow" @click="showNotify">showNotify</view>
+      <view class="shadow-item tn-shadow tn-type-success_shadow" @click="showLoading">showLoading</view>
+      <view class="shadow-item tn-shadow tn-type-warning_shadow" @click="hideLoading">hideLoading</view>
+      <view class="shadow-item tn-shadow tn-type-info_shadow" @click="showOverlay">showOverlay</view>
+      <view class="shadow-item tn-shadow tn-gray-dark_shadow" @click="showModal">showModal</view>
+      <view class="shadow-item tn-shadow tn-gray_shadow" @click="showActionSheet">showActionSheet</view>
+    </view>
     <template #overlay>
       <view class="w-full h-full flex-center text-white text-48">overlay</view>
     </template>
@@ -69,4 +71,12 @@ function showOverlay() {
 </template>
 
 <style lang="stylus" scoped>
+  .shadow-item {
+    @apply p-24 flex flex-center rounded-15 tn-shadow;
+    width: 80%;
+
+    & + .shadow-item {
+      @apply mt-50;
+    }
+  }
 </style>

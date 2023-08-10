@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <view>
+  <view class="p20">
     示例页面
   </view>
 </template>
