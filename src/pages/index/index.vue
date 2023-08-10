@@ -13,6 +13,7 @@ const titleHeight = computed(() => `${navBarInfo.height - navBarInfo.statusHeigh
 
 const layout = ref(null) // 布局组件引用
 let hideNavbar = $ref(false) // 是否隐藏默认导航栏
+let title = $ref('') // 是否隐藏默认导航栏
 
 // 底部导航栏数据
 const tabbarData = [
@@ -25,6 +26,13 @@ const tabbarData = [
 // 当前选中的子页面的索引
 const currentTabbarIndex = ref<number>(0)
 watch(currentTabbarIndex, index => {
+  title = {
+    0: '首页',
+    1: '示例',
+    2: '权限',
+    3: '我的',
+  }[currentTabbarIndex.value]
+
   if (index === 0) {
     hideNavbar = true
   } else {
@@ -47,7 +55,7 @@ provide('layout', layout)
 <template>
   <Layout
     ref="layout"
-    title="首页"
+    :title="title"
     :hide-icon="true"
     :hide-navbar="hideNavbar"
   >
@@ -57,18 +65,10 @@ provide('layout', layout)
         <view :style="{height: titleHeight}" class="flex-center text-white text-30">首页自定义头部</view>
       </view>
     </template>
-    <view v-if="currentTabbarIndex === 0">
-      <Home></Home>
-    </view>
-    <view v-if="currentTabbarIndex === 1">
-      <Examples></Examples>
-    </view>
-    <view v-if="currentTabbarIndex === 2">
-      <Authority></Authority>
-    </view>
-    <view v-if="currentTabbarIndex === 3">
-      <UCenter></UCenter>
-    </view>
+    <Home v-if="currentTabbarIndex === 0"></Home>
+    <Examples v-if="currentTabbarIndex === 1"></Examples>
+    <Authority v-if="currentTabbarIndex === 2"></Authority>
+    <UCenter v-if="currentTabbarIndex === 3"></UCenter>
     <tn-tabbar
       v-model="currentTabbarIndex"
       :fixed="true"

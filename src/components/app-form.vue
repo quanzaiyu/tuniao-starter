@@ -228,7 +228,7 @@ console.info('初始化表单数据：', computedConfig)
 </script>
 
 <template>
-  <view class="p-20">
+  <view class="p-20 bg-white">
     <tn-form
       ref="form"
       :model="computedConfig.formModel"

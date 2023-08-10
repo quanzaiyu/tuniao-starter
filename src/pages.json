@@ -2,8 +2,13 @@
 	"pages": [
 		{ "path": "pages/index/index" },
 		{ "path": "pages/index/login" },
-		{ "path": "pages/test/index" },
-		{ "path": "pages/test/index-header",
+    // UI演示
+    { "path": "pages/demos/ui/index" },
+    { "path": "pages/demos/ui/popup" },
+    { "path": "pages/demos/ui/style" },
+    { "path": "pages/demos/ui/tuniao" },
+    { "path": "pages/demos/ui/uni-ui" },
+		{ "path": "pages/demos/ui/header",
       "style": {
         "mp-alipay": {
           "allowsBounceVertical": "NO",
@@ -12,27 +17,26 @@
         }
       }
     },
-		{ "path": "pages/test/index-popup" },
-		{ "path": "pages/test/index-api" },
-		{ "path": "pages/test/index-upload" },
-		{ "path": "pages/test/index-style" },
-		{ "path": "pages/test/index-tuniao" },
-		{ "path": "pages/test/index-uni-ui" },
-    { "path": "pages/test/index-form" },
-    { "path": "pages/test/index-form-input" },
-    { "path": "pages/test/index-form-select" },
-    { "path": "pages/test/index-form-datetimepicker" },
-    { "path": "pages/test/index-form-calendar" },
-    { "path": "pages/test/index-form-other" },
-    { "path": "pages/test/index-form-confirm" },
-    { "path": "pages/test/index-form-confirm-init" }
+    // 功能演示
+    { "path": "pages/demos/function/index" },
+    { "path": "pages/demos/function/api" },
+    { "path": "pages/demos/function/upload" },
+    // 表单演示
+    { "path": "pages/demos/form/index" },
+    { "path": "pages/demos/form/input" },
+    { "path": "pages/demos/form/select" },
+    { "path": "pages/demos/form/datetimepicker" },
+    { "path": "pages/demos/form/calendar" },
+    { "path": "pages/demos/form/other" },
+    { "path": "pages/demos/form/confirm" },
+    { "path": "pages/demos/form/confirm-init" }
 	],
 	"condition": {
 		"current": 0,
 		"list": [
 			{
-				"name": "test",
-				"path": "pages/test/index",
+				"name": "demos",
+				"path": "pages/index/index",
 				"query": ""
 			}
 		]

@@ -6,6 +6,8 @@ function go(path) {
 
 <template>
   <view>
-    <button @click="go('/pages/test/index')">示例页面</button>
+    <tn-list-item right-icon="right" @click="go('/pages/demos/ui/index')">UI演示</tn-list-item>
+    <tn-list-item right-icon="right" @click="go('/pages/demos/function/index')">功能演示</tn-list-item>
+    <tn-list-item right-icon="right" @click="go('/pages/demos/form/index')">表单演示</tn-list-item>
   </view>
 </template>
