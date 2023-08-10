@@ -1,6 +1,8 @@
 <script setup lang="ts">
 let isLogin = $ref(false)
 
+const { navBarInfo } = useUniAppSystemRectInfo()
+
 // 获取注入数据
 const currentTabbarIndex: Ref = inject('currentTabbarIndex')
 const layout: Ref = inject('layout')
@@ -11,7 +13,7 @@ function checkLogin() {
   if (!uni.$store.userInfo?.access_token) {
     if (!uni.$store.fromLogin) {
     // 如果没登录，跳转到登录页
-      nav.to('/pages/index/login')
+      nav.to('/pages/demos/index/login')
     } else {
       currentTabbarIndex.value = 0
     }
@@ -53,7 +55,6 @@ function logout() {
 function go(page) {
   nav.to(page)
 }
-const { navBarInfo } = useUniAppSystemRectInfo()
 </script>
 
 <template>

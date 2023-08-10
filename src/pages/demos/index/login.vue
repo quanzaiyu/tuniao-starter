@@ -33,8 +33,14 @@ async function login() {
 
 <template>
   <Layout ref="layout" title="登录">
-    <tn-input v-model="form.username" placeholder="请输入用户名"></tn-input>
-    <tn-input v-model="form.password" placeholder="请输入密码" type="password"></tn-input>
-    <button @click="login">登录（获取token）</button>
+    <view class="p20">
+      <view class="mt20">
+        <tn-input v-model="form.username" placeholder="请输入用户名"></tn-input>
+      </view>
+      <view class="mt20">
+        <tn-input v-model="form.password" placeholder="请输入密码" type="password"></tn-input>
+      </view>
+      <view class="p-24 mt-20 flex flex-center rounded-15 tn-border tn-type-primary_border" @click="login">登录（获取token）</view>
+    </view>
   </Layout>
 </template>

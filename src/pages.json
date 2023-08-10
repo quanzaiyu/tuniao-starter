@@ -1,7 +1,10 @@
 {
 	"pages": [
-		{ "path": "pages/index/index" },
-		{ "path": "pages/index/login" },
+    // 真实项目业务逻辑，放开此注释开始
+		// { "path": "pages/index/index" },
+    // 演示
+		{ "path": "pages/demos/index/index" },
+		{ "path": "pages/demos/index/login" },
     // UI演示
     { "path": "pages/demos/ui/index" },
     { "path": "pages/demos/ui/popup" },
@@ -37,7 +40,7 @@
 		"list": [
 			{
 				"name": "demos",
-				"path": "pages/index/index",
+				"path": "pages/demos/index/index",
 				"query": ""
 			}
 		]
