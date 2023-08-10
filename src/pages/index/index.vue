@@ -4,7 +4,15 @@ import Examples from './tabbar/Examples.vue'
 import Authority from './tabbar/Authority.vue'
 import UCenter from './tabbar/UCenter.vue'
 
-const layout = ref(null)
+const { navBarInfo } = useUniAppSystemRectInfo()
+
+// 计算自定义头部的高度
+const headerHeight = computed(() => navBarInfo.height + 'px')
+const navBarHeight = computed(() => navBarInfo.statusHeight + 'px')
+const titleHeight = computed(() => `${navBarInfo.height - navBarInfo.statusHeight}px`)
+
+const layout = ref(null) // 布局组件引用
+let hideNavbar = $ref(false) // 是否隐藏默认导航栏
 
 // 底部导航栏数据
 const tabbarData = [
@@ -16,18 +24,39 @@ const tabbarData = [
 
 // 当前选中的子页面的索引
 const currentTabbarIndex = ref<number>(0)
-
-provide('currentTabbarIndex', currentTabbarIndex)
-provide('layout', layout)
+watch(currentTabbarIndex, index => {
+  if (index === 0) {
+    hideNavbar = true
+  } else {
+    hideNavbar = false
+  }
+}, {
+  immediate: true,
+})
 
 // 导航切换事件
 const onTabbarChange = (index: string | number) => {
   console.info(index)
 }
+
+// 向子组件注入数据
+provide('currentTabbarIndex', currentTabbarIndex)
+provide('layout', layout)
 </script>
 
 <template>
-  <Layout ref="layout" title="首页" :hide-icon="true">
+  <Layout
+    ref="layout"
+    title="首页"
+    :hide-icon="true"
+    :hide-navbar="hideNavbar"
+  >
+    <template #navbar>
+      <view :style="{height: headerHeight}" class="tn-gradient-bg__purplered ">
+        <view :style="{height: navBarHeight}"></view>
+        <view :style="{height: titleHeight}" class="flex-center text-white text-30">首页自定义头部</view>
+      </view>
+    </template>
     <view v-if="currentTabbarIndex === 0">
       <Home></Home>
     </view>

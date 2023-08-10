@@ -1,12 +1,12 @@
 <script setup lang="ts">
 let isLogin = $ref(false)
 
+// 获取注入数据
 const currentTabbarIndex: Ref = inject('currentTabbarIndex')
 const layout: Ref = inject('layout')
 
-checkLogin()
-
 // 检测用户是否登录
+checkLogin()
 function checkLogin() {
   if (!uni.$store.userInfo?.access_token) {
     if (!uni.$store.fromLogin) {
@@ -32,7 +32,7 @@ uni.$on('login-cancel', () => {
   checkLogin()
 })
 
-// 携带token请求：获取性别
+// 携带token请求：获取性别，存储到状态管理
 const sexList = $computed(() => uni.$store.sexList)
 const sexMap = $computed(() => uni.$store.sexMap)
 function getDict() {
