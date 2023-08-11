@@ -44,10 +44,10 @@ function getDict() {
 
 // 退出登录
 function logout() {
-  uni.$store.logout()
   layout.value.notify({ msg: '退出成功' })
 
   setTimeout(() => {
+    uni.$store.logout()
     currentTabbarIndex.value = 0
   }, 2000)
 }

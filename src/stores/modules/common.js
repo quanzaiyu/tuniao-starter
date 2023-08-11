@@ -14,8 +14,8 @@ export default {
      */
     sessionId: '', // 用户登录的sessionId
     userInfo: uni.getStorageSync('userInfo') || null, // 用户信息
-    sexMap: {}, // 性别属性
-    sexList: [], // 性别列表
+    sexMap: uni.getStorageSync('sexMap') || {}, // 性别属性
+    sexList: uni.getStorageSync('sexList') || [], // 性别列表
   },
   getters: {},
   actions: {

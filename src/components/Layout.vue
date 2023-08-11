@@ -84,6 +84,7 @@ defineExpose({
         :back-icon="platform === 'mp-alipay' || hideIcon ? '' : 'left'"
         :home-icon="platform === 'mp-alipay' || hideIcon ? '' : 'home-capsule-fill'"
         :safe-area-inset-right="platform === 'mp-alipay' || hideIcon ? false : true"
+        index-url="/pages/demos/index/index"
       >
         <view>{{ title }}</view>
       </tn-navbar>

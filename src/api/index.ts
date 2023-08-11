@@ -96,6 +96,16 @@ class API {
               })
               reject(res.data)
             }
+          } else if (statusCode === 401) {
+            uni.showToast({
+              title: 'token失效，请重新登录',
+              icon: 'none',
+            })
+
+            setTimeout(() => {
+              uni.$store.logout()
+              nav.to('/pages/demos/index/login')
+            }, 2000)
           } else {
             console.error('======请求失败(非200)======')
             uni.showToast({
