@@ -6,7 +6,6 @@ import UCenter from './tabbar/UCenter.vue'
 
 const layout = ref(null) // 布局组件引用
 let hideNavbar = $ref(false) // 是否隐藏默认导航栏
-let title = $ref('') // 页面标题
 
 // 底部导航栏数据
 const tabbarData = [
@@ -16,7 +15,7 @@ const tabbarData = [
   { text: '我的', icon: 'logo-tuniao', key: 'ucenter' },
 ]
 
-const currentTabbarIndex = ref<number>(0) // 当前选中的子页面的索引
+const currentTabbarIndex = $ref<number>(0) // 当前选中的子页面的索引
 const tabbar = $ref(null)
 let options = $ref(null)
 
@@ -25,28 +24,19 @@ onLoad(opts => {
 })
 
 onMounted(() => {
+  // 跳转到指定tab，只需要进入页面的时候带上参数key即可，如：http://localhost:5173/#/?key=ucenter
   if (options.key) {
     const index = tabbarData.findIndex(item => item.key === options.key)
-    // currentTabbarIndex.value = index
-    tabbar.setActiveItem(index)
+    // currentTabbarIndex = index
+    tabbar.setActiveItem(index) // fix: setActiveItem不生效
+    console.info(currentTabbarIndex)
   }
 })
 
-watch(currentTabbarIndex, index => {
-  title = {
-    0: '首页',
-    1: '示例',
-    2: '权限',
-    3: '我的',
-  }[currentTabbarIndex.value]
-
-  if (index === 0) {
-    hideNavbar = true
-  } else {
-    hideNavbar = false
-  }
-}, {
-  immediate: true,
+// 页面标题
+const title = $computed(() => {
+  hideNavbar = currentTabbarIndex === 0
+  return ['首页', '示例', '权限', '我的'][currentTabbarIndex]
 })
 
 // 导航切换事件
@@ -54,6 +44,7 @@ const onTabbarChange = (index: string | number) => {
   console.info(index)
 }
 
+// 导航项点击事件
 const onTabbarItemClick = item => {
   console.info(item)
 }
