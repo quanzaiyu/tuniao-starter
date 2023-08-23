@@ -375,6 +375,7 @@ console.info('初始化表单数据：', computedConfig)
           :mask="item.mask ?? true"
           :min-time="item.minTime"
           :max-time="item.maxTime"
+          :format="item.format"
           :show-cancel="item.showCancel ?? true"
           :cancel-text="item.cancelText ?? '取消'"
           :cancel-color="item.cancelColor"

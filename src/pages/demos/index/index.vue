@@ -6,18 +6,32 @@ import UCenter from './tabbar/UCenter.vue'
 
 const layout = ref(null) // 布局组件引用
 let hideNavbar = $ref(false) // 是否隐藏默认导航栏
-let title = $ref('') // 是否隐藏默认导航栏
+let title = $ref('') // 页面标题
 
 // 底部导航栏数据
 const tabbarData = [
-  { text: '首页', icon: 'assign-fill' },
-  { text: '示例', icon: 'menu-more-fill' },
-  { text: '权限', icon: 'menu-match-fill' },
-  { text: '我的', icon: 'logo-tuniao' },
+  { text: '首页', icon: 'assign-fill', key: 'home' },
+  { text: '示例', icon: 'menu-more-fill', key: 'examples' },
+  { text: '权限', icon: 'menu-match-fill', key: 'authority' },
+  { text: '我的', icon: 'logo-tuniao', key: 'ucenter' },
 ]
 
-// 当前选中的子页面的索引
-const currentTabbarIndex = ref<number>(0)
+const currentTabbarIndex = ref<number>(0) // 当前选中的子页面的索引
+const tabbar = $ref(null)
+let options = $ref(null)
+
+onLoad(opts => {
+  options = opts
+})
+
+onMounted(() => {
+  if (options.key) {
+    const index = tabbarData.findIndex(item => item.key === options.key)
+    // currentTabbarIndex.value = index
+    tabbar.setActiveItem(index)
+  }
+})
+
 watch(currentTabbarIndex, index => {
   title = {
     0: '首页',
@@ -40,6 +54,10 @@ const onTabbarChange = (index: string | number) => {
   console.info(index)
 }
 
+const onTabbarItemClick = item => {
+  console.info(item)
+}
+
 // 向子组件注入数据
 provide('currentTabbarIndex', currentTabbarIndex)
 provide('layout', layout)
@@ -60,6 +78,7 @@ provide('layout', layout)
     <Authority v-if="currentTabbarIndex === 2"></Authority>
     <UCenter v-if="currentTabbarIndex === 3"></UCenter>
     <tn-tabbar
+      ref="tabbar"
       v-model="currentTabbarIndex"
       :fixed="true"
       :placeholder="false"
@@ -75,6 +94,7 @@ provide('layout', layout)
         inactive-color="#c5cad5"
         :icon="item.icon"
         :active-icon="item.icon"
+        @click="onTabbarItemClick(item)"
       />
     </tn-tabbar>
   </Layout>

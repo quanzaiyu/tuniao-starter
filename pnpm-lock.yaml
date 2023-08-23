@@ -60,8 +60,8 @@ dependencies:
     specifier: ^1.0.19
     version: registry.npmmirror.com/@tuniao/tn-style@1.0.19
   '@tuniao/tnui-vue3-uniapp':
-    specifier: 1.0.9
-    version: registry.npmmirror.com/@tuniao/tnui-vue3-uniapp@1.0.9(@dcloudio/types@3.3.3)(@tuniao/tn-icon@1.5.0)(@tuniao/tn-style@1.0.19)(postcss@8.4.27)(sass@1.64.1)(ts-node@10.9.1)(typescript@5.1.6)(vite@4.0.3)(vue@3.2.47)
+    specifier: 1.0.11
+    version: registry.npmmirror.com/@tuniao/tnui-vue3-uniapp@1.0.11(@dcloudio/types@3.3.3)(@tuniao/tn-icon@1.5.0)(@tuniao/tn-style@1.0.19)(postcss@8.4.27)(sass@1.64.1)(ts-node@10.9.1)(typescript@5.1.6)(vite@4.0.3)(vue@3.2.47)
   '@unocss/reset':
     specifier: ^0.50.8
     version: registry.npmmirror.com/@unocss/reset@0.50.8
@@ -5109,11 +5109,11 @@ packages:
     version: 1.0.19
     dev: false
 
-  registry.npmmirror.com/@tuniao/tnui-vue3-uniapp@1.0.9(@dcloudio/types@3.3.3)(@tuniao/tn-icon@1.5.0)(@tuniao/tn-style@1.0.19)(postcss@8.4.27)(sass@1.64.1)(ts-node@10.9.1)(typescript@5.1.6)(vite@4.0.3)(vue@3.2.47):
-    resolution: {integrity: sha512-/AbR++oxWG6RxFH60lKWHNSGDvHOwxDYr2BbG6WZD1eWOj8xPubT5Taq+gNq6ZXSxavdlNoz2cNQmUi6k0KzKQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@tuniao/tnui-vue3-uniapp/-/tnui-vue3-uniapp-1.0.9.tgz}
-    id: registry.npmmirror.com/@tuniao/tnui-vue3-uniapp/1.0.9
+  registry.npmmirror.com/@tuniao/tnui-vue3-uniapp@1.0.11(@dcloudio/types@3.3.3)(@tuniao/tn-icon@1.5.0)(@tuniao/tn-style@1.0.19)(postcss@8.4.27)(sass@1.64.1)(ts-node@10.9.1)(typescript@5.1.6)(vite@4.0.3)(vue@3.2.47):
+    resolution: {integrity: sha512-qwClPy86Eb0GLoNVPKftkyXZWs9S8EZlQgUKp1M9PzNRePtyWhmWsMhlq0CA/Ur3XgxApqzeVhLnrtDvPHCyIg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@tuniao/tnui-vue3-uniapp/-/tnui-vue3-uniapp-1.0.11.tgz}
+    id: registry.npmmirror.com/@tuniao/tnui-vue3-uniapp/1.0.11
     name: '@tuniao/tnui-vue3-uniapp'
-    version: 1.0.9
+    version: 1.0.11
     peerDependencies:
       '@tuniao/tn-icon': ^1.4.0
       '@tuniao/tn-style': ^1.0.17
