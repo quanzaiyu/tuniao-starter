@@ -15,8 +15,7 @@ const tabbarData = [
   { text: '我的', icon: 'logo-tuniao', key: 'ucenter' },
 ]
 
-const currentTabbarIndex = $ref<number>(0) // 当前选中的子页面的索引
-const tabbar = $ref(null)
+let currentTabbarIndex = $ref<number>(0) // 当前选中的子页面的索引
 let options = $ref(null)
 
 onLoad(opts => {
@@ -24,12 +23,12 @@ onLoad(opts => {
 })
 
 onMounted(() => {
-  // 跳转到指定tab，只需要进入页面的时候带上参数key即可，如：http://localhost:5173/#/?key=ucenter
   if (options.key) {
-    const index = tabbarData.findIndex(item => item.key === options.key)
-    // currentTabbarIndex = index
-    tabbar.setActiveItem(index) // fix: setActiveItem不生效
-    console.info(currentTabbarIndex)
+    nextTick(() => {
+      // 跳转到指定tab，只需要进入页面的时候带上参数key即可，如：http://localhost:5173/#/?key=examples
+      const index = tabbarData.findIndex(item => item.key === options.key) || 0
+      currentTabbarIndex = index > -1 ? index : 0
+    })
   }
 })
 
@@ -69,7 +68,6 @@ provide('layout', layout)
     <Authority v-if="currentTabbarIndex === 2"></Authority>
     <UCenter v-if="currentTabbarIndex === 3"></UCenter>
     <tn-tabbar
-      ref="tabbar"
       v-model="currentTabbarIndex"
       :fixed="true"
       :placeholder="false"
