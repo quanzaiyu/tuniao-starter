@@ -35,7 +35,7 @@ onMounted(() => {
 // 页面标题
 const title = $computed(() => {
   hideNavbar = currentTabbarIndex === 0
-  return ['首页', '示例', '权限', '我的'][currentTabbarIndex]
+  return tabbarData[currentTabbarIndex].text
 })
 
 // 导航切换事件
