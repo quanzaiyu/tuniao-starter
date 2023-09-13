@@ -152,7 +152,7 @@ defineExpose({
       close-btn-position="right-top"
     >
       <view class="w-full h-full bg-white pt-100">
-        <view class="p-30">
+        <view class="">
           <slot name="popup"></slot>
         </view>
       </view>
