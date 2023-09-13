@@ -37,6 +37,27 @@ function hideLoading() {
   loading = { show: false, title: '' }
 }
 
+// 弹出层：popup
+interface PopupType {
+  show: boolean
+  width?: string
+  height?: string
+  bgColor?: string
+  openDirection?: string
+  radius?: string
+}
+let popup = $ref<PopupType>({
+  show: false,
+  width: '100%',
+  height: '',
+  bgColor: 'white',
+  openDirection: 'bottom',
+  radius: '30',
+})
+function showPopup(options) {
+  popup = { show: true, ...options }
+}
+
 // 弹出层：overlay
 let overlay = $ref({
   show: false,
@@ -67,6 +88,7 @@ watchEffect(() => {
 defineExpose({
   loading: showLoading,
   unloading: hideLoading,
+  showPopup,
   notify: showNotify,
   modal: showModal,
   overlay: showOverlay,
@@ -116,6 +138,26 @@ defineExpose({
         <view class="mt-20 text-toast">{{ loading.title }}</view>
       </view>
     </tn-popup>
+
+    <tn-popup
+      v-model="popup.show"
+      :width="popup.width"
+      :height="popup.height"
+      :bg-color="popup.bgColor"
+      :open-direction="popup.openDirection"
+      :radius="popup.radius"
+      :safe-area-inset-bottom="true"
+      :overlay-closeable="true"
+      close-btn
+      close-btn-position="right-top"
+    >
+      <view class="w-full h-full bg-white pt-100">
+        <view class="p-30">
+          <slot name="popup"></slot>
+        </view>
+      </view>
+    </tn-popup>
+
     <tn-overlay v-model:show="overlay.show" :opacity="0.4">
       <slot name="overlay"></slot>
     </tn-overlay>
