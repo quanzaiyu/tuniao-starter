@@ -45,17 +45,23 @@ interface PopupType {
   bgColor?: string
   openDirection?: string
   radius?: string
+  closeBtn?: boolean
 }
 let popup = $ref<PopupType>({
   show: false,
-  width: '100%',
-  height: '',
-  bgColor: 'white',
-  openDirection: 'bottom',
-  radius: '30',
 })
-function showPopup(options) {
-  popup = { show: true, ...options }
+function showPopup(options = {}) {
+  popup = {
+    ...{
+      show: true,
+      width: '100%',
+      bgColor: 'white',
+      openDirection: 'bottom',
+      radius: '30',
+      closeBtn: true,
+    },
+    ...options,
+  }
 }
 
 // 弹出层：overlay
@@ -142,13 +148,12 @@ defineExpose({
     <tn-popup
       v-model="popup.show"
       :width="popup.width"
-      :height="popup.height"
       :bg-color="popup.bgColor"
       :open-direction="popup.openDirection"
       :radius="popup.radius"
       :safe-area-inset-bottom="true"
       :overlay-closeable="true"
-      close-btn
+      :close-btn="popup.closeBtn"
       close-btn-position="right-top"
     >
       <view class="w-full h-full bg-white pt-30">

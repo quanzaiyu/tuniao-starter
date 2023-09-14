@@ -56,9 +56,7 @@ function showOverlay() {
 // popup
 function showPopup() {
   layout.showPopup({
-    width: '100%',
-    bgColor: 'white',
-    openDirection: 'bottom',
+    closeBtn: false,
   })
 }
 </script>
