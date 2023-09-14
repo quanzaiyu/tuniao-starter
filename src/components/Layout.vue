@@ -151,7 +151,7 @@ defineExpose({
       :bg-color="popup.bgColor"
       :open-direction="popup.openDirection"
       :radius="popup.radius"
-      :safe-area-inset-bottom="true"
+      :safe-area-inset-bottom="false"
       :overlay-closeable="true"
       :close-btn="popup.closeBtn"
       close-btn-position="right-top"
