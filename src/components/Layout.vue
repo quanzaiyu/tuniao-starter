@@ -2,6 +2,7 @@
 const props = defineProps({
   hideIcon: { type: Boolean, default: false },
   hideNavbar: { type: Boolean, default: false },
+  hideFooter: { type: Boolean, default: false },
   title: { type: String, default: '' },
   styles: { type: Object, default: () => ({}) },
   type: { type: String, default: 'custom' }, // 可取值: custom list
@@ -104,7 +105,7 @@ defineExpose({
 
 <template>
   <view>
-    <view :class="[styles.bg || 'bg-default']">
+    <view :class="[styles.bg || 'bg-default']" class="min-h-100vh">
       <tn-navbar
         v-if="platform !== 'mp-alipay' && !hideNavbar"
         frosted
@@ -119,7 +120,7 @@ defineExpose({
       <view v-else><slot name="navbar"></slot></view>
       <view class="w-100vw">
         <slot></slot>
-        <view class="w-full h-footer"></view>
+        <view v-if="!hideFooter" class="w-full h-footer"></view>
       </view>
       <view class="fixed bottom-0 w-full h-footer z-100"></view>
     </view>
