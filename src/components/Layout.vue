@@ -156,7 +156,7 @@ defineExpose({
       :close-btn="popup.closeBtn"
       close-btn-position="right-top"
     >
-      <view class="w-full h-full bg-white pt-30">
+      <view class="w-full h-full bg-white pt-30" :style="{backgroundColor: popup.bgColor || 'white'}">
         <view class="px-30 pb-30">
           <slot name="popup"></slot>
         </view>
