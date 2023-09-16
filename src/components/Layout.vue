@@ -44,7 +44,7 @@ interface PopupType {
   width?: string
   height?: string
   bgColor?: string
-  openDirection?: string
+  openDirection?: 'top' | 'center' | 'bottom' | 'left' | 'right'
   radius?: string
   closeBtn?: boolean
 }
@@ -117,7 +117,7 @@ defineExpose({
         :back-icon="platform === 'mp-alipay' || hideIcon ? '' : 'left'"
         :home-icon="platform === 'mp-alipay' || hideIcon ? '' : 'home-capsule-fill'"
         :safe-area-inset-right="platform === 'mp-alipay' || hideIcon ? false : true"
-        index-url="/pages/demos/index/index"
+        index-url="/pages/index/ucenter"
       >
         <view>{{ title }}</view>
       </tn-navbar>
