@@ -14,7 +14,7 @@ import {
 } from 'unocss'
 import {
   presetApplet,
-  presetRemToRpx,
+  presetRemRpx,
   transformerApplet,
   transformerAttributify
 } from 'unocss-applet'
@@ -25,7 +25,7 @@ export default defineConfig({
   presets: [
     presetApplet({ enable: !isH5 }),
     presetAttributify(),
-    presetRemToRpx({ baseFontSize: 4, screenWidth: 750 }),
+    presetRemRpx({ baseFontSize: 4, screenWidth: 750, mode: 'rem2rpx' }),
     presetIcons({
       extraProperties: {
         display: 'inline-block',
@@ -103,9 +103,9 @@ export default defineConfig({
         DEFAULT: '#fff',
       },
       main: {
-        1: '#4583E4',
+        1: '#262626',
+        2: '#595959',
       },
-      toast: '#01beff',
     },
     spacing: {
       half: '50%',

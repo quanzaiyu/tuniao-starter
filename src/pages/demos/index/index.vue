@@ -15,7 +15,7 @@ const tabbarData = [
   { text: '我的', icon: 'logo-tuniao', key: 'ucenter' },
 ]
 
-let currentTabbarIndex = $ref<number>(0) // 当前选中的子页面的索引
+const currentTabbarIndex = ref<number>(0) // 当前选中的子页面的索引
 let options = $ref(null)
 
 onLoad(opts => {
@@ -27,15 +27,15 @@ onMounted(() => {
     nextTick(() => {
       // 跳转到指定tab，只需要进入页面的时候带上参数key即可，如：http://localhost:5173/#/?key=examples
       const index = tabbarData.findIndex(item => item.key === options.key) || 0
-      currentTabbarIndex = index > -1 ? index : 0
+      currentTabbarIndex.value = index > -1 ? index : 0
     })
   }
 })
 
 // 页面标题
 const title = $computed(() => {
-  hideNavbar = currentTabbarIndex === 0
-  return tabbarData[currentTabbarIndex].text
+  hideNavbar = currentTabbarIndex.value === 0
+  return tabbarData[currentTabbarIndex.value]?.text
 })
 
 // 导航切换事件

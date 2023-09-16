@@ -59,6 +59,9 @@ function showPopup() {
     closeBtn: false,
   })
 }
+function hidePopup() {
+  layout.hidePopup()
+}
 </script>
 
 <template>
@@ -77,6 +80,7 @@ function showPopup() {
     </template>
     <template #popup>
       <view class="">popup</view>
+      <button @click="hidePopup">关闭</button>
     </template>
   </Layout>
 </template>

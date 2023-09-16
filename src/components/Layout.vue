@@ -64,6 +64,9 @@ function showPopup(options = {}) {
     ...options,
   }
 }
+function hidePopup() {
+  popup = { show: false }
+}
 
 // 弹出层：overlay
 let overlay = $ref({
@@ -96,6 +99,7 @@ defineExpose({
   loading: showLoading,
   unloading: hideLoading,
   showPopup,
+  hidePopup,
   notify: showNotify,
   modal: showModal,
   overlay: showOverlay,
