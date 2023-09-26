@@ -1,3 +1,4 @@
+import qs from 'qs'
 import type { APIType } from './urls'
 import { ContentType, Role } from './urls'
 
@@ -8,12 +9,13 @@ export interface IQuery {
 interface IAPIOptions {
   query?: AnyObject
   header?: AnyObject
-  pathParams?: AnyObject
+  pathParams?: Array<string | number>
   needMarketSponsorInfoId?: boolean
 }
 
 class API {
   baseProjectUrl = ''
+  refreshTokenLock = false // 刷新Token加锁，避免多次刷新
 
   constructor() {
     // #ifdef H5
@@ -34,10 +36,13 @@ class API {
     data = {}, // get请求的query或者post请求的body
     options: IAPIOptions = {}
   ) {
+    // （深拷贝）存储当前请求，用于刷新token后再次使用
+    const currentRequest = JSON.parse(JSON.stringify({ type, data, options }))
+
     options = {
       query: {}, // post请求中的query
       header: {}, // 头部数据
-      pathParams: {}, // 路由参数
+      pathParams: [], // 路由参数
       needMarketSponsorInfoId: true, // 是否需要marketId,
       ...options,
     }
@@ -45,22 +50,34 @@ class API {
     // eslint-disable-next-line prefer-const
     let [url, method, contentType, role] = type
 
+    if (options.pathParams.length) {
+      url += `/${options.pathParams.join('/')}`
+    }
+
+    // post请求中的query
+    if (options.query) {
+      url += `?${qs.stringify(options.query)}`
+    }
+
     // 请求路径
     url = url.includes('http') ? url : this.baseProjectUrl + url
 
     // 添加头部信息
+    const userInfo = uni.$store.userInfo
     let header: AnyObject = {
       'Content-Type': contentType,
       Authorization: 'Basic c2FiZXI6c2FiZXJfc2VjcmV0',
+      'Blade-Auth': userInfo?.access_token,
+      TOKEN: 'Base Cloud68199860Ys+',
       ...options.header,
     }
 
-    // 添加参数
-    const userInfo = uni.$store.userInfo
+    // 修改不同角色的参数
     if (role === Role.COMPANY || role === Role.MONITOR) {
       // 企业端或监管端需要携带 token
       header = {
         'Blade-Auth': userInfo?.access_token,
+        TOKEN: 'Base Cloud68199860Ys+',
         ...header,
       }
     }
@@ -80,7 +97,7 @@ class API {
         method,
         data,
         header,
-        success(res: RequestSuccessCallbackResult) {
+        success: async (res: RequestSuccessCallbackResult) => {
           const statusCode = Number(res.statusCode)
           const success = Number(res.data?.success)
           if (statusCode === 200) {
@@ -97,15 +114,20 @@ class API {
               reject(res.data)
             }
           } else if (statusCode === 401) {
-            uni.showToast({
-              title: 'token失效，请重新登录',
-              icon: 'none',
-            })
-
-            setTimeout(() => {
-              uni.$store.logout()
-              nav.to('/pages/demos/index/login')
-            }, 2000)
+            if (!this.refreshTokenLock) {
+              this.refreshTokenLock = true
+              await uni.$store.refreshToken() // 刷新token
+              // 再次请求失败的接口
+              const { type, data, options } = currentRequest
+              resolve(this.resolve(type, data, options))
+              uni.$emit('requestRefreshTokenDone')
+              this.refreshTokenLock = false
+            } else {
+              uni.$on('requestRefreshTokenDone', () => {
+                const { type, data, options } = currentRequest
+                resolve(this.resolve(type, data, options))
+              })
+            }
           } else {
             console.error('======请求失败(非200)======')
             uni.showToast({
@@ -142,6 +164,7 @@ class API {
         header: {
           'Blade-Auth': uni.$store.userInfo.access_token,
           Authorization: 'Basic c2FiZXI6c2FiZXJfc2VjcmV0',
+          TOKEN: 'Base Cloud68199860Ys+',
         },
         formData: {},
         success: uploadFileRes => {

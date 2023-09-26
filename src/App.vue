@@ -1,10 +1,17 @@
 <script setup lang="ts">
-onLaunch(function (options) {
+onLaunch(async function (options) {
+  console.info('onLaunch options', options)
+
   // 通过sessionId登录
   // await uni.$store.loginBySessionId(options)
 
   // 获取省市区列表
   // uni.$store.getRegion()
+
+  // #ifdef MP-WEIXIN
+  // 通过微信code登录
+  await uni.$store.loginByCode()
+  // #endif
 })
 </script>
 

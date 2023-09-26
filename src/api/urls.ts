@@ -28,6 +28,12 @@ const urls: IAPIList = {
   // role 角色 0 公众(不需要token) 1 企业 2 监管
 
   // 登录
+  loginWithCode: ['/third/v1/we-chat/login', Method.POST, ContentType.JSON], // 通过微信code登录
+  loginWithPhone: ['/third/v1/we-chat/loginCodePhone', Method.POST, ContentType.JSON], // 通过微信phone登录
+  updateUserInfo: ['/third/v1/thirdPlatformUserInfo/updateUserInfo', Method.POST, ContentType.JSON], // 更新用户信息
+  refreshToken: ['/third/v1/auth/oauth/refresh-token', Method.POST, ContentType.JSON], // 刷新token
+
+  // 授权登录
   sessionId: ['https://shgz.ljming.cn:38087/service/alipay/api/confirmLoginAccount', Method.POST, ContentType.JSON], // 获取sessionId
   login: ['/blade-auth/oauth/token', Method.POST, ContentType.X, Role.PUBLIC], // 登录
 

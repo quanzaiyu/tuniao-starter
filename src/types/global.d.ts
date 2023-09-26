@@ -28,5 +28,6 @@ declare global {
   interface Uni extends _Uni {
     app: any;
     $store: any;
+    $utils: any;
   }
 }

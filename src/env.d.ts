@@ -5,3 +5,19 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+// 对vue进行类型补充说明
+import { ComponentCustomProperties } from 'vue'
+declare module '@vue/runtime-core' {
+  interface ComponentCustomProperties {
+    $oss: string
+    $upload: string
+    $store: any
+    $formatTime: (string, string?) => string
+    go: function
+  }
+
+  interface ComponentInternalInstance {
+    ctx: any
+  }
+}

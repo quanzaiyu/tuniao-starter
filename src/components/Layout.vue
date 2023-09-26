@@ -1,14 +1,27 @@
 <script setup lang="ts">
 const props = defineProps({
-  hideIcon: { type: Boolean, default: false },
-  hideNavbar: { type: Boolean, default: false },
-  hideFooter: { type: Boolean, default: false },
-  title: { type: String, default: '' },
+  // 传入样式(css类名)
+  // bg: 页面背景
+  // footerBg: 底部固定区域背景
   styles: { type: Object, default: () => ({}) },
-  type: { type: String, default: 'custom' }, // 可取值: custom list
+
+  // 头部
+  hideNavbar: { type: Boolean, default: false }, // 是否隐藏头部标题栏
+  hideIcon: { type: Boolean, default: false }, // 是否隐藏头部区域图标(返回上一级、返回首页)
+  title: { type: String, default: '' }, // 头部区域标题
+
+  // 内容
+  hideFooter: { type: Boolean, default: false }, // 是否隐藏内容区域底部间距
+
+  // 底部
+  showFooterShadow: { type: Boolean, default: false }, // 是否显示底部固定区域的影音
 })
 
-defineEmits(['loadmore'])
+const emit = defineEmits(['loadmore'])
+
+onReachBottom(() => {
+  emit('loadmore')
+})
 
 // 获取平台信息，如果是支付宝小程序隐藏左侧导航
 const platform = $computed(() => uni.$store.platform)
@@ -46,7 +59,8 @@ interface PopupType {
   bgColor?: string
   openDirection?: 'top' | 'center' | 'bottom' | 'left' | 'right'
   radius?: string
-  closeBtn?: boolean
+  closeBtn?: boolean // 是否显示关闭按钮
+  overlayCloseable?: boolean // 点击遮罩是否可以关闭
 }
 let popup = $ref<PopupType>({
   show: false,
@@ -60,12 +74,13 @@ function showPopup(options = {}) {
       openDirection: 'bottom',
       radius: '30',
       closeBtn: true,
+      overlayCloseable: true,
     },
     ...options,
   }
 }
 function hidePopup() {
-  popup = { show: false }
+  popup.show = false
 }
 
 // 弹出层：overlay
@@ -110,6 +125,7 @@ defineExpose({
 <template>
   <view>
     <view :class="[styles.bg || 'bg-default']" class="min-h-100vh">
+      <!-- 头部 -->
       <tn-navbar
         v-if="platform !== 'mp-alipay' && !hideNavbar"
         frosted
@@ -122,12 +138,19 @@ defineExpose({
         <view>{{ title }}</view>
       </tn-navbar>
       <view v-else><slot name="navbar"></slot></view>
+      <!-- 内容 -->
       <view class="w-100vw">
         <slot></slot>
         <view v-if="!hideFooter" class="w-full h-footer"></view>
       </view>
-      <view class="fixed bottom-0 w-full h-footer z-100"></view>
+      <!-- 底部 -->
+      <div class="fixed bottom-0 left-0 w-full z-10" :class="[{'tn-shadow tn-grey_shadow': showFooterShadow}, styles.footerBg]">
+        <slot name="footer"></slot>
+        <view class="h-footer "></view>
+      </div>
     </view>
+
+    <!-- 弹出层 -->
     <tn-notify ref="notifyRef"></tn-notify>
     <tn-modal ref="modalRef"></tn-modal>
     <tn-action-sheet ref="actionSheetRef"></tn-action-sheet>
@@ -146,10 +169,9 @@ defineExpose({
           type="primary"
           size="100rpx"
         ></tn-loading>
-        <view class="mt-20 text-toast">{{ loading.title }}</view>
+        <view class="mt-20 text-toast text-center">{{ loading.title }}</view>
       </view>
     </tn-popup>
-
     <tn-popup
       v-model="popup.show"
       :width="popup.width"
@@ -157,7 +179,7 @@ defineExpose({
       :open-direction="popup.openDirection"
       :radius="popup.radius"
       :safe-area-inset-bottom="false"
-      :overlay-closeable="true"
+      :overlay-closeable="popup.overlayCloseable"
       :close-btn="popup.closeBtn"
       close-btn-position="right-top"
     >
@@ -167,12 +189,13 @@ defineExpose({
         </view>
       </view>
     </tn-popup>
-
-    <tn-overlay v-model:show="overlay.show" :opacity="0.4">
+    <tn-overlay v-model:show="overlay.show">
       <slot name="overlay"></slot>
     </tn-overlay>
   </view>
 </template>
 
 <style scoped lang="stylus">
+::v-deep .tn-notify
+  text-align center
 </style>

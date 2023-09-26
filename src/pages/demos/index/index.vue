@@ -48,6 +48,18 @@ const onTabbarItemClick = item => {
   console.info(item)
 }
 
+// 获取电话号码
+async function getPhoneNumber(options) {
+  // #ifdef MP-WEIXIN
+  // 通过微信phone登录
+  const res = await uni.$store.loginByPhone(options.detail)
+  if (res) {
+    layout.value.hidePopup()
+    layout.value.notify({ msg: '登录成功' })
+  }
+  // #endif
+}
+
 // 向子组件注入数据
 provide('currentTabbarIndex', currentTabbarIndex)
 provide('layout', layout)
@@ -86,5 +98,17 @@ provide('layout', layout)
         @click="onTabbarItemClick(item)"
       />
     </tn-tabbar>
+
+    <template #popup>
+      <div class="h-300 w-full">
+        <!-- 弹出层：获取手机号 -->
+        <div class="text-(32 center) font-bold mb-38">您还没登录，请先登录</div>
+        <div class="w-full flex-center">
+          <tn-button type="primary" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">
+            <div class="w-500 p-20 flex-center">一键登录</div>
+          </tn-button>
+        </div>
+      </div>
+    </template>
   </Layout>
 </template>
