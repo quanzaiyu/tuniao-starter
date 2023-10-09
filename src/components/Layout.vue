@@ -9,6 +9,7 @@ const props = defineProps({
   hideNavbar: { type: Boolean, default: false }, // 是否隐藏头部标题栏
   hideIcon: { type: Boolean, default: false }, // 是否隐藏头部区域图标(返回上一级、返回首页)
   title: { type: String, default: '' }, // 头部区域标题
+  headerSticky: { type: Boolean, default: false }, // 头部区域标题
 
   // 内容
   hideFooter: { type: Boolean, default: false }, // 是否隐藏内容区域底部间距
@@ -133,11 +134,15 @@ defineExpose({
         :back-icon="platform === 'mp-alipay' || hideIcon ? '' : 'left'"
         :home-icon="platform === 'mp-alipay' || hideIcon ? '' : 'home-capsule-fill'"
         :safe-area-inset-right="platform === 'mp-alipay' || hideIcon ? false : true"
-        index-url="/pages/index/ucenter"
+        index-url="/pages/index/index"
       >
         <view>{{ title }}</view>
       </tn-navbar>
-      <view v-else><slot name="navbar"></slot></view>
+
+      <tn-sticky v-else :offset-top="0" :enabled="headerSticky">
+        <view><slot name="navbar"></slot></view>
+      </tn-sticky>
+
       <!-- 内容 -->
       <view class="w-100vw">
         <slot></slot>

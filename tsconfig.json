@@ -10,6 +10,8 @@
     "noImplicitThis": false,
     "verbatimModuleSyntax": true,
     "preserveValueImports": false,
+    // https://blog.csdn.net/SmallTeddy/article/details/127536224
+    "outDir": "dist",
     "moduleResolution": "node",
     "importsNotUsedAsValues": "remove",
     "module": "esnext",

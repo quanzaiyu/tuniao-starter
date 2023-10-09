@@ -14,6 +14,8 @@ declare module '@vue/runtime-core' {
     $upload: string
     $store: any
     $formatTime: (string, string?) => string
+    $shopLogo: (string) => string
+    phoneCall: (string) => void
     go: function
   }
 

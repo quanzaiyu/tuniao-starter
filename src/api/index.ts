@@ -67,8 +67,8 @@ class API {
     let header: AnyObject = {
       'Content-Type': contentType,
       Authorization: 'Basic c2FiZXI6c2FiZXJfc2VjcmV0',
-      'Blade-Auth': userInfo?.access_token,
       TOKEN: 'Base Cloud68199860Ys+',
+      'Blade-Auth': userInfo?.access_token,
       ...options.header,
     }
 
