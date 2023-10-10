@@ -1,6 +1,7 @@
 <script setup lang="ts">
 onLaunch(async function (options) {
   console.info('onLaunch options', options)
+  console.info('设备信息', uni.$store.systemInfo)
 
   // 通过sessionId登录
   // await uni.$store.loginBySessionId(options)
