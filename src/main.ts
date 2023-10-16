@@ -25,6 +25,9 @@ import mixin from '@/mixin'
 // 全局指令
 import { skin } from '@/directive'
 
+import * as aliyunlive from '@/utils/aliyun-interaction-sdk.mini.js'
+console.log(aliyunlive)
+
 dayjs.extend(utc)
 dayjs.extend(isToday)
 dayjs.extend(isTomorrow)

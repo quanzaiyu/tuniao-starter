@@ -3,3 +3,4 @@ src/auto-imports.d.ts
 
 src/uni_modules/uni-*/**/*
 vite.config.js
+aliyun-interaction-sdk.mini.js
